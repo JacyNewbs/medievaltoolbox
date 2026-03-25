@@ -307,7 +307,7 @@ function Calendarium() {
   const { events, easterDate } = useMemo(() => getEventsForYear(year), [year]);
   const numDays = daysInMonth(year, month);
   const firstDow = dayOfWeek(year, month, 1);
-  const regnalText = useMemo(() => regnalForDate(year, month, 1), [year, month]);
+  const regnalText = useMemo(() => regnalForDate(year, month, selectedDay || 1), [year, month, selectedDay]);
   const regnalTrans = useMemo(() => findTransDay(year, month), [year, month]);
   const selectedRegnalText = useMemo(() => selectedDay === null ? "" : regnalForDate(year, month, selectedDay), [year, month, selectedDay]);
 
