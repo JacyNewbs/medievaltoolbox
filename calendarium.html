@@ -3,15 +3,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"><link rel="manifest" href="site.webmanifest">
 <title>Calendarium</title>
 <script>if(sessionStorage.getItem("tk_auth")!=="8ea752113563c9bbbcc7627e33051535919069af0999cb3ba4291ef055f1d38f")window.location.href="login.html";</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script><style>body{margin:0;padding:0}</style>  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MHHVQF35D"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-5MHHVQF35D');
-  </script>
-</head><body><div id="root"></div><script type="text/babel">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script><style>body{margin:0;padding:0}</style></head><body><div id="root"></div><script type="text/babel">
 const { useState, useMemo, useCallback } = React;
 
 function julianEaster(year) {
@@ -53,7 +45,8 @@ function dayOfWeek(year, month, day) { return new Date(year, month - 1, day).get
 const CATEGORIES = {
   fixed: { label: "Fixed Feast", color: "#9a6a10" },
   moveable: { label: "Moveable Feast", color: "#3a7a3a" },
-  legal: { label: "Legal & Administrative", color: "#6a5ea0" },
+  legal: { label: "Return Day", color: "#6a5ea0" },
+  quarter: { label: "Quarter Day", color: "#9a6a10" },
 };
 
 function expandAbbreviations(name) {
@@ -195,11 +188,12 @@ function getNextWeekday(fromDate, targetDay) {
 function getLegalDates(year, easter) {
   const dates = [];
   const rd = (m, d, name, note) => dates.push({month:m,day:d,name:name,cat:"legal",note:note});
+  const rdQ = (m, d, name, note) => dates.push({month:m,day:d,name:name,cat:"quarter",note:note});
   const rdD = (dt, name, note) => rd(dt.getMonth()+1, dt.getDate(), name, note);
-  rd(3,25,"Lady Day (Quarter Day)","Start of English legal year before 1752");
-  rd(6,24,"Midsummer (Quarter Day)",null);
-  rd(9,29,"Michaelmas (Quarter Day)",null);
-  rd(12,25,"Christmas (Quarter Day)",null);
+  rdQ(3,25,"Lady Day (Quarter Day)","Start of English legal year before 1752");
+  rdQ(6,24,"Midsummer (Quarter Day)",null);
+  rdQ(9,29,"Michaelmas (Quarter Day)",null);
+  rdQ(12,25,"Christmas (Quarter Day)",null);
   rd(10,6,"Octaves of Michaelmas","Return day [6-12 Oct]");
   rd(10,13,"Quindene of Michaelmas","Return day [13-19 Oct]");
   rd(10,20,"Three weeks after Michaelmas","Return day [20-26 Oct]");
@@ -323,7 +317,7 @@ function Calendarium() {
     const key = month + "-" + d;
     const dayEvents = events[key] || [];
     if (calMode === "ecclesiastical") return dayEvents.filter(e => e.cat !== "legal");
-    if (calMode === "legal") return dayEvents.filter(e => e.cat === "legal");
+    if (calMode === "legal") return dayEvents.filter(e => e.cat === "legal" || e.cat === "quarter");
     return dayEvents;
   }, [month, events, calMode]);
 
@@ -331,7 +325,7 @@ function Calendarium() {
     const key = m + "-" + d;
     const dayEvents = events[key] || [];
     if (calMode === "ecclesiastical") return dayEvents.filter(e => e.cat !== "legal");
-    if (calMode === "legal") return dayEvents.filter(e => e.cat === "legal");
+    if (calMode === "legal") return dayEvents.filter(e => e.cat === "legal" || e.cat === "quarter");
     return dayEvents;
   }, [events, calMode]);
 
