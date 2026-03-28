@@ -9,14 +9,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css"/>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MHHVQF35D"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-5MHHVQF35D');
-  </script>
 </head>
 <body>
 <style>
@@ -119,6 +111,13 @@ body{font-family:'Cormorant Garamond','EB Garamond',Georgia,serif;background:#f5
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
 <script>
 const TNA_BASE="https://discovery.nationalarchives.gov.uk/details/r/";
+const DHC_BASE="https://archive-catalogue.dorsetcouncil.gov.uk/records/";
+function docUrl(d){
+  const repo=d[5], ref=d[0], id=d[6];
+  if(repo==="The National Archives") return TNA_BASE+id;
+  if(repo==="Dorset History Centre") return DHC_BASE+encodeURIComponent(ref);
+  return TNA_BASE+id;
+}
 const DATA=JSON.parse(document.getElementById("manor-data").textContent);
 
 function docClass(t){
@@ -250,7 +249,7 @@ function showManor(i){
   let docsHtml="";
   fDocs.forEach(d=>{
     const cls=docClass(d[1]);
-    const url=TNA_BASE+d[6];
+    const url=docUrl(d);
     docsHtml+="<a class=\"doc-card "+cls+"\" href=\""+url+"\" target=\"_blank\" rel=\"noopener\">"+
       "<div class=\"doc-type "+cls+"\">"+escHtml(d[1])+"</div>"+
       "<div class=\"doc-dates\">"+escHtml(d[4])+"</div>"+
