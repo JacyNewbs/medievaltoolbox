@@ -1,0 +1,1696 @@
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: 
+TITLE: Preamble
+NOTES: none
+TEXT: HENRY, by the grace of God, King of England, Lord of Ireland, Duke of Normandy, Guyan, and Earl of Anjou, to all Archbishops, Bishops, Abbots, Priors, Earls, Barons, Sheriffs, Provosts, Officers, and to all his Bailiffs and faithful Subjects, which shall see this present Charter, Greeting. Know ye that We, unto the Honour of Almighty God, and for the salvation of our soul, and of the souls of our progenitors and successors, to the advancement of holy Church, and amendment of our Realm, of our mere and free will, have given and granted to the Archbishops, Bishops, Abbots, Priors, Earls, Barons and to all of our realm, these liberties underwritten, to be kept in our realm of England for evermore.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: I
+TITLE: A Confirmation of Liberties
+NOTES: none
+TEXT: FIRST, We have granted to God, and by this our present Charter have confirmed, for us and our Heirs for evermore, That the Church of England shall be free, and shall have all her whole rights, and her liberties inviolable. We have granted also, and given to all the freemen of our realm, for us and our Heirs for evermore, all the liberties underwritten, to have and to hold to them and their Heirs, of us and our Heirs, for evermore.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: II
+TITLE: The Relief of the Heirs of Tenants by Knight's Service in Capite
+NOTES: none
+TEXT: IF any of our Earls or Barons, or any other which hold of Us in chief by Knight's service, die, and at the time of his death his heir be of full age, and owe Relief, he shall have his inheritance by the old Relief; that is to say, the heir or heirs of an Earl, for an whole Earldom, by one hundred pounds; the heir or heirs of a Baron, for an whole Barony, by one hundred pounds; the heir or heirs of a Knight, for one whole Knight's fee, by one hundred shillings at the most; and he that hath less, shall give less, according to the old custom of the fees.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: III
+TITLE: The Wardship of Heirs within Age
+NOTES: none
+TEXT: BUT if the heir of any such be within age, his Lord shall not have the ward of him, nor of his land, before that he hath taken of him homage. And after that such an heir hath been in ward, when he be come of age, to wit, of one and twenty years, he shall have his inheritance without Relief, and without Fine; yet so that if while he were within age, he were made Knight, nevertheless the land remain in the keeping of his Lords unto the term aforesaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: IV
+TITLE: No Waste shall be made in the Lands of Heirs in Ward
+NOTES: Enforced by 3 Ed.1. c.21, 6 E.1 c.5.
+TEXT: THE keeper of the land of such an heir, being within age, shall not take of the lands of the heir, but reasonable issues, reasonable customs, and reasonable services, and that without destruction and waste of his men or goods. And if we commit the custody of any such land, to the Sheriff, or to any other which is answerable unto us for the issues of the same land, and he make destruction or waste of those things that he hath in custody, we will take of him amends; and the land shall be committed to two lawful and discreet men of that fee, which shall answer for the issues of the same land unto us, or unto him to whom we shall have assigned them. And if we give or sell to any man the custody of any such land, and he therein make destruction or waste, he shall lose the same custody; and it shall be delivered to two lawful and discreet men of that fee, which in like manner shall be answerable to us as afore is said.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: V
+TITLE: Of maintaining Lands in Ward, and restoring them to Heirs, &c.
+NOTES: Enforced by 3 E.1. c.21.
+TEXT: THE Keeper, so long as he hath the custody of the land of such an heir shall keep up the houses, parks, fishponds, pools, mills, and other things pertaining to the same land, out of the issues of the said land; and he shall deliver to the Heir, when he cometh to his full age, all his land stored with ploughs, and all other things, at the least as he received it. All these things shall be observed in the custodies of Archbishoprics, Bishoprics, Abbeys, Priories, Churches, and Dignities being vacant, which appertain to us; except that such custodies ought not to be sold.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VI
+TITLE: Marriage of Heirs
+NOTES: See 20 H.3. c.6.
+TEXT: HEIRS shall be married without Disparagement.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VII
+TITLE: A Widow shall have her Marriage-estate, Inheritance, and Quarantine. The King's Widow, &c.
+NOTES: See 17 E.2. c.4 for the Oath of Widows who hold in Capite not to marry without the King's Licence. See also 20 H.3 c.1 which gives Damages to Widows divorced of their Dowers.
+TEXT: A WIDOW, after the death of her husband, forthwith and without any difficulty, shall have her marriage-estate, and her inheritance; and shall give nothing for her dower, or for her marriage-estate, or for her inheritance, which inheritance her husband and she held together the day of the death of her husband: And she shall tarry in the chief mansion of her husband by forty days after the death of her husband, within which days her dower shall be assigned her, unless it were assigned her before, or unless that house be a castle; and if she depart from the castle, then a competent house shall be forthwith provided for her, in the which she may honestly dwell, until her dower be to her assigned, as it is aforesaid; and she shall have in the mean time her reasonable estovers of the common. And for her dower shall be assigned unto her the third part of all the lands of her husband, which were his in his life-time, except she were endowed of less at the Church-door. No widow shall be distrained to marry, while she chooses to live single; nevertheless she shall find surety, that she shall not marry without our assent if she hold of us, nor without the assent of her lord, if she hold of another.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VIII
+TITLE: Of recovering Debts to the King
+NOTES: See c.18 of this Charter & 33 H.8. c.39 for the Erection of a Court of Surveyors and for the more effectual Recovery of the King's Debts.
+TEXT: We or our Bailiffs shall not seize any land nor rent for any debt, as long as the chattels of the debtor forthcoming suffice to pay the debt, and the debtor himself be ready to satisfy therefore; neither shall the sureties of the debtor be distrained, as long as the principal debtor be sufficient for the payment of the debt. And if the principal debtor fail in payment of the debt, not having wherewith to pay, or will not pay when he is able, the sureties shall answer for the debt: and if they will, they shall have the lands and rents of the debtor, until they be satisfied of the debt which they before payed for him, unless the principal debtor can shew himself to be thereof acquitted against the said sureties.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: IX
+TITLE: The Liberties and Customs of London and other Places confirmed.
+NOTES: none
+TEXT: THE city of London shall have all her ancient liberties and free customs. Moreover we will and grant, that all other Cities, and Boroughs, and Towns, and the Barons of the Five Ports, and all Ports, have all their liberties and free customs.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: X
+TITLE: None shall be distrained for more Service than is due.
+NOTES: none
+TEXT: No man shall be distrained to do more Service for a Knight's fee, nor for any other freehold, than therefore is due.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XI
+TITLE: Common Pleas shall not follow the King's Court.
+NOTES: none
+TEXT: COMMON Pleas shall not follow our Court, but shall be holden in some place certain.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XII
+TITLE: How Assises of Novel Disseisin and Mort d'ancestor shall be taken and determined.
+NOTES: Enforced and amended by 13 E.1. c.29., 21 H.3. c.12.
+TEXT: Assises of novel disseisin and of Mort d'ancestor, shall not be taken but in their proper shires, and after this manner: We, or if we be out of the realm, our chief Justiciar shall send our Justiciers through every county once in the year, who, with the Knights of the shires, shall take the aforesaid Assises in the counties: And those things, which, at that their coming into the county, by our foresaid Justiciers sent to take those Assises cannot be determined, shall be determined by them in some other place in their circuit: And those things, which for difficulty of some articles cannot be determined by them, shall be referred to our Justiciers of the Bench, and there shall be determined.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XIII
+TITLE: Assises of Darrein Presentment.
+NOTES: See 13 E.1. st.1. c.30 which ordains that these Assises shall be determined in their own Shire. And see 52 H.3. c.12. and 32 H.3. c.21. sect.7. for what Days shall be given in Assises of Darrein Presentment.
+TEXT: Assises of Darrein Presentment shall be always taken before our Justiciers of the Bench, and there shall be determined.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XIV
+TITLE: How Men of all Sorts shall be amerced, and by whom.
+NOTES: Confirmed by 3 E.1. c.6.
+TEXT: A FREEMAN shall not be amerced for a small fault, but after the manner of that fault, and for a great fault after the greatness of the fault, saving his contenement; and a merchant likewise, saving his merchandise; and any other's villain than ours shall be likewise amerced, saving his wainage, if he fall into our mercy; and none of the said amerciaments shall be affixed, but by the oath of honest and lawful men of the vicinage. Earls and Barons shall not be amerced but by their Peers, nor but after the manner of the fault. No man of the Church shall be amerced after the quantity of his spiritual benefice, but after his lay-tenement, and after the quantity of the fault.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XV
+TITLE: Making of Bridges.
+NOTES: none
+TEXT: NEITHER town nor freeman shall be distrained to make bridges over rivers, but such as of old time and of right ought to make them.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XVI
+TITLE: Obstructing of Rivers.
+NOTES: none
+TEXT: NO Rivers shall be defended from henceforth, but such as were in defence in the time of king Henry our grandfather, by the same places, and the same bounds as they were wont to be in his time.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XVII
+TITLE: Holding Pleas of the Crown.
+NOTES: none
+TEXT: NO Sheriff, Constable, Coroner, or other our Bailiffs, shall hold Pleas of our Crown.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XVIII
+TITLE: The King's Tenant dying his debtor, the King shall be first paid.
+NOTES: none
+TEXT: IF any one holding of us lay-fee do die, and our Sheriff or Bailiff do shew our letters patent of our summons for a debt, which the dead man did owe to us; it shall be lawful to our Sheriff or Bailiff to attach and inventory all the goods and chattels of the dead, being found in the lay-fee, to the value of the same debt, by the view of lawful men; yet so that nothing thereof shall be taken away, until there be paid unto us the debt clearly made to appear; and the residue shall be left to the executors to perform the testament of the dead; and if nothing be owing unto us by him, all the chattels shall go to the use of the dead, saving to his wife and his children their reasonable parts.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XIX
+TITLE: Purveyance for a Castle.
+NOTES: Enforced by 3 E.1. c.7.
+TEXT: NO Constable or his Bailiff shall take corn or other chattels of any one, who is not of the town where the castle is situate, unless he forthwith pay the money for the same, or may have respite thereof at the will of the seller: But if he be of that town he shall pay the price within forty days.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XX
+TITLE: Doing of Castle-ward.
+NOTES: See 32 H.8. c.48. concerning lands holden of Dover-castle.
+TEXT: NO Constable shall distrain any Knight to give money for keeping of a Castle, if he himself will do it in his proper person, or by another sufficient man, if he cannot do it himself for a reasonable cause. And should we lead him forth or send him into our army, he shall be quit of Castle-ward, according to the length of time that he be in the army by our command, for the fee for which he did service in the army.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXI
+TITLE: Taking of Horses, Carts, and Wood.
+NOTES: Enforced by 14 E.3. st.1. c.19. and 25 E.3. st.5. c.6.
+TEXT: NO Sheriff or Bailiff of ours, or any other, shall take the horses or carts of any man to make carriages, except he pay the hire limited of old, that is to say, for a cart with two horses 10d. a day; and for a cart with three horses xiv. d. a day. No demesne cart of any spiritual person or Knight or of any Lady shall be taken by the said Bailiffs; nor shall we, nor our Bailiffs, nor any other, take another's wood for castles, or other our necessaries to be done, but by the will of him whose the wood may be.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXII
+TITLE: How long Felons Lands shall be holden by the King.
+NOTES: none
+TEXT: WE will not hold the lands of those who may be convict of Felony but for one year and one day, and then those lands shall be delivered to the Lords of the Fees.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXIII
+TITLE: In what Places Wears shall be put down.
+NOTES: Confirmed and amended by 12 E.4. c.7. which inflicts Penalty on Offenders.
+TEXT: ALL wears from henceforth shall be utterly put down through Thames and Medway, and through all England, except by the sea-coast.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXIV
+TITLE: In what Case a Precipe in Capite is not grantable.
+NOTES: none
+TEXT: THE writ that is called Precipe shall not be henceforth granted to any person of any freehold whereby a freeman may lose his court.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXV
+TITLE: There shall be but one Measure throughout the Realm.
+NOTES: Confirmed and amended by 14 E.3. st.1 c.12. Amended by 27 E.3. st.2 c.10 which inflicts Penalty on Offenders Confirmed and further amended 8 H.6. c.5 and 11 H.7. c.4
+TEXT: ONE measure of wine shall be through our whole realm; and one measure of ale; and one measure of corn, that is to say, the quarter of London; and one breadth of dyed cloths, russets, and haberjects, that is to say, two yards within the lists. And it shall be of weights as it is of measures.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXVI
+TITLE: Inquisition of Life and Member.
+NOTES: Amended by e E.1. c.11. Altered by 6 E.1. st.1. c.9. And see 28 Ed.3. c.9. which takes away this Writ of Inquisition otherwise called the Writ de Odio et Atia.
+TEXT: NOTHING shall henceforth be given for a Writ of Inquisition by him that prayeth Inquisition of life, or of member, but it shall be granted freely, and not denied.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXVII
+TITLE: Tenure of the King in Socage, and of another by Knight's Service. Petit Serjeanty.
+NOTES: none
+TEXT: IF any hold of us by Fee-farm, or by Socage, or by Burgage, and hold land of another by Knight's Service, we will not have the custody of the heir, nor of his land, which is of the fee of another, by reason of that Fee-farm, or Socage, or Burgage: neither will we have the custody of such Fee-farm, or Socage, or Burgage, except that Fee-farm owe Knight's Service. We will not have the custody of the heir, or of any land which he holdeth of another by Knight's Service, by occasion of any Petit Serjeanty which he holdeth of us by the Service of rendering us Knives, Arrows, or the like.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXVIII
+TITLE: Wager of Law shall not be without Witness
+NOTES: none
+TEXT: NO Bailiff shall henceforth put any man to his open law, or to an oath, upon a bare charge without faithful witnesses brought in for the same.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXIX
+TITLE: None shall be condemned without Trial. Justice shall not be sold, denied or delayed
+NOTES: Enforced by 2 E.3. c.8 Confirmed by 5 E.3. c.9, 14 E.3. st.1. c.14. Confirmed by 25 E.3. st.5. c.4, 28 E.3. c.3, 37 E.3. c.18, 42 E.3. c.3, 11 R.2. c.10. See 4 Hen.7 c.12 giving directions to Justices of the Peace.
+TEXT: NO freeman shall be taken, or imprisoned, or be disseised of his freehold, or his liberties, or free customs, or be outlawed, or exiled, or in any other wise destroyed, nor will we pass upon him nor condemn him, unless by the lawful judgment of his Peers, or by the law of the land. To no one will we sell, to no one will we deny or delay, Right or Justice.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXX
+TITLE: How Merchant Strangers coming into this Realm shall be entreated.
+NOTES: Confirmed and amended by 9 E.3. st.1. c.1, 14 E.3. st.2. c.2, 25 E.3. st.4. c.2, 2 R.2. st.1. c.1, 11 R.2. c.7, 2 E.3. c.9.
+TEXT: ALL Merchants, unless they were openly prohibited before, shall have safe and sure Conduct to depart out of England, and to come into England, and to tarry in, and go through England, as well by land as by water, to buy or sell without any evil Tolls, by the old and rightful Customs, except in time of war. And if they be of a land at war against us, and if such be found in our land at the beginning of the war, they shall be attached without harm of body or goods, until it be known unto us, or our Chief Justiciers, how the Merchants of our land be entreated, who shall be then found in the land at war against us; and if ours be safe there, the others shall be safe in our land.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXI
+TITLE: Tenure of a Barony coming into the King's Hands by Eschete.
+NOTES: Enforced by 1 E.3. st.2. c.13 and 1 E.6. c.4.
+TEXT: IF any one hold of any Eschete, as of the honour of Wallingford, Bolon, Nottingham, Lancaster, or of other Eschetes which are in our hand, and be Baronies, and die, his heir shall not give other Relief, nor shall do other Service to us, than he should do to the Baron, if the barony were in the Baron's hand. And we shall hold it in the same wise as the baron held it; neither shall we, by occasion of such Barony or Eschete, have any Eschete or keeping of any of our men, unless he who held the Barony or Eschete otherwise held of us in chief.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXII
+TITLE: Lands shall not be aliened to the Prejudice of the Lord's Service.
+NOTES: Altered by 18 E.1. st.1. c.2.
+TEXT: No Freeman shall henceforth give or sell to any one more of his Land, than so that out of the residue of his Land, there may be sufficiently done to the Lord of the Fee the Service due to him, which belongeth to that Fee.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXIII
+TITLE: Patrons of Abbies shall have the Custody of them when vacant
+NOTES: Confirmed by 25 E.3. st.3. c.1.
+TEXT: ALL Patrons of Abbies, who have Charters of the Kings of England, of Advowson, or old Tenure or Possession, shall have the Custody of them when they fall void, as they ought to have, and as it is afore declared.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXIV
+TITLE: In what only Case a Woman shall have an Appeal of Death.
+NOTES: none
+TEXT: NO Man shall be taken or imprisoned, upon the Appeal of a Woman, for the Death of any other than of her Husband.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXV
+TITLE: At what Time shall be kept a County Court, Sheriff's Tourn, and a Leet.
+NOTES: See further 31 E.3. st.1 c.15 as to Tourns.
+TEXT: NO County Court shall henceforth be holden, but from Month to Month; and where the term was wont to be greater it shall be greater. Nor shall any Sheriff or Bailiff make his Tourn through the Hundred, but twice in the year; and only in the place due and accustomed, that is to say, once after Easter and again after the Feast of Saint Michael. And the View of Frankpledge shall then be made at the same term; (that is to say, at the Feast of Saint Michael) without occasion; so that every one may have his liberties which he had and was wont to have in the time of King Henry our Grandfather, or which he has since purchased. The View of Frankpledge shall be so made, that our peace be kept; and that the Tithing be whole as it was wont to be; and that the Sheriff do not seek occasions; and that he be content with that which the Sheriff was wont to have for making his View in the time of King Henry our Grandfather.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXVI
+TITLE: No Land shall be given in Mortmain
+NOTES: Enforced and amended by 7 E.1. st.2, 13 E.1. st.1. c.32, 18 E.1. st.1. c.3, 27 E.1. st.2, 18 E.3. st.3. c.3, 15 R.2. c.5 and 23 H.8. c.10.
+TEXT: It shall not henceforth be lawful to any to give his Land to any Religious House, so as to take the same again to hold of the same House. Nor shall it be lawful to any Religious House so to accept the Land of any, as to lease the same to him of whom he received it to be held. And if any one henceforth so give his Land to any Religious House, and thereupon be convict, his Gift shall be utterly void, and that Land shall accrue to the Lord of that Fee.
+<<END>>
+<<CLAUSE>>
+STATUTE: Magna Carta
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XXXVII
+TITLE: Escuage: A Subsidy in respect of this Charter, and The Charter of the Forest, granted to the King.
+NOTES: none
+TEXT: SCUTAGE from henceforth shall be taken as it was wont to be taken in the time of King Henry our Grandfather: Saving to Archbishops, Bishops, Abbots, Priors, Templars, Hospitallers, Earls, Barons, and all others as well ecclesiastical as secular persons, [all] the Liberties and free Customs, which they have heretofore had. And all these Customs and Liberties aforesaid, which we have granted to be holden within our Realm, as far as appertaineth to us towards our people; all of our Realm, as well Clergy as Laity shall observe, as far as appertaineth to them, towards theirs. And for this Gift and Grant of these Liberties, and of the other Liberties contained in our Charter of Liberties of the Forest, the Archbishops, Bishops, Abbots, Priors, Earls, Barons, Knights, Freeholders, and all of our Realm have given unto us the Fifteenth Part of all their Moveables. We have also granted unto them for us and our Heirs, that neither we, nor our Heirs, shall procure any thing whereby the Liberties in this Charter contained shall be infringed or weakened. And if any thing be procured by any person contrary hereto, it shall be of no avail: and shall be holden for nought. These being witnesses; the Lord S. Archbishop of Canterbury, E. London, J. Bath, P. Winchester, H. Lincoln, R. Salisbury, B. Rochester, W. Worcester, J. Ely, H. Hereford, R. Chichester, W. Exeter, Bishops; The Abbot of Saint Edmonds, the Abbot of St. Albans, the Abbot of Battle, the Abbot of St. Augustine in Canterbury, the Abbot of Evesham, the Abbot of Westminster, the Abbot of Peterborough, the Abbot of Reading, the Abbot of Abingdon, the Abbot of Malmsbury, the Abbot of Winchcombe, the Abbot of Hyde, the Abbot of Cerne, the Abbot of Sherburn, the Abbot of Cerne, the Abbot of Abbotsbury, the Abbot of Middleton, the Abbot of Selby, the Abbot of Whitby, the Abbot of Cirencester; H. de Burgh, Justiciar [R. ¹¹] Earl of Chester and Lincoln, W. Earl of Salisbury, W. Earl of Warren, G. de Clare Earl of Gloucester and Hertford, W. de Ferrars Earl of Derby, W. de Mandeville Earl of Essex, H. de Bigod Earl of Norfolk, W. Earl of Albermarle, H. Earl of Hereford, John constable of Chester, Robert de Ros, Robert Fitzwalter, Robert de Vyyponte, William de Bruer, Richard de Munfichet, Peter Fitzherbert, [Matthew Fitzherbert, ¹²] William Daubenie, Robert Gressy, Reginald de Breus, John de Monmouth, John Fitzallen, Hugh de Mortimer, Walter de Beauchamp, William de St. John, Peter de Mauly, Brian de Lisle, Thomas de Multon, Richard de Argenteyn, Geoffrey de Nevil, William de Mauduit, John de Balun, and others. Given at Westminster the eleventh Day of February, in the ninth Year of our Reign.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: 
+TITLE: Preamble
+NOTES: Confirmed by 25 E.1. st.1 c.1, 28 E.1. st.3 c.1, 42 E.3. c.1
+TEXT: HENRY, by the grace of God, King of England, Lord of Ireland, Duke of Normandy and of Guyan, &c.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: I
+TITLE: What Grounds shall be disafforested.
+NOTES: none
+TEXT: FIRST, all Forests which King Henry our Grandfather afforested, shall be viewed by good and lawful men; and if he had afforested any other Wood than his own demesne, to the damage of him whose Wood that was, it shall be disafforested; and if he had afforested his own Wood, it shall remain Forest; saving the Common of Herbage, and of other things in the same Forest, to them who before were accustomed to have it.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: II
+TITLE: Who are bound to the Summons of the Forest.
+NOTES: none
+TEXT: MEN who dwell out of the Forest, shall not henceforth come before our Justiciers of the Forest by common Summons, unless they be impleaded, or be Sureties for one or more who are attached on account of the Forest.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: III
+TITLE: Woods afforested by King Richard I. or King John shall be disafforested.
+NOTES: none
+TEXT: ALL Woods which may have been afforested by King Richard our Uncle, or by King John our Father, until our first Coronation, shall be forthwith disafforested, unless it be our demesne Wood.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: IV
+TITLE: No Purpresture, Waste, or Assart, shall be made in Forests.
+NOTES: none
+TEXT: ARCHBISHOPS, Bishops, Abbots, Priors, Earls, Barons, Knights, and Freeholders, who have their Woods in Forests, shall have their Woods as they had them at the time of the first Coronation of King Henry our Grandfather; so that they shall be quit for ever of all Purprestures, Wastes, and Assarts, made in those Woods after that Time, until the beginning of the Second Year of our Coronation; and they, who henceforth make Waste or Purpresture in them without our licence, or Assart, shall answer for the Wastes, Purprestures, and Assarts.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: V
+TITLE: When Rangers shall make their Range in the Forest.
+NOTES: none
+TEXT: OUR Rangers shall go through the Forests to make Range, as it used to be done at the time of the first Coronation of King Henry our Grandfather, and not otherwise.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VI
+TITLE: Lawing of Dogs in Forests.
+NOTES: none
+TEXT: THE inquest or view for the Lawing of Dogs being in the Forest shall henceforth be made when the Range ought to be made, that is to say, from three year to three year; and then it shall be made by the view and testimony of lawful men, and not otherwise; and he whose Dog may then be found not lawed, shall pay for an Amerciament 3s. And no Ox shall henceforth be taken for Lawing; and such Lawing shall be by the Assise commonly used that three Claws shall be cut off without the ball from the fore foot. Nor shall Dogs henceforth be lawed unless in the Places where they used to be lawed at the time of the first Coronation of the aforesaid King Henry our Grandfather.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VII
+TITLE: Gatherings in Forests: Appointment of Foresters.
+NOTES: Enforced by 25 E.3. st.5 c.7.
+TEXT: NO Forester or Bedel henceforth shall make Scotal, or gather Sheafs or Oats, or any Corn, Lambs, or Pigs, nor shall make any Gathering; And by the view and oath of the twelve Rangers, when they shall make their Range, so many Foresters shall be placed for the keeping the Forests, as reasonably shall seem sufficient for the keeping the same.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: VIII
+TITLE: When Swanimotes and Courts of Attachment shall be kept, and who shall repair to them.
+NOTES: none
+TEXT: NO Swanimote shall henceforth be kept in our realm but thrice in the year, videlicet in the beginning of Fifteen Days before the feast of St. Michael, when our agisters meet to agist our demesne Woods, and about the Feast of St. Martin, when our agisters ought to receive our Pawnage: And at these two Swanimotes shall meet the Foresters, Verderers, and Agisters, and none other, by distress: And the third Swanimote shall be kept in the beginning of fifteen days before the Feast of St. John Baptist, for the fawning of our Dogs; and for the holding that Swanimote shall meet the Foresters, Verderers, and none other, by distress. Moreover, every forty days through the year the Foresters and Verderers shall meet to make Attachments of the Forest, as well for vert as for venison, by the Presentment of the same Foresters, and before them who are attached. And the aforesaid Swanimotes shall not be kept but in the Counties in which they have used to be kept.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: IX
+TITLE: Who may take Agistment and Pawnage in Forests.
+NOTES: none
+TEXT: EVERY Freeman may agist his own Wood which he hath in the Forest at his pleasure, and may have his Pawnage. Also we do grant that every Freeman may drive his Swine through our demesne Woods, freely and without Impediment, to agist them in his own Woods, or where else he will. And if the Swine of any Freeman lie one night in our Forest, there shall be no occasion taken therefrom whereby he may lose any thing of his own.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: X
+TITLE: The Punishment for killing the King's Deer.
+NOTES: Altered by 3 E.1. c.20, 7 R.2. c.4, 1 E.3. st.7. c.8, 1 H.7. c.7, 4 H.7. c.6.
+TEXT: NO man shall henceforth lose Life or Member for our Venison. But if any man be taken, and convict of the taking of our Venison, he shall make a grievous Fine, if he have any thing wherewith; but if he have not any thing wherewith, he shall lie in our prison a Year and a Day; and if after a Year and a Day he can find sureties, he shall go out of prison, or else shall abjure the Realm of England.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XI
+TITLE: A Nobleman passing through the Forest may kill a Deer.
+NOTES: none
+TEXT: WHATSOEVER Archbishop, Bishop, Earl or Baron, coming to us at our commandment, pass through our Forest, it shall be lawful for him to take and kill one beast, or two, by view of the Forester if he be present; or else he shall cause an horn to be wound, lest he seem to do this by stealth. The same shall be lawful for them to do in returning as is aforesaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XII
+TITLE: How a Freeman may use his Land in the Forest.
+NOTES: none
+TEXT: EVERY Freeman may henceforth, without hindrance make in his own Wood, or in his own Land, which he hath in the Forest, a Mill, a Fish-pond, a Pool, a Marl-pit, a Dike, or arable ground, without the covert in arable ground, so that it be not to the Annoyance of any neighbour.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XIII
+TITLE: What a Freeman may have in his own Woods.
+NOTES: none
+TEXT: EVERY Freeman may have in his own Woods, Ayries of Hawks, Sparrow-hawks, Falcons, Eagles, and Herons; and shall have also the Honey that may be found within his Woods.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XIV
+TITLE: Who may take Cheminage or Toll in a Forest, for what cause and how much.
+NOTES: none
+TEXT: NO Forester henceforth, who is not Forester in fee paying to us firm for his Bailiwick, shall take any Cheminage in his Bailiwick: but a Forester in fee, paying to us firm for his Bailiwick, may take Cheminage; that is to say, for a Cart by the half year, ii d. and by another half year, ii. d. for an Horse that beareth loads by the half year, an halfpenny, and by another half year, an halfpenny; and of those only who come from without his Bailiwick as Merchants by his licence into his Bailiwick to buy Underwood, Timber, Bark, or Charcoal, and to carry elsewhere to sell where they will; and for none other Cart or any load that Cheminage be taken; and Cheminage shall not be taken, unless in the places in which of old it was wont and ought to be taken. But they which carry upon their backs Underwood, Bark, or Coal to sell, though it be their livelihood, shall henceforth pay no Cheminage.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XV
+TITLE: A Pardon of Outlaws of Trespass within the Forest.
+NOTES: none
+TEXT: ALL Persons outlawed for our Forest only, from the Time of King Henry our Grandfather, until our first Coronation may come to our Peace without let, and shall find good Sureties, that henceforth they incur no forfeiture unto us concerning our Forest.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Charter of the Forest
+REGNAL YEAR: 9 Hen.3.
+YEAR: 1224/5
+CHAPTER: XVI
+TITLE: How Plea of the Forest shall be holden.
+NOTES: Amended by 7 R.2. c.3.
+TEXT: NO Constable shall hold Pleas of the Forest, either for Vert or Venison; but every Forester in fee shall make attachments for Pleas of the Forest, as well for Vert as Venison, and shall present them to the Verderers of the Provinces; and when they be enrolled and enclosed under the Seals of the Verderers, they shall be presented to our chief Forester when he shall come into those parts to hold the Pleas of the Forest, and before him they shall be determined. And these liberties of the Forests we have granted to all: Saving to archbishops, bishops, abbots, priors, earls, barons, knights, and to others as well ecclesiastical persons as secular Templars, and Hospitallers, the Liberties and free Customs, in Forests and without, in Warrens and other places, which they have before had. And all these Liberties and Customs, [&c. to the same purport as in the Great Charter, with some slight variations, particularly in the names of the witnesses, as may be seen in comparison of the Latin text.]
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: 
+TITLE: Preamble
+NOTES: 
+TEXT: It was provided in the Court of our Lord the King, at Merton on Wednesday the morrow after the Feast of St Vincent, the 20th Year of the Reign of King Henry the Son of King John, before W. Archbishop of Canterbury, and his Bishops, Suffragens, and before the greater part of the Earls and Barons of England, there being assembled for the Coronation of the said King, and Alianore the Queen, about which they were all called, where it was treated for the Commonwealth of the Realm upon the Articles underwritten; thus it was provided and granted, as well of the foresaid Archbishops, Bishops, Earls, and Barons, as of the King himself and others.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: I
+TITLE: A Woman shall recover Damages in a Writ of Dower.
+NOTES: See Magna Carta, c.7.
+TEXT: FIRST, of Widows which after the death of their Husbands are deforced of their Dowers and cannot have their Dowers or Quarantine without Plea; that is to say, that whosoever deforce them of their Dowers or Quarantine of the Lands whereof their Husbands died seised, and that the same Widows after shall recover by plea, they that be convict of such wrongful divorcement shall yield Damages to the same Widows, that is to say, the Value of the whole Dower to them belonging, from the time of the Death of their Husbands unto the Day that the said Widows by Judgment of the Court have recovered their Seisin thereof, and the Divorcers nevertheless shall be amerced at the King's pleasure.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: II
+TITLE: Widows may bequeath the Crop of their Lands.
+NOTES: none
+TEXT: ALSO from henceforth Widows may bequeath the Crop of their Ground, as well of their Dowers, as of other their Lands and Tenements given, to the Lords of the Fee, all such Customs and Services as be due for their Dowers and other Tenements.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: III
+TITLE: Enquiry and Punishment of Redisseisin.
+NOTES: See 52 H.3. c.8, 13 E.1. st.1. c.26. by which latter this clause is extended to recoveries by default, &c.
+TEXT: ALSO if any be disseised of his Freehold, and before the Justices in Eyre have recovered Seisin by Assise of Novel Disseisin, or by Confession of them which did the Disseisin, and the Disseisee hath had Seisin delivered by the Sheriff; if the same Disseisors, afterwards after the Circuit of the Justices, or within the same 4] have again disseised the same Disseisee of the same Freehold, and thereof be convict, they shall be forthwith taken and committed, and kept in the King's prison, until the King hath discharged them by Fine, or by some other mean. And this is the form how such convict persons shall be punished; that is to say, when the Plaintiffs come into the Court, they shall have the King's Writ directed to the Sheriff, in which shall be contained the Plaint of Disseisin done upon Disseisin. And then it shall be commanded to the Sheriff, that he, taking with him the Keepers of the Pleas of the King's Crown, and other lawful Knights, in his proper Person, shall go unto the Land or Pasture for which the Plaint hath been made, and that he make before them, by the first Jurors, and by other neighbours and lawful Men, diligent Inquisition thereof; and if they find him disseised again, as before is said, [then let him do] according to the Provision afore-mentioned; but if it be found otherwise, the Plaintiff shall be amerced and the other shall go quit. Neither shall the Sheriff execute any such Plaint without special Commandment of the King. In the same manner shall be done respecting them that have recovered their Seisin by Assise of Mort d'ancestor; and so shall it be of all Lands and Tenements recovered in the King's Court by Inquests; if they be disseised after by the said Divorcers, against whom they have recovered anywise by Inquest.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: IV
+TITLE: In what Cases Lords may approve against their Tenants.
+NOTES: See 13 E.1. st.1. c.46 that Lords may approve against Neighbours also. That statute & this confirmed by 3 & 4 Ed.6. c.3.
+TEXT: ALSO because many great men of England (which have enfeoffed Knights and [others] their Freeholders of small Tenements in their great Manors) have complained that they cannot make their Profit of the residue of their Manors, as of Wastes, Woods, and [common] Pastures, whereas the same Feoffees have sufficient Pasture, as much as belongeth to their Tenements; it is thus provided and granted, That whenever such Feoffees do bring an Assise of Novel disseisin for their Common of Pasture, and it is knowledged before the Justiciers, that they have as much Pasture as sufficeth to their Tenements, and that they have free Ingress and Egress from their Tenements unto the Pasture, then let them be contented therewith; and they of whom it was complained shall go quit of as much as they have made their Profit of their Lands, Wastes, Woods, and Pastures; and if they allege that they have not sufficient Pasture, or sufficient Ingress and Egress according to their Hold, then let the Truth be inquired by Assise; and if it be found by the Assise, that the same Deforceors have in any Thing disturbed them of their Ingress and Egress, or that they had not sufficient Pasture, and sufficient Ingress and Egress, (as before is said), then shall they recover their Seisin by view of the Inquest: so that by their Discretion and Oath the Plaintiffs shall have sufficient Pasture, and sufficient Ingress and Egress in form aforesaid; and the Disseisors shall be amerced, and shall yield Damages, as they were wont before this Provision. And if it be certified by the Assise, that the Plaintiffs have sufficient Pasture, with free and sufficient Ingress and Egress, as before is said, let the other make their Profit of the Residue, and go quit of that Assise.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: V
+TITLE: Usury shall not run against any within Age.
+NOTES: Repealed by the general Words of 37 H.8. c.9.
+TEXT: LIKEWISE it is provided and granted by the King, that from henceforth Usuries shall not run against any being within Age, from the Time of the Death of his Ancestor (whose Heir he is) unto his lawful Age; so nevertheless, that the principal Debt, with the Usury that was before the Death of his Ancestor, (whose Heir he is) shall not remain unpaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: VI
+TITLE: The Penalties for Ravishment of a Ward, Forfeiture of Marriage, or Disparagement of a Ward.
+NOTES: See Magna Carta, c.6. and also 3 E.1. c.22, 13 E.1. st.1. c.35.
+TEXT: OF Heirs led away, or withholden, or married by their Relations, or by other, with Force, against our Peace thus it is provided, That whatsoever Layman be convict thereof that he hath so withholden, led away, or married any child, he shall yield to the Loser the Value of the Marriage; and for the Offence his body shall be taken and imprisoned until he hath recompensed the Loser, if the Child be married; and further, until he hath satisfied the King for the Trespass. And this must be done as to an Heir being within the Age of fourteen Years. And touching an Heir being fourteen Years old, or above unto his full Age, if he marry without Licence of his Lord, to defraud him of the Marriage, and his Lord offer him reasonable Marriage (without Disparagement) then his Lord shall hold his Land beyond the Term of his Age, that is to say, of One and twenty Years, so long that he may thereout receive the double Value of the Marriage after the Estimation of lawful men, or according to what he had been offered before for the said Marriage, without Fraud or Collusion, and according to what may be proved in the King's Court. And as touching Lords, which marry those that they have in ward to Villains, or other, as Burgesses, where they be disparaged, if such an Heir be within the Age of fourteen Years, and of such Age, that he cannot consent to Marriage, then, if his Relations complain of the same Lord, the Lord shall lose the Wardship unto the age of the Heir; and all the Profit that thereof shall be taken, shall be converted to the Use of the Heir being within Age, after the Disposition and Provision of his Relations, for the Shame done to him; but if he be fourteen Years, and above, so that he may consent, and do consent to such Marriage, no Pain shall follow.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: VII
+TITLE: In what Case the Ward shall pay to his Lord the Value of his Marriage.
+NOTES: none
+TEXT: IF an Heir (of what Age soever he be) will not marry at the Request of his Lord, he shall not be compelled thereunto; but when he come to full Age, he shall give to his Lord, and pay him as much as any would have given him for the Marriage, before the Receipt of his Land, and that whether he will marry himself, or not; for the Marriage of him that is within Age of mere Right pertaineth to the Lord of the Fee.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: VIII
+TITLE: Several Limitations of Prescription in several Writs.
+NOTES: Altered by 3 Ed.1. c.39. and later by 32 H.3. c.2.
+TEXT: TOUCHING Conveyance of Descent in a Writ of Right from an Ancestor from the Time of King Henry the elder, the Year and Day, it is provided, that from henceforth there be no mention made of so long time, but from the Time of King Henry our Grandfather; and this Provision shall take effect at Pentecost, the One and twentieth Year of our Reign, and not afore, and the Writs before purchased shall proceed. Writs of Mort d'ancestor, of Nativis, and Entry shall not pass the last Return of King John from Ireland into England; and this Provision shall take effect as before is declared. Writs of Novel disseisin shall not pass the first voyage of our Sovereign Lord the King, that now is, into Gascoigne. And this Provision shall take his Effect from the Time aforesaid; and all Writs purchased before shall proceed.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: IX
+TITLE: He is a Bastard that is born before the Marriage of his Parents.
+NOTES: none
+TEXT: TO the King's Writ of Bastardy, Whether one being born before Matrimony may inherit in like Manner as he that is born after Matrimony, all the Bishops answered, That they would not, nor could not answer to it: because it was directly against the common Order of the Church. And all the Bishops instanced the Lords, that they would consent, that all such as were born afore Matrimony should be legitimate, as well as they that be born after Matrimony, as to the Succession of Inheritance, forsomuch as the Church accepteth such for legitimate. And all the Earls and Barons with one Voice answered, that they would not change the Laws of the Realm, which hitherto have been used and approved.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: X
+TITLE: Attornies allowed to make Suits to several Courts.
+NOTES: See 13 Ed.1. st.1. c.10, 7 R.2. c.14, 15 H.6. c.7.
+TEXT: MOREOVER it is provided that every Freeman which oweth Suit to the County, Trything, Hundred, and Wapentake, or to the Court of his Lord, may freely make his Attorney to do those Suits for him.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Merton
+REGNAL YEAR: 20 Hen.3.
+YEAR: 1235/6
+CHAPTER: XI
+TITLE: Lords shall not imprison Offenders at their own Wills for Trespasses in their Parks and Ponds.
+NOTES: none
+TEXT: CONCERNING Trespassers in Parks and Ponds it is not yet discussed; for the Lords demanded the proper Imprisonment of such as they should take in their Parks and Ponds, which the King denied; and therefore it was deferred.
+<<END>>
+<<CLAUSE>>
+STATUTE: De Anno et Die Bissextili
+REGNAL YEAR: 21 Hen.3.
+YEAR: 1236/7
+CHAPTER: none
+TITLE: Of the Leap-Year
+NOTES: THE Day of the Leap-Year and the Day before shall be holden for One Day.
+TEXT: THE King unto his Justices of the Bench, greeting. Know ye, that where within our Realm of England, it was long doubted of the Year and Day that were wont to be assigned unto such Persons being impleaded, when and from what Day of the Year going before unto another Day of the Year following, the Year and Day in a Leap-year ought to be taken and reckoned: We therefore, willing that a Conformity be observed in this Behalf every where within our Realm, and to avoid Danger from such as be in Plea, have provided, and by the Counsel of our faithful Subjects have ordained, That, to take away from henceforth all Doubt and Ambiguity that might arise hereupon, the Day increasing in the Leap-year shall be accounted in that Year, so that because of that Day none shall be prejudiced that is impleaded, but it shall be taken and reckoned of the same Month wherein it groweth; and that increasing Day shall be contained in the entirety of the Year aforesaid, and that Day and the Day next going before shall be accounted for One Day. And therefore we do command you, that from henceforth you do cause this to be published afore you, and be observed. Witness myself at Westminster, &c.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: 
+TITLE: Preamble: The Provision made at Oxford
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: It has been provided that from each county there shall be elected four discreet and lawful knights who, on every day that the county is held [i.e. the county court], shall assemble to hear all complaints touching any wrongs and injuries inflicted on any persons by sheriffs, bailiffs, or any other men, and to make the attachments that pertain to the said complaints until the first arrival of the chief justiciar in those parts: so that they shall take from the plaintiff adequate pledges for his prosecution, and from the defendant for his coming and standing trial before the said justiciar on his first arrival; and that the four knights aforesaid shall have all the said complaints enrolled, together with their attachments, in proper order and sequence — namely, for each hundred separately and by itself — so that the said justiciar, on his first arrival, can hear and settle the aforesaid complaints singly from each hundred. And they shall inform the sheriff that they are summoning all his hundredmen and bailiffs before the said justiciar on his next arrival, for a day and a place which he will make known to them: so that every hundredman shall cause all plaintiffs and defendants of his bailiwick to come in succession, according to what the aforesaid justiciar shall bring to trial from the aforesaid hundred; also as many men and such men — both knights and other free and lawful men — as may be required for best proving the truth of the matter, in such a way that all are not troubled at one and the same time; rather let as many come as can be tried and concluded in one day.
+Also it is provided that no knight of the aforesaid counties, by virtue of an assurance that he is not to be placed on juries or assizes, shall be excused by a charter of the lord king or be exempt from this provision thus made for the common good of the whole kingdom.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: I
+TITLE: Those chosen from the Lord King's side
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The lord bishop of London [Fulk Basset]; the lord bishop elect of Winchester [Aymer de Lusignan]; the lord Henry, son of the king of Germany; the lord John, earl de Warenne; the lord Guy de Lusignan; the lord William de Valence; the lord John, earl of Warwick; the lord John Mansel; Brother John of Darlington; the abbot of Westminster; the lord Henry of Hengham.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: II
+TITLE: Those chosen from the side of the earls and barons
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The lord bishop of Worcester [Walter de Cantilupe]; the lord Simon, earl of Leicester; the lord Richard, earl of Gloucester; the lord Humphrey, earl of Hereford [Humphrey de Bohun]; the lord Roger Marshal; the lord Roger de Mortimer; the lord John Fitz-Geoffrey; the lord Hugh Bigod; the lord Richard de Gray; the lord William Bardulf; the lord Peter de Montfort; the lord Hugh Despenser. And if it should happen that of necessity any one of these cannot be present, the rest of them shall elect whom they please in place of the absentee, namely, another person needful for carrying on that business.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: III
+TITLE: Thus the community of England swore at Oxford
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: We make known to all people that we have sworn on the holy gospels and are held together by this oath, and promise in good faith, that each one of us and all of us together will help each other, both ourselves and those belonging to us against all people, doing right and taking nothing that we cannot take without doing wrong, saving faith to the king and crown. And we promise on the same oath that none of us will ever take anything of land or movables whereby this oath can be disturbed or in any way impaired. And if any one so acts contrary to this, we will hold him as a mortal enemy.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: IV
+TITLE: This is the oath of the twenty four
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: Each one swore on the holy gospels that he for the glory of God and in loyalty to the king and for the benefit of the kingdom will obtain and treat with the aforesaid sworn persons upon the reform and improvement of the condition of the kingdom. And that he will not fail for gift or promise, for love or hatred, for fear of any one, for gain or loss, loyalty to act according to the tenor of the letter that the king has given on this and his son likewise.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: V
+TITLE: Thus swore the chief justiciar of England
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: He swears he will well and loyally according to his power do what belongs to the justiciars office of dispensing justice to all men and for the profit of the king and the kingdom, in accordance with the provision made and to be made by the twenty four, and by the king's council and the magnates of the land, who will swear to help and support him in these things.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: VI
+TITLE: Thus swore the chancellor of England
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: That he will not seal any writ except a writ of course without the order of the king and of the councillors who are present. Nor will he seal a gift of great wardship or of a large sum of money or of escheats without the assent of the full council or of the greater part of it. And that he will not seal anything that is contrary to what has been and will be ordained by the twenty four or by the greater part of them. And that he will not take any reward otherwise than is agreed for others. And he will be given a companion in the way that the council will provide.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: VII
+TITLE: This is the oath taken by the wardens of the castles
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: That they will keep the king's castles loyally and in good faith for the use of the king and his heirs. And that they will give them up to the king or his heirs and to no other and through his council and in no other way, that is to say, through men of standing in the land elected to the council or through the greater part of them. And this form above written is to last full twelve years. And henceforth they shall not be prevented by this establishment and this oath from being able to give them up freely to the king or his heirs.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: VIII
+TITLE: These are the men sworn of the king's council
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The Archbishop of Canterbury, the bishop of Worcester, the earl of Leicester, the earl of Gloucester, the earl Marshal, Peter of Savoy, the count of Aumale, the earl of Warwick, the earl of Hereford, John Mansel, John Fitz-Geoffrey, Peter de Montfort, Richard de Gray, Roger Mortimer, James Audley.
+The twelve on the king's side have chosen from the twelve on the side of the community the earl Roger Marshal and Hugh Bigod. And the party of the community has chosen from the twelve who are on the side of the king the earl of Warwick and John Mansel.
+And these four have power to elect the council of the king; and when they have made the election, they shall designate those to the twenty-four. And that shall hold on which the majority of these four agree.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: IX
+TITLE: These are the twelve elected by the barons on behalf of the community
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: These are the twelve who have been elected by the barons, on behalf of the whole community of the land, to consider common needs along with the king's council at the three annual parliaments: the lord bishop of London, the earl of Winchester, the earl of Hereford, Philip Basset, John de Balliol, John de Verdun, John de Grey, Roger de Sumery, Roger de Mohaut, Hugh Despencer, Thomas de Gresley, Giles d'Argentein.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: X
+TITLE: These are the twenty-four appointed by the community to consider aid for the king
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The bishop of Worcester, the bishop of London, the bishop of Salisbury, the earl of Leicester, the earl of Gloucester, the earl Marshal, Peter of Savoy, the earl of Hereford, the count of Aumale, the earl of Winchester, the earl of Oxford, John Fitz-Geoffrey, John de Grey, John de Balliol, Roger Mortimer, Roger de Sumery, Roger de Mohaut, Peter de Montfort, Thomas de Gresley, Fulk of Kerdiston, Giles d'Argentein, John Kyriel, Philip of Basset, Giles of Erdington. And if any one of these cannot or will not be present, those who are present shall have power to elect another in his place.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XI
+TITLE: Concerning the state of Holy Church
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: It should be remembered that the state of Holy Church is to be amended by the twenty-four chosen to reform the state of the kingdom of England — at what time and place they think best, according to the powers that they hold by writ of the king of England.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XII
+TITLE: Concerning the chief justice
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: Furthermore that a chief justice — or two — shall be appointed; also what power he shall have; and that he shall be for only one year, so that at the end of the year he shall render account of his term before the king and the royal council and before the man who is to follow him.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XIII
+TITLE: Concerning the treasurer and the exchequer
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The same with regard to the treasurer; so that he shall render account at the end of the year. And according to the ordinance of the said twenty-four, other good men are to be appointed to the exchequer, whither all the issues of the land are to come, and not elsewhere. And let that be amended which seems in need of amendment.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XIV
+TITLE: Concerning the chancellor
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The same with regard to the chancellor; so that he shall render account of his term at the end of the year, and that merely by the king's will he shall seal nothing out of course, but shall do so by the council that surrounds the king.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XV
+TITLE: Concerning the power of the justice and of the bailiffs
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: The chief justice has power to redress the misdeeds of all other justices, of bailiffs, of earls, of barons, and of all other people, according to the rightful law of the land. And writs are to be pleaded according to the law of the land in the proper places. And the justices shall accept nothing unless it is a present of bread and wine and like things: namely, such meat and drink as have been customarily brought for the day to the tables of the chief men. And this same regulation shall be understood for all the king's councillors and all his bailiffs. And no bailiff, by virtue of his office or of some plea, shall take any fee, either by his own hand or in any manner through another person. And if he is convicted, let him be punished; likewise the man who gives. And the king, if it is suitable, shall give fees to his justices and to his people who serve him, so that they shall have no need of taking anything from others.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XVI
+TITLE: Concerning the sheriffs
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: As sheriffs there shall be appointed loyal persons, good men who are landholders; so that in each county there shall be as sheriff a feudal tenant of the same county, who shall well, loyally, and justly treat the people of the county. And he shall take no fee; that he shall be sheriff for no more than a year in all; that during the year he shall render his accounts at the exchequer and be responsible for his term; that the king, from the royal income, shall make allowance to him in proportion to his receipts, so that he may rightly keep the county; and that he shall take no fees, neither he nor his bailiffs. And if they are convicted, let them be punished.
+It should be remembered that, with regard to the Jewry and the wardens of the Jewry, such reforms are to be established as shall carry out the oath in this respect.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XVII
+TITLE: Concerning the escheators
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: Good escheators are to be appointed. And they shall take nothing from goods of deceased persons whose lands ought to be in the king's hands; but that, if a debt is owing to him, the escheators shall have free administration of the goods until they have carried out the king's wishes — and this according to the provision in the charter of liberties. Also inquiry shall be made concerning the misdeeds committed there by escheators, and that redress shall be made for such. Nor shall tallage or anything else be taken, except as it should be according to the charter of liberties.
+The charter of liberties is to be strictly observed.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XVIII
+TITLE: Concerning the exchange of London
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: It should be remembered to establish reforms touching the exchange of London; also touching the city of London and all the other cities of the king, which have been brought to shame and ruin by tallages and other oppressions.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XIX
+TITLE: Concerning the household of the king and queen
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: It should be remembered to reform the household of the king and queen.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XX
+TITLE: Concerning the parliaments, as to how many shall be held annually and in what manner
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: It should be remembered that the twenty-four have ordained that there are to be three parliaments a year: the first on the octave of St. Michael, the second on the morrow of Candlemas, and the third on the first day of June, that is to say, three weeks before St. John [this means 6th October, 3rd February and 3rd June]. To these three parliaments the chosen councillors of the king shall come, even if they are not summoned, in order to examine the state of the kingdom and to consider the common needs of the kingdom and likewise of the king; and by the king's command also at other times, whenever it is necessary. So too it should be remembered that the community is to elect twelve good men, who shall come to the three parliaments and at other times, when there is need and when the king and his council summon them to consider the affairs of the king and the kingdom. And the community shall hold as established whatever these twelve shall do — and this is to reduce the cost to the community. Fifteen are to be named by these four men — that is to say, by the earl Marshal, the earl of Warwick, Hugh le Bigot, and John Mansel — who have been elected by the twenty-four to name the aforesaid fifteen, who are to form the king's council. And they are to be confirmed by the aforesaid twenty-four, or by the majority of those men. And they shall have the power of advising the king in good faith concerning the government of the kingdom and concerning all matters that pertain to the king or the kingdom; and of amending and redressing everything that they shall consider in need of amendment or redress. And [they shall have authority] over the chief justice and over all other people. And if they cannot all be present, that shall be firm and established which the majority of them shall enact.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Oxford
+REGNAL YEAR: 42 Hen. III
+YEAR: 1258
+CHAPTER: XXI
+TITLE: These are the names of the principal castles of the king, and of those who have charge of them
+NOTES: Annulled by the Dictum de Kenilworth 1266
+TEXT: Robert de Neville: Bamburgh, Newcastle upon Tyne. Gilbert de Grant: Scarborough. William de Bardolf: Nottingham. Ralph Basset of Sapcote: Northampton. Hugh Bigod: Tower of London. Richard de Grey: Dover. Nicholas de Moels: Rochester, Canterbury, Winchester. Roger de Samford: Porchester. Stephen Longsepee: Corfe. Matthew de Bexil: Gloucester. Henry de Tracy: Exeter. Richard de Rochele: Haldesham. John de Grey: Hereford. Roger Walerand: Salisbury. Hugh Despencer: Horston. Peter de Montfort: Bridgewater. The earl of Warwick: Devizes. John son of Bernard: Oxford.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: 
+TITLE: Preamble
+NOTES: none
+TEXT: In the year 1259 from the Incarnation of the Lord, the forty-third of the reign of King Henry, son of King John, at a meeting of the lord king and his magnates at Westminster on Michaelmas fortnight, the provisions hereinunder written, by the common counsel and consent of the said king and his magnates, were enacted and published by the same king and his magnates in this form.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: I
+TITLE: Concerning suit to the courts of magnates and other lords
+NOTES: none
+TEXT: With regard to the performance of suit to the courts of the magnates and of other lords who have such courts, it is provided and established by general agreement that no one who is enfeoffed by charter shall henceforth be distrained to perform suit to his lord's court, unless he is specifically obliged by the tenor of his charter to perform the suit; with the sole exception of those whose ancestors were accustomed to perform suit of this kind, or who, before the first crossing of the said lord king into Brittany — after the time of which crossing twenty-nine and a half years had elapsed down to the time that this constitution was made.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: II
+TITLE: Concerning distress contrary to this provision
+NOTES: none
+TEXT: If anyone distrains his tenant contrary to this provision let quick justice be done about it in the king's court as is subsequently provided.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: III
+TITLE: Concerning inheritance divided between parceners
+NOTES: none
+TEXT: If it happens that an inheritance is divided between several parceners (like an inheritance that arises as from one heir), the other parceners shall help with the cost of doing the suit reasonably. And if tenants are enfeoffed with the same inheritance the lord may no longer demand more than one suit as is aforesaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: IV
+TITLE: Concerning procedure where lords distrain contrary to this provision
+NOTES: none
+TEXT: If any lords distrain their tenants contrary to this provision, then at the complaint of the tenant let them be attached to come to the king's court at an early date to answer them; on which day they shall have one excuse for nonappearance if they are in the realm and the beasts in this connection are to be released immediately to the plaintiff and so remain until the action between them is terminated. And those who have levied the distress do not appear on the date that was given them by way of essoin, or on the first date if they were not essoined, then shall the sheriff of the district be ordered to cause them to appear on another date, and if they do not appear the sheriff shall be ordered to distrain them by all that they possess in his bailiwick, and he be answerable to the king for the issue therefrom and that he produce them in person in court on another day. And then on that day if they do not appear the plaintiff shall go away without day and the beast shall stay released, so that the lords henceforth shall not be able to distrain them on that account until they have their deraignment by an action in the king's court, saving to the lords their rights in respect of the suits whatever they dare to institute legal proceedings about them. And the lords are to come to the court of the king to answer. And the plaintiffs can have their plaints; then by judgement of the court they shall recover the damages they have had by reason of this distress.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: V
+TITLE: Concerning lords distraining for suits withheld
+NOTES: none
+TEXT: On the other hand let lords distrain their suit by the same speedy justice tenants who withhold from their lords suits which they owe and which they have done since the aforesaid term, and recover their damages just as their tenants do from them. As to suits which were withheld before the aforesaid term the common law shall run as usual.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: VI
+TITLE: Concerning the sheriff's tourn
+NOTES: none
+TEXT: With regard to the sheriff's tourn, it is provided that, unless their presence is specially demanded, archbishops, bishops, abbots, priors, earls, and barons, or other men of religion, or women, shall not of necessity come thither. But tourns are to be held in the way they were held in the time of the predecessors of our lord king who now is. And if any have lands in several hundreds they are not to be distrained or to attend tourns except where they live. And the tourns shall be held according to the form of the king's Great Charter, and as they were customarily held in the time of the kings John and Richard.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: VII
+TITLE: Concerning fines for miskenning
+NOTES: none
+TEXT: It is also provided that neither on the eyres of the justices nor in the counties nor in the courts of barons nor in a liberty or elsewhere shall fines henceforth be taken from anybody for miskenning, or on condition that people are not molested.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: VIII
+TITLE: Concerning pleas of dower
+NOTES: none
+TEXT: Furthermore it is provided that in a plea of dower that is before the bench one should give four days in the year at least, namely one day each term. And if one can give more, one should give more.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: IX
+TITLE: Concerning essoins of darein presentment and quare impedit
+NOTES: none
+TEXT: Like essoins of darein presentment and of quare impedit of churches that are vacant one should give a day every fortnight or every three weeks according to whether the district is a long way off or near. And if anyone who is impleaded by quare impedit does not come on the first day and does not have himself essoined, on another day if he does not come let him there be distrained by all his lands and his chattels by the great distress, as said above.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: X
+TITLE: Concerning charters of exemption from assizes and juries
+NOTES: none
+TEXT: Moreover, with regard to charters of exemption and liberty, that those securing them are not to be put on assizes, juries, or recognitions, it is provided that, if their oath is so essential that without it justice cannot be administered as in the grand assize or in a perambulation or where they are witnesses, by name either in charters in writing, in attaints or in other cases which cannot be decided without the oaths of knights, in such cases they shall be forced to swear, saving to them their aforesaid liberty and exemption in other respects.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XI
+TITLE: Concerning distress outside one's own fee
+NOTES: none
+TEXT: No one except the king is in future to levy a distress outside his own fee or on the king's highway where everybody can come and go.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XII
+TITLE: Concerning wardship and the heir's recovery of land
+NOTES: none
+TEXT: In addition, if it happens that the lord after his tenant's death takes his lands into his hand because the heir is under age and then when the heir comes of age will not surrender his land without being sued, that the heir get back his land into his hand by writ of mort d'ancestor together with the damages he has sustained on account of the detention after his full age. And likewise if the heir is of age when his ancestor dies and is the heir apparent who is regarded and accepted, that the chief lord may not evict him, or take anything or remove anything, except take a simple seisin only. And if the chief lord keeps him out, so that he is allowed to obtain a writ of mort d'ancestor or of cosinage, he may recover his land and his damages as by writ of novel disseisin.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XIII
+TITLE: Concerning wardship of socage
+NOTES: none
+TEXT: On wardship of socage it is so provided that if land which is held in socage is held in wardship by his kinsmen because of the heir who is under age, the guardian cannot do waste, sale or any destruction of the land that is in his wardship, but shall safely keep it for the benefit of the heir so that when he comes of age the guardian shall answer to him loyally for the issues and the profits of the thing, saving to him his reasonable outlay. Nor can he sell or give the marriage except to the advantage of the minor.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XIV
+TITLE: Concerning escheators and amercements for failure to obey a common summons
+NOTES: none
+TEXT: In addition it is provided that the escheators, those appointed to hold inquests, justices assigned to take assizes and justices assigned to hear and determine pleas of trespass, or any other bailiff, have no power to amerce for failure to obey a common summons, except the chief justice and the justices in eyre for all pleas.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XV
+TITLE: Concerning men of religion buying land
+NOTES: none
+TEXT: It is likewise provided that no man of religion can buy any land without the agreement of the lord, namely that lord who is nearest except for the mesne lord.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XVI
+TITLE: Concerning essoins and false judgment
+NOTES: none
+TEXT: It is likewise provided on essoins that no one henceforth is to be distrained to take an oath in warranty of the essoin either in county court or elsewhere. Hereafter no one but the king shall hold in his court a plea concerning false judgment rendered in a court of his tenant; for pleas of this sort especially pertain to the crown and dignity of the king.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XVII
+TITLE: Concerning distress and beasts kept against gage and surety
+NOTES: none
+TEXT: It is provided that if anyone is distrained and his beasts are kept against gage and surety, the sheriff when complaint has been made can freely release the beasts in accordance with the law of the land, if they are taken outside a liberty, without contradiction and without hindrance from him who took them. And if they are within a liberty and the bailiff will not release them the sheriff shall release them for default on the part of the bailiff of the liberty.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XVIII
+TITLE: Concerning free tenants and their free tenements
+NOTES: none
+TEXT: Without the king's writ, no one may henceforth distrain his free tenants to respond concerning their free tenements or anything that pertains to their free tenements. Nor may he cause his free tenants against their will to take oaths; so that no one may do this without the king's precept.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XIX
+TITLE: Concerning bailiffs who will not render account
+NOTES: none
+TEXT: It is provided that no bailiff who ought to render account is to take himself off away from his lord. And if he will not render his account and has no land or tenement whereby he can be distrained he is to be attached in person, so that the sheriff in whose bailiwick he is found shall make him come to render account if he is in arrears.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XX
+TITLE: Concerning farmers doing waste or destruction of tenements
+NOTES: none
+TEXT: It is provided that no farmers during the period of their farm shall do sale or exile of woods, houses, men or other things belonging to the tenement which they have at farm, unless they have special permission in writing to make the sale. And if they do it and are convicted, they shall render the damages for it.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXI
+TITLE: Concerning itinerant justices amercing vills
+NOTES: none
+TEXT: Hereafter itinerant justices shall not amerce vills on their eyres because particular twelve-year-old persons do not come before sheriffs and coroners for inquests concerning a man's death or other matters pertaining to the crown; so long as, nevertheless, enough men come from those vills for satisfactorily carrying out such inquests.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXII
+TITLE: Concerning coroners and sheriffs amercing townships
+NOTES: none
+TEXT: No coroner or sheriff or other bailiff from now on shall amerce townships because they do not come to inquests. But when they find a default, let it be put in the coroner's roll and presented before the justices in eyre who have power to amerce townships and no one else.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXIII
+TITLE: Concerning judgment of murder
+NOTES: none
+TEXT: No judgment of murder shall henceforth be rendered before the justices in a case that is adjudged merely one of accident; but murder shall be proper in the case of a man feloniously slain, and not otherwise.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXIV
+TITLE: Concerning hue and cry
+NOTES: none
+TEXT: No justice or sheriff or other bailiff is from now on to amerce townships for hue and cry raised and not followed up if it is not raised for reasonable cause, such as for the death of a man, robbery, wounding or similar case which pertains specially to the crown.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXV
+TITLE: Concerning those vouched to warranty in a plea of land
+NOTES: none
+TEXT: Furthermore if any one is vouched to warranty in a plea of land in the eyre of the justices he is not from now on to be amerced for not being present, inasmuch as no free man ought to be amerced for default except on the first day of the coming of the justices. But if he who is vouched to warranty is then within the same county, then it is for the sheriff to cause him to come on the third day or the fourth according to whether he is far away or near, as is the practice in the eyre of the justices. And if he is living in another county he shall have a reasonable summons of 15 days in accordance with the common law.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXVI
+TITLE: Concerning justices appointed to go through the land
+NOTES: none
+TEXT: Furthermore justices are provided to go through the land. And there is to be one of the twelve or others of the community to see that justice is done to plaintiffs and to all others. And so they are to see that order is sent to the counties that establishments made for the benefit of the realm, those that are made and those that will be, are to be kept.
+Likewise that the provisions that have been made since the beginning of these establishments are to be upheld and maintained.
+Furthermore the rolls of these establishments are to be read and affirmed. And the charters of liberties and of the forests are to be kept and maintained. It is likewise provided that no one is to come and attend parliament with horses or with arms, or armed, unless he is specifically ordered by the king or by his councillors by writ for the common business of the land.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXVII
+TITLE: Concerning appointment of good men to hear complaints
+NOTES: none
+TEXT: Where itinerant justices were lately on circuit, good men and sage are to be appointed to hear and inquire into all complaints that could have been terminated without writ during the last seven years; similarly that if anyone has not made plaint before the seven years and has not had justice he is to recover to get it. And they are to have the power to inquire concerning the sheriffs and their bailiffs, how they have behaved towards the district since their establishment.
+They are to enquire also concerning the bailiffs of the rich men of the land and concerning the rich men themselves.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXVIII
+TITLE: Concerning the power of itinerant justices and the council between parliaments
+NOTES: none
+TEXT: Itinerant justices are to have the same power as sheriffs in their eyre; in addition they are to have their own power throughout their eyre. And there are to be provided from the less important people of the council two or three who are to be constantly in attendance on the king between parliaments. And they are to be changed at each parliament and others appointed. And their action is to be viewed at each parliament. And if there is anything in it to be amended, it is to be amended by those of the council. And if any important business arises between parliament that cannot be settled by the aforesaid two or three, or cannot well be delayed until the next parliament, all those of the council are to be summoned by writ to settle this business. And there is to be put in the writ the occasion of the summons, if this is not secret. And if any of the others of the council, or of the aforesaid two or three, comes to the king's council as long as the business lasts both as to their own business and as to the king's business for which they are summoned.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXIX
+TITLE: Concerning the sale of wardships
+NOTES: none
+TEXT: It is to be remembered that two good men are to be provided to sell the wardships that are now of right in the king's hand.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXX
+TITLE: Concerning sheriffs and counties
+NOTES: none
+TEXT: Furthermore that two good men are to be provided to ordain equally with the council of the exchequer concerning sheriffs and counties.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXI
+TITLE: Concerning those to go to France and those to stay with the Justiciar
+NOTES: none
+TEXT: Furthermore people are to be provided to go with the king to France. And who shall stay in the land with the Justiciar. And that an answer is to be given to the envoys from Wales. And it is to be provided how the writs of the provisions and of the establishments shall issue from the chancery without delay. And likewise about the envoys who shall go to Rome.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXII
+TITLE: Concerning the appointment of persons for wardships and the queen's gold
+NOTES: none
+TEXT: For selling the wardships the Justiciar, the treasurer, Mr Thomas of Wymondham, Sir Roger of Thirkleby and Sir Henry of Bath are to be appointed immediately. And that these same are to ordain and provide on what items the queen ought to get gold.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXIII
+TITLE: Concerning tallages and pleas of customs, services, escheats and wardships
+NOTES: none
+TEXT: It is provided that these same are to come to the exchequer and view the sums of all kinds of tallages that have been imposed since the king's accession. And that they are to estimate how much each one can raise. And these same are to provide how one ought to proceed in pleas about customs and about services. And these same are to provide how one ought to proceed in escheats and in wardships.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXIV
+TITLE: Concerning those appointed to correct trespasses and wrongs
+NOTES: none
+TEXT: It is to be provided which people ought to go to correct trespasses and wrongs done, which can be determined without writ. The Justiciar is to provide this with the others. And which are to be at the bench with the justices, and which at the exchequer.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXV
+TITLE: Concerning four knights to be appointed in each county
+NOTES: none
+TEXT: It is provided that four knights are to be appointed in each county to observe the wrongs which sheriffs do; that if it happen that they do wrongs, these four are to admonish the sheriffs to have them corrected. And if they will not correct them, let them enter the wrongs done onto a roll, and show them to the chief justices at the end of the year when he asks for them; or earlier if he asks for them, if so be that the plaintiffs to whom the wrongs have been done are willing to prosecute. And that these aforesaid four knights are not to have any authority to interfere with the performance by the sheriffs of their office.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXVI
+TITLE: Concerning clerks accused of crimes pertaining to the crown
+NOTES: none
+TEXT: If a clerk is accused of the death of a man, of robbery, or larceny or other crime that concerns the crown, then it is by command of the king delivered on bail to twelve good men that they have him before the justices or released by pledges without command of the king if the aforesaid twelve or the pledges have his person before the justices on the first day, they are not in future to be amerced, even though the clerk will not answer or stand his trial in the king's court, inasmuch as they were not pledged or going surety for anything other than to produce the clerk's person in court.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXVII
+TITLE: Concerning the appointment of sheriffs
+NOTES: none
+TEXT: The justiciar, the treasurer, Sir Henry of Bath, Sir Roger of Thirkleby and the barons of the exchequer are to provide this year instantly which good men, upright and sage, are to be sheriffs this year. And they are to be vavasours in the shire they are sheriffs of. On the other hand, next year at the last county court before Michaelmas there are to be chosen in full county court four good men, upright and who will be advantageous to the king and to the shire in this office. And they are to be at the exchequer at Michaelmas. And the barons are to pick out the most sufficient in their estimation.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXVIII
+TITLE: Concerning reform of the exchequer and the exchequer of the Jews
+NOTES: none
+TEXT: Furthermore good men are to be chosen by the Justiciar and the treasurer to provide during this advent and the festival days, against the next parliament, what is to be amended at the great exchequer and at the exchequer of the Jews. And by the same reasonable sustenance is to be provided for those who are at either exchequer.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XXXIX
+TITLE: Concerning inquiry into the condition of the forests
+NOTES: none
+TEXT: It is provided that Sir Thomas de Gresley, justice of the forest, is to take Nicholas of Ramsey and three knights from each county and they are to enquire into the condition of the forests, of vert and venison, and of sales and destructions, and by whom they are done. And they are to enquire about malpractices in connection with forest pleas and by whom they were established and from what time; and when he has done this he is to make it known to the king and his council.
+It is to be done the same way with the forests beyond the Trent; that the chief justice provide four knights and enquire about all the forests beyond Trent in the way aforesaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XL
+TITLE: Concerning those to be with the Justiciar during the king's absence
+NOTES: none
+TEXT: The archbishop, the bishop of Worcester, the earl marshal, the earl of Warwick are to be with the Justiciar to deal with the important business of the kingdom as long as the king is out of England. And all those of the council and the community's twelve who stay in England are to be summoned if needs be. Sir Philip Basset and Sir Roger Mortimer are to be constantly with the Justiciar.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: XLI
+TITLE: Concerning castellans, the bench, and the exchequer
+NOTES: none
+TEXT: It is provided that the Justiciar is to provide that the castellans are to have reasonable sustenance for keeping the king's castles and maintaining them. It is provided to put two good men from the community or from the community's twelve or from others with the justices at the bench. And that they are to see that justice is done. And in the same way two good men from the community or from the community's twelve or from others are to be put at the exchequer.
+<<END>>
+<<CLAUSE>>
+STATUTE: Provisions of Westminster
+REGNAL YEAR: 43 Hen. III
+YEAR: 1259
+CHAPTER: 
+TITLE: Closing Statement
+NOTES: none
+TEXT: These are the provisions and the establishments made at Westminster at the Michaelmas parliament by the king and his council and the twelve chosen by the common counsel before the community of England which then were at Westminster in the forty third year of the reign of Henry the son of king John.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Assize of Bread and Ale
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 1
+CHAPTER: none
+TITLE: The Assize of Bread and Ale
+NOTES: The Prices of Bread, and Ale shall be according to the Prices of Corn
+TEXT: WHEN a Quarter of Wheat is sold for 12d. then Wastel Bread of a Farthing shall weigh 6li. and 16s. But Bread Coket of a Farthing of the same Corn and Bultel, shall weigh more than Wastel by 2s. And Coket bread made of Corn of lower Price, shall weigh more than Wastel by 5s. Simnel of a Farthing shall weigh 2s. less than Wastel, because it is twice baked. Bread made of the whole Wheat shall weigh a Cocket and an Half, to wit the Cocket which shall weigh more than Wastel by 5s. Bread of Treet shall weigh 2 Wastels. And Bread of common Wheat shall weigh two great Cockets.
+When a Quarter of Wheat is sold for 18d. then Wastel Bread of a Farthing shall weigh 4li. 10s. 8d. 
+When for 2s. 68s.
+2s. vid. 54s. 4 3/4 d.
+3s. 45s. 4d.
+3s. vid. 38s. 10 1/2d.
+4s. 34s.
+4s. vid. 30s. 2 1/2d.
+5s. 27s. 2 1/2d.
+5s. vid. 24s. 8 1/2d.
+6s. 22s. 8d.
+6s. vid. 20s. 11 1/2d.
+7s. 19s. 1 1/2d.
+7s. vid. 18s. 1 1/2d.
+8s. 17s.
+8s. vid. 16s.
+9s. 15s. 1/2d.
+9s. vid. 14s. 4 1/2d.
+10s. 13s. 7 1/2d.
+10s. vid. 12s. 11 1/2d.
+11s. 12s. 4 1/2d.
+11s. vid. 11s. 10d.
+12s. 11s. 4d.
+12s. vid. 10s. 10 1/2d.
+13s. 10s. 5 1/2d.
+13s. vid. 10s. 1/2d.
+14s. 9s. 4 1/4d.
+15s. 9s. 1d.
+15s. vid. 8s. 9 1/2d.
+16s. 8s. 6d.
+16s. vid. 8s. 2 1/2d.
+17s. 8 s.
+17s. vid. 7s. 9 1/2d.
+18s. 7s. 6 1/2d.
+18s. vid. 7s. 4 1/2d.
+19s. 7s. 2d.
+19s. vid. 6s. 11 1/2d.
+20s. 6s. 9 1/2d.
+And then a Baker in every Quarter of Wheat as it is proved by the King's Bakers may gain 4d. and the Bran, and Two Loaves for baking; for Three Servants 1d. for Two Loads 1d. in Salt, 1d. for Kneading 1d. for Candle 1d. for Wood 2d. for his Boulting 1d.
+And it is to be known that the Assise of Bread and Ale shall not be changed but by 6d. increasing or decreasing in the Quarter.
+When a Quarter of Wheat is sold for 3s. or 3s. 4d. and a Quarter of Barley for 20d. or 2s. and a Quarter of Oats for 16d. then Brewers in Cities ought and may well afford to sell Two Gallons of Ale for a Penny, and out of Cities to sell Three or Four Gallons for a Penny.
+And when in a Town Three Gallons are sold for a Penny, out of a Town they ought and may sell Four. And this Assise ought to be holden throughout all England, by the Provision of our Lord King Henry the Third.
+<<END>>
+<<CLAUSE>>
+STATUTE: Dies Communes in Banco
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 2
+CHAPTER: 
+TITLE: General Days in Bank
+NOTES: none
+TEXT: If a Writ come in the Octave of Michaelmas a Day shall be given thereupon unto the Octave of Hilary; And if it come in the Quindene of Michaelmas, Day shall be given unto the Quindene of Hilary; If it come in the three Weeks after Michaelmas, the Day shall be the Morrow of the Purification; If within a Month after Michaelmas, in the Octave of the Purification; If in the Morrow of All Souls, then in the Quindene of Easter; If in the Morrow of Martinmas, then in the three Weeks after Easter; If in the Octave of Martinmas, then in the month of Easter; If in the Quindene of Martinmas, then within five Weeks after Easter; and also there is Day specially given in the Morrow of Ascension, and it countervaileth as much as within five Weeks after Easter; If in the Octave of Hilary, in the Octave of Trinity; If in the Quindene of Hilary, then in the Quindene of Trinity, and sometime in the Morrow of John the Baptist; If in the Morrow of the Purification, then in the Morrow and Octave of John the Baptist; If in the Octave of the Purification, then in the Quindene of John the Baptist; If in the Quindene of Easter, then in the Octave of Michaelmas; If within three Weeks after Easter, then in the Quindene of Michaelmas; If within the month of Easter, then within three Weeks of Michaelmas; If within five Weeks after Easter, or in the Morrow of Ascension, then within a Month after Michaelmas; If in the Octave of Trinity, then in the Morrow of All Souls; If in the Quindene of Trinity, or in the Morrow of John the Baptist, then in the Morrow of Martinmas; If in the Octave of John the Baptist, then in the Octave of Martinmas; If in the Quindene of John the Baptist, then Day shall be given unto the Quindene of Martinmas. And so every Term shall answer to other.
+<<END>>
+<<CLAUSE>>
+STATUTE: Dies Communes de Dote
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 3
+CHAPTER: 
+TITLE: General Days in Dower
+NOTES: Cited as 51 Hen. 3 Stat. 3 in the Statutes at Large. Statute of uncertain date, conventionally printed as 51 Hen. III. Text from Statutes of the Realm, vol. 1, p. 208, printed from Lib. Horn, fo. 157, with variants from MS. Cott. Claudius D. II.
+TEXT: If the Writ do come in the Octave of Michaelmas, Day shall be given until the Morrow of All Souls; If it come in Quindene of Michaelmas, Day shall be given until the Morrow of Martinmas; If within three Weeks after the Feast of St. Michael, then in the Octave of Martinmas; If in the month of Michaelmas, then in Quindene of Martinmas; If in Morrow of All Souls, then in the Octave of Hilary; If in the Morrow of Martinmas, then in Quindene of Hilary; If in Octave of Martinmas, then in the Morrow of the Purification; If in the Quindene of Martinmas, then in the Octave of the Purification; If in the Octave of Hilary, then in the Quindene of Easter; If in the Quindene of Hilary, then in three weeks of Easter; If in the Morrow of the Purification, then in the month of Easter; If in Octave of the Purification, then in the Morrow of Ascension; If in the Quindene of Easter, then in the Octave of Trinity; If in three weeks of Easter, then in the Quindene of Trinity; If in the month of Easter, then in the Morrow of John the Baptist; If in the fifth week of Easter, then in the Octave of John; If in the Morrow of Assension, then in the Quindene of John; If in the Octave of Trinity, then in the Octave of Michaelmas; If in the Quindene of Trinity, then in the Quindene Michaelmas; If in the Morrow of John the Baptist, then in third week of Michaelmas; If in the Octave of John the Baptist, then in month of Michaelmas; If in the Quindene of John the Baptist, then in the Morrow of All Souls.
+<<END>>
+<<CLAUSE>>
+STATUTE: De Districtione Scaccarii
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 4
+CHAPTER: none
+TITLE: A Statute of Distresses of the Exchequer
+NOTES: none
+TEXT: FORASMUCH as the Commonalty of the Realm hath sustained great Damage by wrongful taking of Distresses, which have been made by Sheriffs, and by other the King's Bailiffs for the King's Debt, or for any other cause: It is therefore provided and ordained, that when a Sheriff, or any other Man doth take the Beasts of other, they to whom the Beasts do belong may give them their keeping without Disturbance (so long as they be impounded) and without giving any thing for their keeping. And that the Beasts, nor no other Distress taken for the King's Debt, nor for any other cause, be given ne sold within Fifteen Days after the taking. And if any bring the Tally of a Payment made in the Exchequer, the Distress shall cease. And if he bring the Tally of any Sheriff or Bailiff, of Payment made to them of the thing demanded, and will find Pledges that he will appear in the Exchequer, upon the next account, to do as Right shall require, then the Distress shall cease. And the Sheriff or Bailiff shall cause him to be attached, that ought to have acquitted him, that he appear upon the same account, to do as Right shall require; and there shall have the names of the pledges. Also it is provided, that no man of Religion, nor other, shall be distrained by his Beasts that gain his Land, nor by his Sheep, for the King's Debt, nor the Debt of any other man, nor for any other cause, by the King's Bailiff or other, so long as they can find another Distress, or Chattels sufficient whereof they may levy the Debt, or sufficient for the Demand (except Impounding of Beasts that a man findeth in his Ground, Damage feasant, after the Law, Use, and Custom of the Realm). And that such Distresses be reasonable to the Amount of the Debt or Demand, according to the right Value, and by the Estimation of Neighbours, and not by Strangers, and not outrageous. Also the King willeth and commandeth, that Sheriffs, or their Bailiffs, that have received the King's Debt of the Summons of the Exchequer, and have not acquitted the Debtors thereof at the next account, shall be punished after the Statutes made thereupon. And the King willeth, that all Debts of Summons of the Exchequer that the Sheriff or Bailiff have confessed Receipt, shall be allowed forthwith, whether he received all the Debt, or Part, so that that shall never come more in Demand nor Summons, of which the Sheriff hath confessed the Receipt.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: I
+TITLE: 
+NOTES: none
+TEXT: THE King commandeth, that all manner of Bailiffs, Sheriffs, and other Officers, as well the Justices of Chester, and the other Bailiffs thereof, as others, of all manner of Receipts of Issues, of Wards, of Escheats, and of their Bailiwicks, shall be answerable in the Exchequer, and there shall make account to the Treasurer and Barons of the same place. And that all Sheriffs, Fermors, Bailiffs of Franchises, and other, who ought to come to the Proffer in the Exchequer, the morrow of St. Michael, and the morrow of the Utes of Easter, for to pay their Ferns, Rents, and Issues belonging to the King, and shall come to the Exchequer at the aforesaid Terms, and shall there bring in full the aforesaid Ferns, Rents, and Issues, which they owe as before is mentioned. And if any make default, his Body shall remain without departing from thence, until he have paid or made agreement; and he that will not come at the Terms aforesaid, shall be amerced after the Custom of the Exchequer; and the Sheriffs and Bailiffs at the same terms shall bring and pay such Money as they have received of the Summons of the Exchequer, and other the King's Debts, and shall be prepared and ready to make full account of the things aforesaid.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: II
+TITLE: 
+NOTES: none
+TEXT: And that all Bailiffs of Franchises, which ought to levy the King's Debts, and be answerable to the Sheriffs and at their command, according to the Extracts of the Summons of the Exchequer, do come and answer sufficiently, and such as do not, their Bodies shall remain in Ward of the Sheriffs; and for Default in them, the Sheriffs shall cause the Debts to be levied by their own Bailiffs, where they have Power, as they have used to do in time passed. And if the Bailiffs do not come in to answer at the Day that the Sheriff shall give them knowledge, the Sheriff shall enter into the same Franchises, and cause the Debts to be levied with his own hand.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: III
+TITLE: 
+NOTES: none
+TEXT: Concerning Justices of Chester, and Bailiffs thereof, the King willeth, that they, or one of them, shall come at the Proffer of St. Michael every Year, when they shall pay what they owe unto the King, for that Term; and at the Proffer of the Utes of Easter they shall come likewise, and bring in that which they owe to the King for that Term; and the Justice of Chester shall have Day to account from Year to Year in quindena Pasche; and the Bailiffs thereof the Morrow of Easter Utes. And that all Sheriffs of England except the Sheriffs of Westmorland, Lancaster, Worcester, Rutland, and Cornwall, shall from henceforth keep all such Wards and Escheats, [that are not in other Fees, as belong to the King, which be within their Shires;] and of the issues thereof they shall be answerable in the Exchequer at the Terms aforesaid; and at their Turns that they make in their Shires, they shall find Office of other things, which the King's Escheators have used to find, and which belong unto the King, once or twice in the Year, to as little Grievance of the People as they can. And the Sheriffs shall seize the Escheats that fall unto the King, to remain in Fees, and shall certify the King of them without delay.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: IV
+TITLE: 
+NOTES: none
+TEXT: And the King shall assign three able persons that shall go throughout the Realm, to survey and extend the Wards and Escheats aforesaid, from Year to Year, when they shall think requisite. And the Sheriffs, by their Counsel, shall approve or let to Ferm, or otherwise, such Wards and Escheats as they shall think most for the King's Advantage.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: V
+TITLE: 
+NOTES: none
+TEXT: Touching the five Shires before named, the King will, that the Sheriff of Cumberland shall execute the Office of Escheator in the Shires of Westmorland and Lancaster; and the Sheriff of Nottingham in Rutland; and the Sheriff of Gloucester in Worcester; and the Sheriff of Devonshire in Cornwall; and shall safely keep for the King his Wards and Escheats in the same Shires, and shall answer in the Exchequer for the issues of them, as they ought to do for their own Shires. And the three able Persons aforesaid shall survey and extend such Wards and Escheats, as elsewhere, and they shall be approved, by their Counsel. And when the Sheriffs do accompt for their Counties, they shall accompt for such Wards and Escheats. And in like manner shall the Justices of Chester do, and their Bailiffs there, every one for his Bailiwick. And the said three able Persons shall keep the King's Demesnes, and shall approve them as they shall think best for the King's Advantage, and shall answer [at the Exchequer] for the issues: And they shall have power to deliver small Manors and Demesns to folk of the same Places, or to other, according to their Discretion, at Terms certain from Year to Year, where they shall think it most to the King's Profit: And the Fermors shall be chargeable for their Ferns unto the principal Approvers, and they unto the Exchequer, the Morrow after the Ascension, from Year to Year.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: VI
+TITLE: 
+NOTES: none
+TEXT: And the principal Collectors of the Custom of Wools, shall pay at the two Terms before mentioned, all such Money as they have taken and received of the said Custom; and shall make accompt from Year to Year clearly of all Parcels received in all the Ports, and throughout the Realm; so that they shall answer for every Ship, where it was charged, and how much it carried, and whose the Wools were: and for every other Charge in the Ship, whereof Custom is due, and for the whole Receipt.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: VII
+TITLE: 
+NOTES: none
+TEXT: And the Warden of the King's Wardrobe shall make accompt yearly in the Exchequer in the Feast of St. Margaret; and the Treasurer and Barons of the Exchequer shall be charged by Oath, that they shall not attend to hear the Pleas or Matters of other Men, while they have to do with the King's Business, if it be not a Matter that concerneth the King's own Debt. And when a Sheriff or Bailiff hath begun his Accompt, none other shall be received to accompt, until he that was first appointed hath clearly accompted and his Money be received.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: VIII
+TITLE: 
+NOTES: none
+TEXT: And that the Constable, Marshal, Chamberlain, and other that are of Fee in the Exchequer, from henceforth shall present unto the King such as they have put in their Places to do their Offices, which must be of good Fame, and sufficient, for whose Acts themselves will answer. And the King enjoineth the Treasurer, and Barons of the Exchequer, upon their Allegiance, and by the Oath that they have made to him, that they shall not assign any in their rooms who are not such, and that the Exchequer be not charged with more Persons than is necessary. And that none [of them] that be sworn to the King, shall put in his room any other, Clerk or Lay Person, except he be sworn, without special Licence of the Treasurer; and if any be, he shall be forthwith removed from his Office, and none other shall be received in his stead without the King's Licence.
+And if any that is received without the Treasurer's Licence do trespass after, Punishment shall be done as well to the Assignor, as to him that is assigned, according to the Trespass. And if both be insufficient, their Superior shall be punished, whether he be Officer of Fee, or other. And the Treasurer shall put no other in his room, until he hath Commandment from the King. And if he that keepeth the Room of another, by Licence of the Treasurer, doth any thing that he ought not to do, he shall be punished according to the Trespass, if he have whereof; and if he have not, he that put him in Office shall be charged for his Trespass; and if he that put him in Office be not sufficient, his Superior shall be charged, whether he be of Fee, or otherwise.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: IX
+TITLE: 
+NOTES: none
+TEXT: And all they of the Wool-staple shall make Oath, that if any of them may perceive that another doth commit any Default, Offence, or other thing dishonest in the Office of the Wool-staple, or that he hath done before, that they shall certify it to the Treasurer, or to the Barons, or to some of them, who shall cause it to be amended; or to the King himself, if need require.
+And that about the Feast of St. Margaret, before that the Exchequer be closed, it shall be yearly searched and seen if there be any Sheriff or Bailiff, that ought to have accompted the same Year, and hath not, and thereupon a Remembrance made in a Roll by itself. And if it be a Sheriff, his Accompt shall be first heard after Michaelmas, before that any other Sheriff be received to accompt; And if he be a Bailiff, he shall be summoned or distrained to come at a certain Day for to accompt, so that no Accompt shall be suffered to sleep.
+And forasmuch as Sheriffs, Constables, and other, obtain many times outrageous Allowances, by surmise of the King's Works, and other Things done and provided by his Commandment; it is provided, that all Surveyors of the King's Works shall be chosen by the Oath [of Twelve Men,] and this from such as are best skilled, and will and can attend best to that Office; and that be sufficient to answer the King, if need be, and be sworn to bear lawful Witness. And if the Treasurer or Barons of the Exchequer have any Suspicion of false Allowances of Works, or other Things, the Truth must be inquired; and he that is thereof attainted, shall answer to the King for as much as the Allowance amounteth unto, and shall be imprisoned one Year and forty Days, and shall be punished at the King's pleasure, and the Surveyors shall be punished for their Consent. And in the same Manner, he that upon the Accompt did conceal and keep secret such Things, whereof he ought to have charged himself, shall be punished in like wise as he that admitted such false Allowances.
+<<END>>
+<<CLAUSE>>
+STATUTE: Statutum de Scaccario
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 5
+CHAPTER: X
+TITLE: 
+NOTES: none
+TEXT: And that all the Justices, Commissioners, and other, shall from henceforth deliver into the Exchequer, at the Feast of St. Michael, from Year to Year, their Extracts of Fines and Amerciaments made and taxed before them, and of all Things whereof the Extracts are wont to be delivered there. And they of the Exchequer shall make Extracts of the Summons through all Shires, saving that the Extracts in Eyre of all Pleas shall be delivered immediately after the Eyre made.
+<<END>>
+<<CLAUSE>>
+STATUTE: Judicium Pillorie
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 6
+CHAPTER: 1
+TITLE: Statute of the Pillory and Tumbrel
+NOTES: none
+TEXT: IF a Baker or a Brewer be convict, because he hath not observed the Assise of Bread and Ale, the first, second, and third time, he shall be amerced according to his Offence, if it be not over grievous; but if he have offended grievously and often, and will not be corrected, then he shall suffer Punishment of the Body, that is to wit, a Baker to the Pillory, and a Brewer to the Tumbrel, or Cuckling-stool. First, six lawful Men shall be sworn truly to gather all Measures of the Town, to wit, Bushels, half and quarter Bushels, Gallons, Pottles, and Quarts, as well of Taverns as of other Places; Yards, and Weights, to wit, Pounds, half Pounds, and the little Weights of the Towns, wherewith Bread of the Town or of the Court is weighed, that is to say, one Loaf of every sort of Bread. And upon every Measure, Yard, Weight, and also upon every Loaf, the Name of the Owner diligently written; and they shall gather the Measures of Mills. Afterwards, twelve lawful Men shall swear to make true Answer to all such Things as shall be demanded of them in the King's Behalf upon Articles here following; and such Things as be secret, they shall propose secretly, and answer privately. And the Bailiffs shall be commanded to bring in all the Bakers and Brewers with their Measures, and all other Things underwritten.
+First, they shall inquire the Price of Wheat, to wit, of what things how a Quarter of the best Wheat was sold the last Market-day, and how the second Wheat, and how the third; and how a Quarter of Barley and Oats.
+Next, how the Baker's Bread doth answer in his Court, to wit, Wastel and other Bread, according to the Sale of Wheat of the best, or of the second, or of the third Price. Also upon how much Increase or Decrease in the Price of [the Quarter of] Wheat a Baker ought to change the Assise and Weight of his Bread. Also how much the Wastel of a Farthing ought to weigh, and all other manner of Bread, after the Price of a Quarter of Wheat, that they present. And for what Default in the Weight of the Bread, a Baker ought to be amerced, or to be judged unto the Pillory, according to the Law and Custom of his Court. Also if any Steward or Bailiff, for any Bribe, doth release Punishment of the Pillory and Tumbrel, being already judged, or to be judged of right.
+<<END>>
+<<CLAUSE>>
+STATUTE: Judicium Pillorie
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 6
+CHAPTER: 2
+TITLE: 
+NOTES: none
+TEXT: Also if they have in the Town a Pillory of convenient Strength, as appertaineth to the Liberty of their Market, which they may use (if need be) without bodily Peril either of Man or Woman. Next, Inquiry shall be made of the Assise and Price of Wine, after the Departure of the Justices in Eyre, or of them that were last in Office of the Market of the Town; that is to say, of the Vintners Names, and how they sell a Gallon of Wine; and if any corrupted Wine be in the Town, or such as is not wholesome for Man's Body. Also of the Assise of Ale in the Court of the Town, how it is, and whether it be observed; and if not, what Brewers have sold contrary to the Assise; and they shall present their Names distinctly and openly, and they ought to be amerced for every Default, or be judged to the Tumbrel, if they sell contrary to the Assise.
+<<END>>
+<<CLAUSE>>
+STATUTE: Judicium Pillorie
+REGNAL YEAR: 51 Hen.3.
+YEAR: 1266/7
+ST: 6
+CHAPTER: 3
+TITLE: 
+NOTES: none
+TEXT: Also if there be any that sell by one measure and buy by another. Also if any do use false Yards, Weights, or Measures. Also if any Butcher do sell contagious Flesh, or that died of the Murrain. Or if any do buy Flesh of Jews, and then sell it to Christians. Also of Cooks that sodden Flesh or Fish with Bread or Water, or any otherwise, that is not wholesome for Man's Body, or after that they have kept it so long that it loseth its natural Wholesomeness, and then sodden it again, and sell it. Also of Forestallers, that buy any Thing afore the due and accustomed Hour, against the good State and Weal of the Town and Market, or that pass out of the Town to meet such Things as come to the Market, buying out of the Town, to the Intent that they may sell the same in the Town more dear unto Regrators, than they would that brought them, in case they had come to the Town or Market.
+Ale shall be sold according to the Price of Barley.
+When a Quarter of Barley is sold for Two Shillings, then Four Quarts of Ale shall be sold for a Penny; when for Two Shillings Sixpence, then Seven Quarts of Ale shall be sold for Two pence; when for Three Shillings, then Three Quarts for One Penny; when for Three Shillings Sixpence, then Five Quarts for Two pence; when it is sold for Four Shillings, then Two Quarts at One Penny; and so onward the Prices shall increase and decrease after the Rate of Sixpence.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: 
+TITLE: Preamble
+NOTES: none
+TEXT: IN the Year of Grace, One thousand two hundred fifty seven, the Two and fiftieth Year of the Reign of King Henry, Son of King John, in the Utas of St.
+Martin , the said King our Lord providing for the better Estate of his Realm of England, and for the more speedy Ministration of Justice, as belongeth to the Office of a King; and the more discreet men of the said Realm being called together, as well of the higher as of the lower estate, by whom it was provided, enacted, agreed, and ordained, that the Realm of England, of late disquieted with manifold Troubles and Dissensions, requireth the Reformation of Statutes and Laws, whereby the Peace and Tranquillity of the People may be preserved, and wherein convenient Remedy by the said King and his Leiges ought to be applied; hath made these Acts, Ordinances, and Statutes underwritten, which he willeth to be observed forever firmly and inviolably of all his subjects, as well high as low.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: I
+TITLE: All Persons shall have and receive Justice in the King's Courts.
+NOTES: none
+TEXT: WHEREAS at the Time of the Troubles late stirred up within this Realm, and also sithence; many great men and others refused to be justified by the King and his Court, like as they ought and were wont in Time of the King's noble Progenitors, and also in his Time; but by themselves took great Revenges and Distresses of their Neighbours, and of other, until they received Amends and Fines at their own Pleasure; and further, some of them would not be justified by the King's Officers, nor would suffer them to make Delivery of such Distresses as they had taken of their own Authority at their own Pleasure: it is provided, agreed, and granted, that all Persons, as well of high as of low estate, shall have and receive Justice in the King's Court; and that none henceforth shall take any Revenges or Distresses of his own Pleasure, without Award of the King's Court, though Damage or Injury be done him, whereof he would have Amends of his Neighbour, either of high or low estate. And upon the foresaid Article it is provided and granted, that if any from henceforth take such Revenges of his own Pleasure, without Award of the King's Court (as before is said) and be convict thereof, he shall be punished by Fine, and that according to the Quantity of the Trespass. And likewise if one Neighbour take a Distress of another without Award of the King's Court, whereby he hath Damage, he shall be punished in the same wise, and that after the Quantity of the Trespass: and nevertheless Amends shall be made, fully and sufficiently, to them that have sustained Loss by such Distresses.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: II
+TITLE: None but Suitors shall be distrained to come to a Court.
+NOTES: none
+TEXT: MOREOVER, none (of what Estate soever he be), shall distrain any to come to his court, who is not of his Fee, or upon whom he hath no Jurisdiction, by reason of Hundred or Bailiwick; nor shall take Distresses out of his Fee or Place where he hath not Bailiwick or Jurisdiction: and he that offendeth against this Statute, shall be punished in like Manner, and that according to the Quantity and Quality of the Trespass.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: III
+TITLE: Distresses shall be delivered by the King's Officers.
+NOTES: none
+TEXT: If any, of what Estate soever he be, will not suffer such Distresses as he hath taken, to be delivered by the King's Officers, after the Law and Custom of the Realm; or will not also suffer Summons, Attachments, or Executions of Judgments given in the King's Court, to be done according to the Law and Custom of the Realm, as is aforesaid, he shall be punished in Manner aforesaid, as one that will not obey the Law, and this according to the Quantity of the Offence. And if any of what Estate soever he be, distrain his Tenant for Services and Customs which he alleges to be due unto him, or for any other Thing, for the which the Lord of the Fee hath Right to distrain, and after it is found that his Tenant doth not owe those to him, the Lord shall not therefore be punished by Fine, as in the Cases aforesaid, if he do suffer the Distresses to be delivered according to the Law and Custom of the Realm; but shall be amerced as hitherto hath been used, and the Tenant shall recover his Damages against him.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: IV
+TITLE: A Distress shall not be driven out of the County. Distresses shall be reasonable.
+NOTES: Enforced by 3 Ed.1. c.16.
+TEXT: NONE from henceforth shall cause Distresses that he hath taken, to be driven out of the County where they were taken; and if one Neighbour do so to another of his own Pleasure, and without Judgment, he shall be punished by Fine as above, as for a Thing done against the Peace: Nevertheless, if the Lord presume so to do against his Tenant, he shall be punished by a great Amerciament. Moreover, Distresses shall be reasonable, and not too great. And they that take unreasonable and undue Distresses, shall be grievously amerced for the Excess of such Distresses.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: V
+TITLE: A Confirmation of the Great Charter and The Charter of the Forest.
+NOTES: none
+TEXT: THE Great Charter shall be observed in all his Articles, as well in such as pertain to the King, as to other; and that shall be enquired afore the Justices in Eyre in their Circuits, and afore the Sheriffs in their Counties, when need shall be. And Writs shall be freely granted against them that do offend, before the King, or the Justices of the Bench, or before Justices in Eyre, when they come into those Parts. Likewise The Charter of the Forest shall be observed in all his Articles, and the Offenders, when they be convict, shall be grievously punished by our Sovereign Lord the King in Form above mentioned.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: VI
+TITLE: A fraudulent Conveyance to defeat a Lord of his Wardship shall be void.
+NOTES: See 34 & 35 H.8. c.5&15. for further Remedy in this Case. Confirmed by 4 H.7. c.17.
+TEXT: AS touching them that use to infeoff their eldest Sons and Heirs, being within Age, of their Heritage, that thereby the Lords of the Fee should lose their Wardships, it is provided, accorded, and agreed, that by occasion of any such Feoffment no chief Lord shall lose his Wardship. Moreover touching them that fain false Feoffments of their Lands, which they will lease for Term of Years, that thereby the Lords of the Fee should lose their Wardships. Wherein it is contained, that they are satisfied of the whole Service therein mentioned until a certain Term; so that such Feoffees are bound at the said Term to pay a certain Sum to the Value of the same Lands, or far above; that so after such Term the Land shall return unto them, or to their Heirs, insomuch as no Man will be content to hold it upon the Price; it is provided accorded and agreed, that by such Fraud no chief Lord shall lose his Wardship. Nevertheless it shall not be lawful to them to disseise such Feoffees without Judgment, but they shall have a Writ for to have such Wardship restored unto them; and by the Witnesses contained in the Deed of Feoffment, together with other free and lawful Men of the Country, and by the Quantity and Value of the Tenements, and by the Quantity of the Sum payable after such Term, it shall be tried whether such Feoffments were made bona fide, or by Collusion, to deprive the chief Lords of the Fee of their Wardships. And if the chief Lords in such Cases recover their Wardships by Judgment of the Court, the Feoffees shall nevertheless have their Action, as to the recovering the Term or Fee, which they had therefore, when the Heirs come to their lawful Age. But if any chief Lords do maliciously implead such Feoffees, feigning this Case, where the Feoffments were indeed made lawfully and in good faith, then the Feoffees shall have their Damages awarded, and their Costs which they have sustained by occasion of the foresaid Plea, and the Plaintiffs shall be grievously punished by Amerciament.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: VII
+TITLE: Ward by reason of Ward.
+NOTES: none
+TEXT: IN a Plea of Communi Custodia, if the Deforceors come not at the great Distress, then the said Writ shall be renewed twice or thrice, at such Terms as it may be done within the Half Year following; so that every time the Writ shall be read in the open county if the Deforcior be not found before and there openly be proclaimed, that he may come at the Day limited to him: but if he be absent himself then, and come not to answer within the said Half Year, nor the Sheriff cannot find him to have his body before the Justices to answer according to the Law and Custom of the Realm, then, as a Rebel and such a one as will not be justified, he shall lose the Seisin of the Wardship; having to him his Action at another time, if he have any right to the same. But in such Cases where the Wardships belong to the Guardians of Wards being within Age, and where there are demanded against the said Guardians, Wardships which belong to the Heirs or as appertaining to their Inheritance, such Heirs within Age shall not lose their Inheritance by the Negligence or Rebellion of their Guardians, as in the Case above rehearsed; but let the Common Law run in like manner as it hath been accustomed to do.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: VIII
+TITLE: The Punishment of those which commit Redisseisin.
+NOTES: none
+TEXT: THEY which be taken and imprisoned for Redisseisin, shall not be delivered without special Commandment of our Lord the King, and shall make Fine therefore with our Lord the King for their Trespass. And if it be found, that the Sheriff deliver them otherwise, he shall be grievously amerced therefore; and nevertheless, they which are so delivered by the Sheriff without the King's Commandment, shall be grievously punished for their Trespass.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: IX
+TITLE: How Suit of Court shall be done; and the Remedies for Lords and Tenants concerning the same.
+NOTES: none
+TEXT: CONCERNING doing Suits at the Court of great Lords, or at the Court of meaner Persons, from henceforth this Order shall be observed; That none that is infeoffed by Deed, from henceforth shall be distrained to do such Suit to the Court of his Lord, without he be specially bound to do that Suit by the Form of his Deed: those only except, whose Ancestors, or they themselves, have used to do such Suit before the first Voyage of the said King Henry into Britany, since which nine and thirty Years and an half are passed, into the time that these Statutes were enacted. Likewise from henceforth none infeoffed without Deed, from the time of the Conquest, or any other antient Feoffment, shall be distrained to do such Suit, unless that he or his Ancestors have used to do it before the said Voyage. And they that are infeoffed by Deed to do a certain Service, as for the free Service of so many Shillings by Year, to be paid in lieu of all Service, from henceforth shall not be bounden to such Suit, or other like, contrary unto the Form of their Feoffment. And if any Inheritance, whereof but one Suit is due, descend unto many Heirs, Parceners of the same Inheritance, whoso hath the eldest Part of that Inheritance, shall do that one Suit for himself and his Fellows, and the other Coheirs with him shall be Contributaries, according to their Portion, for doing such Suit. And if many be enfeoffed of an Inheritance, whereof but one Suit is due, the Lord of the Fee shall have but that one Suit; and shall not exact of the said Inheritance, but that one Suit, as thereof was used to be done before. And if those Feoffees have no Warrant or Mean which ought to acquit them, then all the Feoffees, according to their Portion, shall be Contributaries for doing the Suit for them. And if it chance that Lords of Courts do distrain their Tenants for such Suits, contrary to this Constitution, then, at the Complaint of such Tenants, their Lords shall be attached to appear in the King's Court at a short Day, to make Answer thereto, and shall have but one Essoin therein, if they be within the Realm, and immediately his Beasts, or other Distresses taken by colour of such Claim shall be delivered to the Plaintiff, and so shall remain, until the Plea betwixt them be determined. And if the Lords of the Courts which took such Distresses, come not at the Day that they were attached, or do not keep the Day given to them by Essoin, then the Sheriff shall be commanded to cause them to come at another Day; at which Day, if they come not, then the Sheriff shall be commanded to distrain them by all their Goods and Chattels that they have in the Shire, so that the Sheriff shall answer to the King of the Issues of the said Inheritance, and that he have their Bodies before the Justices at a certain Day limited: so that if they come not at that Day, the Party Plaintiff shall go thereof without Day, and his Beasts or other Distresses taken by colour of such Claim shall remain delivered, until the same Lords have recovered the same Suit by Award of the King's Court; and in the mean time such Distresses shall cease; saving to Lords of Courts their Right to recover such Suits in Form of Law, when they will sue therefore. And when Lords of Courts come in to answer the Plaintiffs of such Trespasses, and be convict thereupon, then, by Award of the King's Court, the Plaintiffs shall recover against them the Damages that they have sustained by occasion of the said Distress. Likewise if Tenants, after this Constitution, withdraw from their Lords their Suits which they ought to do, and which, before the time of the said Voyage and hitherto, they used to do: then by like Speediness of Justice, as to limiting of Days, and awarding of Distresses, the Lords of the Court shall obtain Justice to recover their Suits, together with their Damages, as Tenants may recover their Damages. And this recovering of Damages must be understood of withdrawings from themselves, and not of withdrawings from their Ancestors. Nevertheless Lords of Courts shall not recover Seisin of such Suits against their Tenants by Default, as they were wont to do. But touching Suits withdrawn before the Time aforementioned, let the Common Law run as it was wont before time.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: X
+TITLE: Certain Persons exempt from Appearance at Sheriffs' Tourns.
+NOTES: none
+TEXT: CONCERNING the Tourns of Sheriffs, it is provided, That Archbishops, Bishops, Abbots, Priors, Earls, Barons, or any Men of Religion, or Women, shall not need to come thither, except their Appearance be especially required thereat for some other Cause; but the Tourn shall be kept as it hath been used in the times of the King's noble Progenitors. And if any have Tenements in different Hundreds, they shall not be bound to appear at any such Tourns, but in the Bailiwicks where they be dwelling. And the Tourns shall be kept after the Form of the Great Charter, and as they were used to be kept in the Times of King Richard and King John.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XI
+TITLE: No Fines shall be taken for Beaupleader.
+NOTES: Enforced by 3 E.1. c.8. and 1 E.3. st.2. c.8.
+TEXT: IT is provided also, that from henceforth neither in the circuit of Justicers, nor in Counties, Hundreds, nor Court Barons, shall Fines hereafter be taken of any for Fair-pleading, nor for not being troubled for that cause. And it is to be known, that hereby Fines certain, or annual payments made from the time that our Lord the King first passed into Britain hitherto, are not taken away.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XII
+TITLE: Days given in Dower, Assise of Darrain Presentment, and Quare impedit.
+NOTES: none
+TEXT: IN a Plea of Dower, that is called Unde nihil habet, from henceforth four days shall be given in the Year at the least, and more if conveniently it may be, so that they shall have five or six Days at the least in the Year. In Assises of Darrain Presentment, and in a Plea of Quare impedit, of Churches vacant, Days shall be given from fifteen to fifteen, or from three Weeks to three Weeks, as the Place shall hap to be near, or far. And in a Plea of Quare impedit, if the Disturber come not at the first Day that he is summoned, nor call nor Essoin, then he shall be attached for another Day; at which Day if he come not, nor eat no Essoin, he shall be distrained by the great Distress above given; And if he come not then by his Default a Writ shall go to the Bishop of the same Place, that the Claim of the Disturber for that time shall not be prejudicial to the Plaintiff; having to the Disturber his Right at another time, when he will sue therefore. The same Law, concerning the making of Attachments, shall from henceforth be observed in all Writs where Attachments lie, as to the making Distresses; so that the second Attachment shall be made by better Pledges, and afterwards the last Distress.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XIII
+TITLE: After Issue joined there shall be but one Essoin, or one Default.
+NOTES: none
+TEXT: AND it is to be known, that after one hath put himself upon any Enquest the which hath passed or must pass in such manner of Writs, he shall have but one Essoin, or one Default; so that if he come not at the Day given to him by his Essoin, or make Default the second Day, then that Enquest shall be taken by his Default, and according to the same Enquest they shall proceed to Judgement; But if such Enquest, taken in the County, before the Sheriff or Coroner, shall be remitted to the King's Justices at a certain Day, and if the Party Defendant come not at that Day, then, upon his Default, another Day, shall be assigned to him after the Discretion of the Justices; and it shall be commanded to the Sheriff, that at that Day he cause him to come to hear the Judgement, if he will, according to the Enquest; at which Day, if he come not, upon his Default they shall proceed to Judgement. In like manner it shall be done, if he come not at a Day given unto him by his Essoin.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XIV
+TITLE: They which have Charters of Exemption, must in some Cases be sworn.
+NOTES: none
+TEXT: CONCERNING Charters of Exemption and Liberties; that the Purchaser shall not be impanelled in Assises, Juries, and Enquests; it is provided, That if their Oaths be so requisite, that without them Justice cannot be ministered, as in great Assises, Perambulations, and in Deeds or Writings of Covenants, where they be named for Witnesses, or in Attaints, and in other Cases like, they shall be compelled to swear; saving to them at another time their foresaid Liberty and Exemption.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XV
+TITLE: In what Places Distresses shall not be taken.
+NOTES: none
+TEXT: IT shall be lawful for no Man from henceforth, for any manner of Cause, to make Distresses out of his Fee, nor in the King's Highway, nor in the common Street; but only to the King or his Officers having special Authority to do the same.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XVI
+TITLE: A Remedy for the Heir, if his chief Lord do keep or put him out of Possession.
+NOTES: none
+TEXT: IF any Heir after the Death of his Ancestor be within Age, and his Lord have the Wardship of his Lands and Tenements, if such Lord will not render unto the said Heir his Land when he cometh to his full Age without Plea, such Heir shall recover his Land by Assise of Mort d'ancestor, together with the Damages that he hath sustained by such withholding, from the Time that he was of full Age. And if an Heir at the time of his Ancestor's death be of full Age, and he is Heir apparent, and known for Heir, and be found in the Inheritance, the chief Lord shall not put him out, nor take, nor remove any thing there, but shall take only simple Seisin thereof for the Recognition of his Seigniory, that he may be known for Lord. And if the chief Lord do hold such an Heir out of the Possession maliciously, whereby he is driven to purchase a Writ of Mort d'ancestor, or of Cosinage, then he shall recover his Damages as in Assise of Novel disseisin. Touching Heirs which hold of our Lord the King in chief, thus shall it be observed, That our Lord the King shall have the first Seisin of their Lands, like as he was wont to have before time: Neither shall the Heir, nor any other, intrude into the same Inheritance, before he hath received it out of the King's Hands, as the same Inheritance was wont to be taken out of the Hands of him and his Ancestors in times past. And this must be understood of Lands and Fees, the which were accustomed to be in the King's Hands, by reason of Knights Service, or Serjeanty, or Right of Patronage.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XVII
+TITLE: The Authority and Duty of Guardians in Socage.
+NOTES: none
+TEXT: IT is provided, That if Land holden in Socage be in the Custody of the Friends of the Heir, because the Heir is within Age, such Guardians shall make no Waste, nor Sale, nor any Destruction of the same Inheritance; but safely shall keep it to the Use of the said Heir, so that when he cometh to his lawful Age, they shall answer to him for the Issues of the said Inheritance by a lawful Accompt, having to the same Guardians their reasonable Cost. Neither can the said Guardians give or sell the Marriage of the said Heir, but to the Advantage of the foresaid Heir; But the next Friends which had the Wardship, for all that Time that Writs of impleading did not lie, shall have such Wardship unto the Advantage of the Heir, as is said before, without Waste, Sale, or Destruction making.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XVIII
+TITLE: Who only may amerce for Default of common Summons.
+NOTES: none
+TEXT: NO Escheator, Commissioner, or Justice specially assigned to take any Assises, or to hear and determine any Matters, from henceforth shall have Power to amerce for default of common Summons, but the chief Justices, or the Justices in Eyre in their Circuits.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XIX
+TITLE: None shall need to swear to warrant their Essoins.
+NOTES: none
+TEXT: TOUCHING Essoins, it is provided, That in Counties, Hundreds, or in Courts Barons, or in other Courts, none shall need to swear to warrant his Essoin.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XX
+TITLE: None but the King shall hold Plea of false Judgement.
+NOTES: none
+TEXT: NONE from henceforth (except our Lord the King) shall hold in his Court any Plea of false judgement, given in the Court of his Tenants; for such Pleas specially belong to the Crown and Dignity of our Lord the King.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXI
+TITLE: Of the Replevying of Distresses.
+NOTES: none
+TEXT: IT is provided also, That if the Beasts of any Man be taken, and wrongfully withholden, the Sheriff, after Complaint made to him thereof, may deliver them without Let or Gainsaying of him that took the Beasts, if they were taken out of Liberties. And if the Beasts were taken within any Liberties, and the Bailiffs of the Liberty will not deliver them, then the Sheriff, for Default of those Bailiffs, shall cause them to be delivered.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXII
+TITLE: None shall compel his Freeholder to answer for his Freehold.
+NOTES: none
+TEXT: NONE from henceforth may distrain his Freeholders to answer for their Freeholds, nor for any Things touching their Freehold, without the King's Writ; nor shall cause his Freeholders to swear against their Wills: for no Man may do that without the King's Commandment.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXIII
+TITLE: A Remedy against Accomptants.
+NOTES: none
+TEXT: IT is provided also, That if Bailiffs, which ought to make account to their Lords, do withdraw themselves, and have no Lands nor Tenements whereby they may be distrained; then they shall be attached by their Bodies, so that the Sheriff, in whose Bailiwick they be found, shall cause them to come to make their Account. Also Fermors, during their Terms, shall not make Waste, Sale, nor Exile of Houses, Woods, and Men, nor of any Thing belonging to the Tenements that they have to term, without special Licence had by Writing of Covenant, making mention that they may do it; which Thing if they do, and thereof be convict, they shall yield full Damage, and shall be punished by Amerciament grievously.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXIV
+TITLE: Of Inquests before Sheriffs and Coroners.
+NOTES: none
+TEXT: THE Justices in Eyre from henceforth shall not amerce Townships in their Circuits, because all being twelve Years old came not afore the Sheriffs and Coroners, to make Enquiry of Robberies, Burnings of Houses, or other Things pertaining to the Crown; but that there come sufficient out of those Towns, by whom such Inquests may be made full: except Inquests of the Death of Man, whereat all being twelve Years of Age, ought to appear, unless they have reasonable cause of Absence.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXV
+TITLE: What kind of Manslaughter shall be adjudged Murther.
+NOTES: none
+TEXT: MURTHER from henceforth shall not be adjudged before our Justices, where it is found Misfortune only; but it shall take place in such as are slain by Felony only, and not otherwise.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXVI
+TITLE: What Day shall be given to him that is vouched to Warranty.
+NOTES: none
+TEXT: IT is provided, That none, being vouched to Warranty before Justices in Eyre, in Plea of Land or Tenement, shall be amerced from henceforth, because he was not present when he was vouched to Warranty, except the first Day of the coming of the Justices: But if the Party vouched be within the Shire, then the Sheriff shall be commanded to cause him to come within the third or fourth Day, according to the Distance of the Place, as it was wont to be done in the Circuit of the Justices. And if he dwell without the Shire, then he shall have reasonable Summons of fifteen Days at the least, after the Discretion of the Justices, and the Common Law.
+<<END>>
+[END OF CHUNK 4]
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXVII
+TITLE: Of Clerks bailed upon a Capital Offence, refusing to answer.
+NOTES: none
+TEXT: If a Clerk, for any Crime or Offence touching the Crown, be arrested, and after, by the King's Commanding, let to bail, or replevied, so that they to whom he was let to bail, have him before our Justices; the Sureties from henceforth, nor they to whom he was let to bail, shall not be amerced (if they have his Body before our Justices) although he will not answer before them, by reason of a Clerk's Privilege, nor cannot by reason of his Ordinary.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXVIII
+TITLE: Remedies for Successors of Prelates for Wrongs done to their Predecessors, &c.
+NOTES: none
+TEXT: It is provided, That if any Wrongs or Trespasses be done to Abbots, [Priors'] or other Prelates of the Church, and they, having pursued their Right for such Wrongs, be prevented with Death before Judgment given therein; their Successors shall have Actions to demand the Goods of their Church out of the Hands of such Trespassers. Moreover, the Successors shall have like Action for such Things as were withdrawn by such Violence from their House and Church, lately before the Death of their Predecessors, though their said Predecessors did not pursue their Right during their Lives. And if any intrude into the Lands or Tenements of such Religious Persons in the time of Vacation, of which Lands their Prelates died seised as in the Right of their Church, their Successors shall have a Writ to recover their Seisin. And then Damages shall be awarded them, as in Assise of Novel disseisin is wont to be.
+<<END>>
+<<CLAUSE>>
+STATUTE: The Statute of  Marlborough
+REGNAL YEAR: 52 Hen.3.
+YEAR: 1267
+CHAPTER: XXIX
+TITLE: In what Case a Writ of Entrie sur disseisin in the Post doth lie.
+NOTES: none
+TEXT: It is provided also, That if those Alienations, (whereupon a Writ of Entry was wont to be granted), hap to be made in so many Degrees, that by reason thereof the same Writ cannot be made in the Form before times used, the Plaintiffs shall have a Writ to recover their Seisin, without making mention of the Degrees, into whose Hands soever the same Thing shall happen to come by such Alienations; and that by an original Writ to be provided therefore by the Council of our Lord the King.
+<<END>>

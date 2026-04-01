@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leges — Medieval Toolbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #f5ead0; --parchment-dark: #ede0be; --parchment-mid: #f0e3c5;
+  --ink: #2a1f0e; --ink-light: #5c4a2a;
+  --gold: #b8922a; --gold-light: #d4a83c; --gold-dark: #8c6e1e;
+  --red: #7a1c1c;
+  --border: rgba(184,146,42,0.35); --border-h: rgba(184,146,42,0.60);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Crimson Pro',Georgia,serif;background:var(--parchment);color:var(--ink);font-size:17px;line-height:1.6}
+/* TOPBAR */
+#topbar{height:52px;background:var(--ink);display:flex;align-items:center;padding:0 20px;gap:16px;border-bottom:2px solid var(--gold-dark);position:sticky;top:36px;z-index:190}
+.wordmark{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--gold-light);letter-spacing:.04em;text-decoration:none;white-space:nowrap}
+.tb-sep{width:1px;height:22px;background:rgba(255,255,255,.14)}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:rgba(255,255,255,.62);letter-spacing:.07em;text-transform:uppercase}
+#search-wrap{margin-left:auto;position:relative}
+#search-input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:3px;padding:5px 32px 5px 28px;color:#fff;font-family:'Crimson Pro',serif;font-size:.95rem;width:248px;outline:none;transition:border-color .2s,background .2s}
+#search-input::placeholder{color:rgba(255,255,255,.36)}
+#search-input:focus{border-color:var(--gold);background:rgba(255,255,255,.12)}
+.s-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.36);font-size:.9rem;pointer-events:none;user-select:none}
+#s-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.36);font-size:.82rem;cursor:pointer;display:none;background:none;border:none;padding:0;line-height:1}
+#s-clear:hover{color:rgba(255,255,255,.7)}
+/* TAB BAR */
+#tabbar{height:36px;background:var(--parchment-dark);border-bottom:2px solid var(--gold-dark);display:flex;align-items:stretch;padding:0 16px;gap:2px;position:sticky;top:0;z-index:200}
+.tab-link{display:flex;align-items:center;padding:0 14px;font-family:'Cormorant Garamond',serif;font-size:.82rem;font-weight:600;letter-spacing:.05em;color:var(--ink-light);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s,border-color .15s}
+.tab-link:hover{color:var(--ink);border-bottom-color:var(--gold)}
+.tab-link.active{color:var(--ink);border-bottom-color:var(--gold-dark)}
+/* SEARCH DROPDOWN */
+#s-drop{display:none;position:fixed;top:88px;left:0;right:0;background:var(--ink);border-bottom:2px solid var(--gold-dark);z-index:150;max-height:370px;overflow-y:auto}
+#s-drop::-webkit-scrollbar{width:4px}
+#s-drop::-webkit-scrollbar-thumb{background:var(--gold-dark)}
+.sr-empty{padding:13px 20px;font-family:'Crimson Pro',serif;font-style:italic;color:rgba(255,255,255,.38);font-size:.9rem}
+.sr-item{padding:9px 20px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.05);transition:background .12s}
+.sr-item:hover{background:rgba(255,255,255,.07)}
+.sr-lbl{font-family:'Cormorant Garamond',serif;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold)}
+.sr-tit{font-size:.93rem;color:#fff;margin-top:1px}
+.sr-snip{font-size:.8rem;color:rgba(255,255,255,.44);font-style:italic;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-item mark{background:rgba(184,146,42,.42);color:#fff;border-radius:1px}
+/* LAYOUT */
+#layout{display:flex;height:calc(100vh - 88px)}
+/* MONARCH PANEL */
+#monarch-panel{width:184px;min-width:184px;background:var(--ink);border-right:2px solid var(--gold-dark);overflow-y:auto}
+#monarch-panel::-webkit-scrollbar{width:4px}
+#monarch-panel::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:2px}
+.mp-hdg{font-family:'Cormorant Garamond',serif;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.28);padding:14px 13px 8px}
+.monarch-btn{display:block;width:100%;text-align:left;background:none;border:none;border-top:1px solid rgba(255,255,255,.06);padding:10px 13px;font-family:'Cormorant Garamond',serif;font-size:.94rem;font-weight:600;color:rgba(255,255,255,.68);cursor:pointer;transition:background .14s,color .14s;line-height:1.25;position:relative}
+.monarch-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+.monarch-btn.active{background:var(--gold-dark);color:#fff}
+.monarch-btn .reign{display:block;font-family:'Crimson Pro',serif;font-size:.71rem;font-style:italic;color:rgba(255,255,255,.36);margin-top:2px;font-weight:400}
+.monarch-btn.active .reign{color:rgba(255,255,255,.65)}
+.m-dot{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--gold-light);display:none;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+/* NAV PANEL */
+#nav-panel{width:234px;min-width:234px;background:var(--parchment-dark);border-right:1px solid var(--border-h);overflow-y:auto;display:flex;flex-direction:column}
+#nav-panel::-webkit-scrollbar{width:4px}
+#nav-panel::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+.statute-group{border-bottom:1px solid var(--border)}
+.sg-hdr{display:flex;align-items:flex-start;gap:7px;padding:10px 13px 8px;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--parchment-dark);z-index:5;border-bottom:1px solid var(--border);transition:background .12s}
+.sg-hdr:hover{background:var(--parchment-mid)}
+.sg-chev{font-size:.64rem;color:var(--gold-dark);transition:transform .2s;flex-shrink:0;margin-top:3px}
+.sg-chev.open{transform:rotate(90deg)}
+.sg-name{font-family:'Cormorant Garamond',serif;font-size:.87rem;font-weight:700;color:var(--ink);line-height:1.2}
+.sg-meta{font-family:'Crimson Pro',serif;font-size:.7rem;color:var(--gold-dark);font-style:italic;margin-top:1px}
+.clause-list{display:none}
+.clause-list.open{display:block}
+.clause-btn{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(184,146,42,.08);padding:8px 13px 8px 22px;font-family:'Crimson Pro',serif;font-size:.85rem;color:var(--ink-light);cursor:pointer;line-height:1.3;transition:background .12s,color .12s}
+.clause-btn:hover{background:rgba(184,146,42,.1);color:var(--ink)}
+.clause-btn.active{background:rgba(184,146,42,.18);color:var(--ink)}
+.cap-lbl{display:block;font-family:'Cormorant Garamond',serif;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gold-dark);margin-bottom:1px}
+.clause-btn.active .cap-lbl{color:var(--gold)}
+#nav-empty{padding:28px 15px;font-family:'Crimson Pro',serif;font-style:italic;color:var(--ink-light);font-size:.87rem;text-align:center;line-height:1.65}
+/* TEXT PANEL */
+#text-panel{flex:1;overflow-y:auto}
+#text-panel::-webkit-scrollbar{width:6px}
+#text-panel::-webkit-scrollbar-track{background:var(--parchment-mid)}
+#text-panel::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+#text-inner{max-width:780px;margin:0 auto;padding:40px 52px 90px;width:100%}
+#text-loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:280px;gap:16px;color:var(--ink-light);font-style:italic;font-size:.95rem}
+.spinner{width:26px;height:26px;border:2px solid var(--border-h);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px}
+.w-sym{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--gold);opacity:.3;margin-bottom:18px;line-height:1;user-select:none}
+#welcome h2{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;margin-bottom:10px}
+#welcome p{font-size:.95rem;max-width:360px;color:var(--ink-light);font-style:italic;line-height:1.65}
+#clause-view{display:none}
+#clause-breadcrumb{font-size:.76rem;color:var(--ink-light);font-style:italic;letter-spacing:.02em;margin-bottom:20px}
+#clause-breadcrumb strong{color:var(--gold-dark);font-style:normal;font-weight:600}
+#clause-cap-label{font-family:'Cormorant Garamond',serif;font-size:.73rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+#clause-title{font-family:'Cormorant Garamond',serif;font-size:2.05rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:5px}
+#clause-dateline{font-size:.83rem;color:var(--gold-dark);font-style:italic;margin-bottom:22px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+#clause-notes{background:rgba(184,146,42,.08);border-left:3px solid var(--gold);padding:10px 15px;margin-bottom:22px;border-radius:0 3px 3px 0}
+.notes-lbl{font-family:'Cormorant Garamond',serif;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:var(--gold-dark);margin-bottom:4px}
+#clause-notes p{font-size:.87rem;color:var(--ink-light);font-style:italic;line-height:1.55}
+#clause-text{font-size:1.08rem;line-height:1.8;color:var(--ink);text-align:justify;hyphens:auto}
+#clause-text p+p{margin-top:1em}
+.dropcap{float:left;font-family:'Cormorant Garamond',serif;font-size:3.9rem;font-weight:700;line-height:.78;margin-right:4px;margin-top:9px;color:var(--red)}
+#clause-nav{display:flex;gap:12px;margin-top:40px;padding-top:18px;border-top:1px solid var(--border)}
+.nav-btn{flex:1;background:none;border:1px solid var(--border-h);border-radius:2px;padding:8px 13px;font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--ink-light);cursor:pointer;transition:background .14s,color .14s;line-height:1.3;text-align:left}
+#nav-next{text-align:right}
+.nav-btn:hover:not(:disabled){background:rgba(184,146,42,.1);color:var(--ink)}
+.nav-btn:disabled{opacity:.25;cursor:default}
+.nav-btn .n-arr{font-size:.78rem}
+.nav-btn .n-cap{display:block;font-size:.67rem;font-family:'Crimson Pro',serif;font-style:italic;color:var(--gold-dark);margin-top:1px}
+.nav-btn .n-tit{display:block;font-size:.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#load-error{display:none;padding:30px;font-family:'Crimson Pro',serif;font-style:italic;color:var(--red);font-size:.95rem;text-align:center;line-height:1.7;white-space:pre-line}
+#clause-citation{margin-top:28px;font-family:'Crimson Pro',serif;font-size:.78rem;color:var(--ink-light);font-style:italic;border-top:1px solid var(--border);padding-top:12px;opacity:.75}
+/* PRICE TABLE (Assize of Bread and Ale) */
+.price-table{width:100%;border-collapse:collapse;margin:1.4em 0;font-size:.94rem}
+.price-table thead tr{background:rgba(184,146,42,.07)}
+.price-table th{font-family:'Cormorant Garamond',serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--gold-dark);border-bottom:2px solid var(--border-h);border-top:1px solid var(--border-h);padding:7px 14px;text-align:left}
+.price-table td{padding:5px 14px;border-bottom:1px solid var(--border);color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.price-table td:first-child{color:var(--ink-light);font-style:italic}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tbody tr:hover td{background:rgba(184,146,42,.07)}
+.price-table-caption{font-family:'Cormorant Garamond',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--gold-dark);margin-bottom:.4em;margin-top:1.4em}
+</style>
+</head>
+<body>
+<nav id="tabbar">
+  <a class="tab-link" href="anno-regni.html">Anno Regni</a>
+  <a class="tab-link" href="calendarium.html">Calendarium</a>
+  <a class="tab-link" href="carta-maneriorum.html">Carta Maneriorum</a>
+  <a class="tab-link" href="locus.html">Locus</a>
+  <a class="tab-link" href="nummus.html">Nummus</a>
+  <a class="tab-link" href="fontes.html">Fontes</a>
+  <a class="tab-link active" href="leges.html">Leges</a>
+</nav>
+<div id="topbar">
+  <a class="wordmark" href="#">&#x2756; Medieval Toolbox</a>
+  <div class="tb-sep"></div>
+  <span class="page-title">Leges &mdash; Statutes at Large</span>
+  <div id="search-wrap">
+    <span class="s-icon">&#x2315;</span>
+    <input id="search-input" type="search" placeholder="Search all loaded statutes&hellip;" autocomplete="off" spellcheck="false">
+    <button id="s-clear" title="Clear">&#x2715;</button>
+  </div>
+</div>
+<div id="s-drop"></div>
+<div id="layout">
+  <div id="monarch-panel">
+    <div class="mp-hdg">Monarch</div>
+    <div id="monarch-list"></div>
+  </div>
+  <div id="nav-panel">
+    <div id="nav-empty">Select a monarch to load their statutes.</div>
+    <div id="nav-content"></div>
+  </div>
+  <main id="text-panel">
+    <div id="text-inner">
+      <div id="text-loading"><div class="spinner"></div><span>Loading statutes&hellip;</span></div>
+      <div id="load-error"></div>
+      <div id="welcome">
+        <div class="w-sym">&#x2696;</div>
+        <h2>Statutes at Large</h2>
+        <p>Select a monarch from the left panel, then choose a statute and clause to read its text.</p>
+        <p style="margin-top:10px;font-size:.85rem;opacity:.6;">Further monarchs and their statutes will be added as work progresses.</p>
+      </div>
+      <div id="clause-view">
+        <div id="clause-breadcrumb"></div>
+        <div id="clause-cap-label"></div>
+        <h1 id="clause-title"></h1>
+        <div id="clause-dateline"></div>
+        <div id="clause-notes"><div class="notes-lbl">Editorial Notes</div><p id="notes-body"></p></div>
+        <div id="clause-text"></div>
+        <div id="clause-nav">
+          <button class="nav-btn" id="nav-prev"><span class="n-arr">&larr;</span><span class="n-cap" id="prev-cap"></span><span class="n-tit" id="prev-tit"></span></button>
+          <button class="nav-btn" id="nav-next"><span class="n-arr">&rarr;</span><span class="n-cap" id="next-cap"></span><span class="n-tit" id="next-tit"></span></button>
+        </div>
+        <div id="clause-citation">Extracted from <em>The Statutes at Large of England</em> (London: George Eyre and Andrew Strahan, 1811).</div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+'use strict';
+const MANIFEST='statutes/manifest.json';
+const state={manifest:[],cache:{},activeMonarch:null,clauses:[],idx:null};
+
+// ── PARSER ────────────────────────────────────────────────────────────────────
+function parseTxt(raw){
+  const out=[];
+  for(const block of raw.split(/<<CLAUSE>>/)){
+    const body=block.replace(/<<END>>/g,'').replace(/\[END OF CHUNK \d+\]/g,'').trim();
+    if(!body) continue;
+    const field=name=>{const m=body.match(new RegExp('^'+name+':\\s*(.*)$','m'));return m?m[1].trim():''};
+    const textM=body.match(/^TEXT:\s*([\s\S]*)$/m);
+    const cl={
+      statute:field('STATUTE'), regalYear:field('REGNAL YEAR'), year:field('YEAR'),
+      chapter:field('CHAPTER'), title:field('TITLE'), notes:field('NOTES'),
+      text:textM?textM[1].trim():''
+    };
+    if(cl.statute&&cl.text) out.push(cl);
+  }
+  return out;
+}
+
+function groupBy(clauses){
+  const groups=[],seen=new Map();
+  for(const cl of clauses){
+    if(!seen.has(cl.statute)){const g={name:cl.statute,regalYear:cl.regalYear,year:cl.year,clauses:[]};groups.push(g);seen.set(cl.statute,g);}
+    seen.get(cl.statute).clauses.push(cl);
+  }
+  return groups;
+}
+
+// ── FETCH ─────────────────────────────────────────────────────────────────────
+async function loadManifest(){const r=await fetch(MANIFEST);if(!r.ok)throw new Error(`manifest ${r.status}`);return r.json();}
+async function loadFile(entry){
+  if(state.cache[entry.file]) return state.cache[entry.file];
+  const r=await fetch(entry.file);
+  if(!r.ok) throw new Error(`${entry.file} — HTTP ${r.status}`);
+  const data=parseTxt(await r.text());
+  state.cache[entry.file]=data;
+  return data;
+}
+
+// ── RENDER MONARCH LIST ────────────────────────────────────────────────────────
+function renderMonarchs(){
+  const list=document.getElementById('monarch-list');
+  list.innerHTML='';
+  for(const e of state.manifest){
+    const b=document.createElement('button');
+    b.className='monarch-btn';
+    b.dataset.file=e.file;
+    b.innerHTML=`${esc(e.monarch)}<span class="reign">${esc(e.regnalYears)}</span><span class="m-dot"></span>`;
+    b.addEventListener('click',()=>selectMonarch(e,b));
+    list.appendChild(b);
+  }
+}
+
+// ── RENDER NAV ─────────────────────────────────────────────────────────────────
+function renderNav(clauses){
+  const content=document.getElementById('nav-content');
+  document.getElementById('nav-empty').style.display='none';
+  content.innerHTML='';
+  for(const grp of groupBy(clauses)){
+    const wrap=document.createElement('div');
+    wrap.className='statute-group';
+    const hdr=document.createElement('div');
+    hdr.className='sg-hdr';
+    hdr.innerHTML=`<span class="sg-chev">&#9658;</span><div><div class="sg-name">${esc(grp.name)}</div><div class="sg-meta">${esc(grp.regalYear)} &middot; ${esc(grp.year)} &middot; ${grp.clauses.length} clause${grp.clauses.length===1?'':'s'}</div></div>`;
+    const list=document.createElement('div');
+    list.className='clause-list';
+    hdr.addEventListener('click',()=>{const o=list.classList.toggle('open');hdr.querySelector('.sg-chev').classList.toggle('open',o);});
+    for(const cl of grp.clauses){
+      const gi=clauses.indexOf(cl);
+      const btn=document.createElement('button');
+      btn.className='clause-btn';
+      btn.dataset.idx=gi;
+      const cap=cl.chapter?`Cap. ${cl.chapter}`:'Preamble';
+      btn.innerHTML=`<span class="cap-lbl">${esc(cap)}</span>${esc(clauseLabel(cl))}`;
+      btn.addEventListener('click',()=>selectClause(gi));
+      list.appendChild(btn);
+    }
+    wrap.appendChild(hdr);
+    wrap.appendChild(list);
+    content.appendChild(wrap);
+  }
+}
+
+// ── SELECT MONARCH ────────────────────────────────────────────────────────────
+async function selectMonarch(entry,btn){
+  document.querySelectorAll('.monarch-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const dot=btn.querySelector('.m-dot');
+  dot.style.display='block';
+  ui('loading');
+  try{
+    const clauses=await loadFile(entry);
+    state.activeMonarch=entry;
+    state.clauses=clauses;
+    state.idx=null;
+    renderNav(clauses);
+    ui('welcome');
+  }catch(e){
+    uiError(`Failed to load statutes for ${entry.monarch}.\n\n${e.message}`);
+  }finally{dot.style.display='none';}
+}
+
+// ── SELECT CLAUSE ─────────────────────────────────────────────────────────────
+function selectClause(idx){
+  const clauses=state.clauses, cl=clauses[idx];
+  if(!cl) return;
+  state.idx=idx;
+  document.querySelectorAll('.clause-btn').forEach(b=>b.classList.toggle('active',Number(b.dataset.idx)===idx));
+  const active=document.querySelector('.clause-btn.active');
+  if(active) active.scrollIntoView({block:'nearest'});
+
+  const cap=cl.chapter?`Chapter ${cl.chapter}`:'Preamble';
+  const hasNotes=cl.notes&&cl.notes.trim()&&cl.notes.trim().toLowerCase()!=='none';
+  el('clause-breadcrumb').innerHTML=`<strong>${esc(cl.statute)}</strong> &middot; ${esc(cl.regalYear)} &middot; ${esc(cl.year)}`;
+  el('clause-cap-label').textContent=cap;
+  el('clause-title').textContent=hasNotes?(cl.title||cap):cap;
+  el('clause-dateline').textContent=`${cl.regalYear} (${cl.year})`;
+
+  const notesBox=el('clause-notes');
+  if(hasNotes){el('notes-body').textContent=cl.notes.trim();notesBox.style.display='block';}
+  else{notesBox.style.display='none';}
+
+  el('clause-text').innerHTML=buildTextHtml(cl);
+
+  // Prev/Next within same statute
+  const grpClauses=clauses.filter(c=>c.statute===cl.statute);
+  const li=grpClauses.indexOf(cl);
+  const prevBtn=el('nav-prev'), nextBtn=el('nav-next');
+  if(li>0){
+    const prev=grpClauses[li-1],pg=clauses.indexOf(prev);
+    prevBtn.disabled=false;
+    el('prev-cap').textContent=prev.chapter?`Cap. ${prev.chapter}`:'Preamble';
+    el('prev-tit').textContent=clauseLabel(prev);
+    prevBtn.onclick=()=>selectClause(pg);
+  }else{prevBtn.disabled=true;el('prev-cap').textContent='';el('prev-tit').textContent='';}
+  if(li<grpClauses.length-1){
+    const next=grpClauses[li+1],ng=clauses.indexOf(next);
+    nextBtn.disabled=false;
+    el('next-cap').textContent=next.chapter?`Cap. ${next.chapter}`:'Preamble';
+    el('next-tit').textContent=clauseLabel(next);
+    nextBtn.onclick=()=>selectClause(ng);
+  }else{nextBtn.disabled=true;el('next-cap').textContent='';el('next-tit').textContent='';}
+
+  ui('clause');
+  el('text-panel').scrollTop=0;
+}
+
+// ── UI STATES ─────────────────────────────────────────────────────────────────
+function ui(s){
+  el('text-loading').style.display=s==='loading'?'flex':'none';
+  el('load-error'  ).style.display=s==='error'  ?'block':'none';
+  el('welcome'     ).style.display=s==='welcome' ?'flex':'none';
+  el('clause-view' ).style.display=s==='clause'  ?'block':'none';
+}
+function uiError(msg){el('load-error').textContent=msg;ui('error');}
+
+// ── SEARCH ─────────────────────────────────────────────────────────────────────
+const sInput=document.getElementById('search-input');
+const sDrop =document.getElementById('s-drop');
+const sClear=document.getElementById('s-clear');
+let sTimer=null;
+
+sInput.addEventListener('input',()=>{
+  clearTimeout(sTimer);
+  const q=sInput.value.trim();
+  sClear.style.display=q?'block':'none';
+  if(q.length<2){closeDrop();return;}
+  sTimer=setTimeout(()=>runSearch(q),200);
+});
+sClear.addEventListener('click',()=>{sInput.value='';sClear.style.display='none';closeDrop();sInput.focus();});
+sInput.addEventListener('blur',()=>setTimeout(closeDrop,200));
+sInput.addEventListener('focus',()=>{const q=sInput.value.trim();if(q.length>=2)runSearch(q);});
+
+function runSearch(q){
+  const all=Object.values(state.cache).flat();
+  if(!all.length){sDrop.innerHTML=`<div class="sr-empty">No statutes loaded yet &mdash; select a monarch first.</div>`;sDrop.style.display='block';return;}
+  const ql=q.toLowerCase();
+  const hits=all.filter(c=>c.statute.toLowerCase().includes(ql)||c.title.toLowerCase().includes(ql)||c.text.toLowerCase().includes(ql)||c.notes.toLowerCase().includes(ql)).slice(0,40);
+  sDrop.innerHTML='';
+  if(!hits.length){sDrop.innerHTML=`<div class="sr-empty">No results for &ldquo;${esc(q)}&rdquo;.</div>`;sDrop.style.display='block';return;}
+  for(const cl of hits){
+    const item=document.createElement('div');
+    item.className='sr-item';
+    const cap=cl.chapter?`Cap. ${cl.chapter}`:'Preamble';
+    const snip=snippet(cl.text,ql);
+    item.innerHTML=`<div class="sr-lbl">${esc(cl.statute)} &middot; ${esc(cap)} &middot; ${esc(cl.regalYear)}</div><div class="sr-tit">${hi(clauseLabel(cl),q)}</div><div class="sr-snip">${hi(snip,q)}</div>`;
+    item.addEventListener('click',()=>{jumpTo(cl);closeDrop();sInput.value='';sClear.style.display='none';});
+    sDrop.appendChild(item);
+  }
+  sDrop.style.display='block';
+}
+function closeDrop(){sDrop.style.display='none';}
+
+async function jumpTo(cl){
+  const entry=state.manifest.find(e=>state.cache[e.file]?.includes(cl));
+  if(!entry) return;
+  if(state.activeMonarch?.file!==entry.file){
+    const btn=document.querySelector(`.monarch-btn[data-file="${entry.file}"]`);
+    if(btn) await selectMonarch(entry,btn);
+  }
+  const idx=state.clauses.indexOf(cl);
+  if(idx!==-1){
+    // Ensure the statute group is expanded
+    document.querySelectorAll('.sg-hdr').forEach(h=>{
+      if(h.querySelector('.sg-name')?.textContent===cl.statute){
+        const list=h.nextElementSibling;
+        if(list&&!list.classList.contains('open')){list.classList.add('open');h.querySelector('.sg-chev').classList.add('open');}
+      }
+    });
+    selectClause(idx);
+  }
+}
+
+// ── TEXT RENDERING ────────────────────────────────────────────────────────────
+function buildTextHtml(cl){
+  if(cl.statute==='The Assize of Bread and Ale') return buildAssizeHtml(cl.text);
+  const paras=cl.text.split(/\n\n+/).filter(Boolean);
+  let html='';
+  paras.forEach((p,i)=>{
+    const t=p.trim();
+    if(i===0&&t.length>1) html+=`<p><span class="dropcap">${esc(t[0])}</span>${esc(t.slice(1))}</p>`;
+    else html+=`<p>${esc(t)}</p>`;
+  });
+  return html;
+}
+
+function buildAssizeHtml(text){
+  const lines=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').map(l=>l.trim()).filter(Boolean);
+
+  // Require a digit after "for" so the intro line (roman "xii d.") is never matched
+  const isFirstRow =l=>/^When a Quarter of Wheat is sold for\s+\d/i.test(l);
+  const isSecondRow=l=>/^When for\s+\d/i.test(l);
+  const isPriceRow =l=>isFirstRow(l)||isSecondRow(l)||/^\d+s\./.test(l);
+
+  function parseRow(line){
+    // "When a Quarter of Wheat is sold for 18d. then Wastel Bread of a Farthing shall weigh 4li. 10s. 8d."
+    let m=line.match(/^When a Quarter of Wheat is sold for\s+(.+?)[,.]?\s+then Wastel Bread of a Farthing shall weigh\s+(.+?)\.?\s*$/i);
+    if(m) return[m[1].trim(),m[2].trim()];
+    // "When for 2s. 68s."
+    m=line.match(/^When for\s+(\d+s\.\s*(?:vid\.)?)\s+(.+)$/i);
+    if(m) return[m[1].trim(),m[2].trim()];
+    // "2s. vid. 54s. 4 3/4 d." or "3s. 45s. 4d." or "4s. 34s."
+    m=line.match(/^(\d+s\.\s*(?:vid\.)?)\s+(.+)$/);
+    if(m) return[m[1].trim(),m[2].trim()];
+    return null;
+  }
+
+  function fmt(s){
+    return s.replace(/\bvid\./g,'6d.').replace(/1\/2/g,'½').replace(/3\/4/g,'¾').replace(/1\/4/g,'¼');
+  }
+
+  // Walk lines, collecting paragraphs and table-row runs
+  const sections=[];
+  let i=0;
+  while(i<lines.length){
+    if(isPriceRow(lines[i])){
+      const rows=[];
+      while(i<lines.length&&isPriceRow(lines[i])){
+        const r=parseRow(lines[i]);
+        if(r) rows.push(r);
+        i++;
+      }
+      if(rows.length) sections.push({type:'table',rows});
+    } else {
+      sections.push({type:'para',text:lines[i]});
+      i++;
+    }
+  }
+
+  let html='';
+  let first=true;
+  for(const sec of sections){
+    if(sec.type==='para'){
+      const t=sec.text;
+      if(first&&t.length>1){html+=`<p><span class="dropcap">${esc(t[0])}</span>${esc(t.slice(1))}</p>`;first=false;}
+      else{html+=`<p>${esc(t)}</p>`;first=false;}
+    } else {
+      first=false;
+      html+=`<div class="price-table-caption">Price of a Quarter of Wheat &rarr; Weight of Wastel Bread (farthing loaf)</div>
+<table class="price-table">
+<thead><tr><th>Quarter of Wheat</th><th>Wastel Bread weight</th></tr></thead>
+<tbody>${sec.rows.map(([w,b])=>`<tr><td>${esc(fmt(w))}</td><td>${esc(fmt(b))}</td></tr>`).join('')}</tbody>
+</table>`;
+    }
+  }
+  return html;
+}
+
+// ── UTILS ──────────────────────────────────────────────────────────────────────
+// Returns the display label for a clause: full title if notes exist, otherwise just "Chapter X" / "Preamble"
+function clauseLabel(cl){
+  const cap=cl.chapter?`Chapter ${cl.chapter}`:'Preamble';
+  const hasNotes=cl.notes&&cl.notes.trim()&&cl.notes.trim().toLowerCase()!=='none';
+  return hasNotes?(cl.title||cap):cap;
+}
+function el(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function reEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+function snippet(text,q){const i=text.toLowerCase().indexOf(q);if(i<0)return text.slice(0,90)+(text.length>90?'…':'');const s=Math.max(0,i-35),e=Math.min(text.length,i+q.length+65);return(s>0?'…':'')+text.slice(s,e)+(e<text.length?'…':'');}
+function hi(str,q){return esc(str).replace(new RegExp(reEsc(esc(q)),'gi'),m=>`<mark>${m}</mark>`);}
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+(async()=>{
+  try{state.manifest=await loadManifest();renderMonarchs();}
+  catch(e){uiError(`Could not load the statute manifest.\n\nEnsure statutes/manifest.json exists in the same directory as leges.html.\n\n${e.message}`);}
+})();
+</script>
+</body>
+</html>
