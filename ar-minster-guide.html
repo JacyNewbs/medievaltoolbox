@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Old Minster — AR Assembly Guide</title>
+  <script>if(sessionStorage.getItem("ar_auth")!=="9e7cd9cb5a63a3591e16f4d835f32a1c4a84ab66e39ae27aa448c03b66bf63e7")window.location.href="ar-login.html";</script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- AR.js + A-Frame: Hiro-marker-based AR, works iOS Safari + Android Chrome -->
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    :root {
+      --parchment: #f5ead0;
+      --parchment-dk: #e8d4a0;
+      --ink: #2c1810;
+      --ink-lt: #5a3824;
+      --gold: #c9a227;
+      --red: #8b1a1a;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--parchment);
+      color: var(--ink);
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    /* ── Setup Screen ─────────────────────────────── */
+    #setup {
+      position: fixed; inset: 0;
+      background: var(--parchment);
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 20px 20px 12px;
+      overflow-y: auto;
+      z-index: 200;
+      gap: 0;
+    }
+
+    .orn { color: var(--gold); font-size: 1.4rem; margin-bottom: 4px; }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .sub {
+      font-style: italic;
+      color: var(--ink-lt);
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .rule {
+      width: 100%; max-width: 380px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 10px 0;
+    }
+
+    .instructions {
+      max-width: 380px; width: 100%;
+      font-size: 1.0rem;
+      line-height: 1.65;
+      color: var(--ink-lt);
+      margin-bottom: 4px;
+    }
+    .instructions ol { padding-left: 1.3em; }
+    .instructions li { margin-bottom: 4px; }
+    .instructions strong { color: var(--ink); }
+
+    .marker-wrap {
+      border: 1px solid var(--gold);
+      background: white;
+      padding: 10px;
+      border-radius: 3px;
+      margin: 8px 0;
+      text-align: center;
+    }
+    .marker-wrap img { width: 110px; height: 110px; display: block; margin: 0 auto; }
+    .marker-note { font-size: 0.78rem; color: var(--ink-lt); font-style: italic; margin-top: 4px; }
+
+    .btn {
+      display: block;
+      width: 100%; max-width: 280px;
+      padding: 13px 24px;
+      margin: 6px 0;
+      background: var(--ink);
+      color: var(--parchment);
+      border: none; border-radius: 2px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn:hover { background: var(--ink-lt); }
+    .btn.secondary { background: var(--ink-lt); font-size: 0.95rem; padding: 10px 24px; }
+
+    .tip {
+      font-size: 0.8rem; color: var(--ink-lt);
+      font-style: italic;
+      text-align: center;
+      max-width: 320px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── A-Frame Scene ────────────────────────────── */
+    #ar-scene {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 1;
+    }
+
+    /* ── Phase Controls ───────────────────────────── */
+    #hud {
+      display: none;
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    #phase-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(245,234,208,0.96);
+      border-top: 2px solid var(--gold);
+      padding: 10px 16px 14px;
+      pointer-events: auto;
+    }
+
+    #phase-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    #phase-title {
+      font-weight: 600; font-size: 1.05rem;
+    }
+    #phase-date { color: var(--red); font-style: italic; font-size: 0.95rem; }
+    #phase-desc { font-size: 0.9rem; color: var(--ink-lt); font-style: italic; margin-bottom: 8px; }
+
+    .controls-row {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .ctrl-btn {
+      padding: 8px 18px;
+      background: var(--ink); color: var(--parchment);
+      border: none; border-radius: 2px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; cursor: pointer;
+      flex-shrink: 0;
+    }
+    .ctrl-btn:disabled { opacity: 0.35; }
+
+    #phase-pips {
+      flex: 1; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;
+    }
+    .pip {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink-lt);
+      font-size: 0.7rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; pointer-events: auto;
+      font-family: Georgia, serif;
+      color: var(--ink-lt);
+      flex-shrink: 0;
+    }
+    .pip.active { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
+    .pip.built { background: var(--parchment-dk); }
+
+    .toggle-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; color: var(--ink-lt);
+      margin-top: 6px;
+    }
+    input[type=checkbox] { accent-color: var(--ink); width:14px; height:14px; }
+
+    #exit-btn {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(245,234,208,0.9);
+      border: 1px solid var(--gold);
+      padding: 6px 14px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; cursor: pointer;
+      border-radius: 2px; pointer-events: auto;
+    }
+
+    #marker-hint {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(245,234,208,0.85);
+      border: 1px solid var(--gold);
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-lt);
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    /* ── Camera fallback (iOS) ────────────────────── */
+    #cam-video {
+      display: none; position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: 1;
+    }
+    #cam-overlay {
+      display: none; position: fixed;
+      bottom: 130px; left: 50%;
+      transform: translateX(-50%);
+      width: min(92vw, 480px);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      z-index: 10;
+      opacity: 0.93;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    #cam-overlay img { width: 100%; display: block; border-radius: 2px; }
+
+    #plan-canvas { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ── Setup Screen ───────────────────────────────── -->
+<div id="setup">
+  <div class="orn">✦</div>
+  <h1>Old Minster<br>AR Assembly Guide</h1>
+  <p class="sub">Winchester, c.640–1093</p>
+  <div class="rule"></div>
+
+  <div class="instructions">
+    <ol>
+      <li>Print the <strong>Hiro marker</strong> below at roughly <strong>8–12 cm square</strong></li>
+      <li>Place it on the table near your 3D-printed modules</li>
+      <li>Tap <em>Start AR</em> and allow camera access</li>
+      <li>Point the camera at the marker — the floor plan appears flat on the table</li>
+      <li>Use the arrows or phase dots to step through construction phases</li>
+    </ol>
+  </div>
+
+  <div class="marker-wrap">
+    <img src="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png"
+         alt="Hiro AR marker" crossorigin="anonymous">
+    <div class="marker-note">Save &amp; print this marker — 8–12 cm square works well</div>
+  </div>
+
+  <button class="btn" id="btn-start-ar">▶ Start AR</button>
+  <button class="btn secondary" id="btn-start-cam">📷 Camera Overlay (iOS)</button>
+
+  <p class="tip">AR marker tracking works in Android Chrome &amp; Firefox.<br>For iOS Safari, use Camera Overlay mode instead.</p>
+</div>
+
+<!-- ── Plan Canvas (hidden) ──────────────────────── -->
+<canvas id="plan-canvas" width="800" height="500"></canvas>
+
+<!-- ── A-Frame AR Scene ──────────────────────────── -->
+<a-scene id="ar-scene"
+  embedded
+  arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.75;"
+  renderer="logarithmicDepthBuffer: true; colorManagement: true; antialias: true;"
+  vr-mode-ui="enabled: false">
+
+  <a-assets>
+    <!-- Canvas injected via JS after scene loads -->
+  </a-assets>
+
+  <a-marker preset="hiro" id="the-marker">
+    <!--
+      The floor plan appears as a flat plane anchored to the Hiro marker.
+      width=3 / height=1.875 → matches 800:500 canvas aspect ratio.
+      Positioned slightly south of marker centre so modules placed north
+      of marker align with the plan. Adjust position/rotation as needed.
+    -->
+    <a-plane
+      id="plan-plane"
+      position="0 0 0"
+      rotation="-90 0 0"
+      width="3"
+      height="1.875"
+      material="transparent: true; side: double; alphaTest: 0.05;">
+    </a-plane>
+  </a-marker>
+
+  <a-entity camera></a-entity>
+</a-scene>
+
+<!-- ── AR HUD ────────────────────────────────────── -->
+<div id="hud">
+  <div id="marker-hint">Point camera at the Hiro marker…</div>
+
+  <div id="phase-bar">
+    <div id="phase-header">
+      <span id="phase-title">Phase 1</span>
+      <span id="phase-date">c.650</span>
+    </div>
+    <div id="phase-desc">Core nave + east apse</div>
+
+    <div class="controls-row">
+      <button class="ctrl-btn" id="prev-btn">◀</button>
+      <div id="phase-pips"></div>
+      <button class="ctrl-btn" id="next-btn">▶</button>
+    </div>
+
+    <div class="toggle-row">
+      <input type="checkbox" id="show-prev" checked>
+      <label for="show-prev">Show all previous phases</label>
+    </div>
+  </div>
+
+  <button id="exit-btn">✕ Exit</button>
+</div>
+
+<!-- ── Camera fallback (iOS) ─────────────────────── -->
+<video id="cam-video" autoplay playsinline muted></video>
+<div id="cam-overlay"><img id="cam-plan-img" alt="floor plan"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   Old Minster AR Assembly Guide
+   Jacob Newbury / Medieval Toolbox
+   ═══════════════════════════════════════════════════════
+
+   Floor plan coordinate system:
+   Canvas: 800 × 500 px
+   Scale: 8 px / metre (approx)
+   Orientation: East = right (+x), North = up (−y)
+   Nave west wall at x ≈ 270, centre y ≈ 260
+   Full building (Phase 8) spans approx x: 36 → 632
+   ═══════════════════════════════════════════════════════ */
+
+const PHASES = [
+  {
+    num: 1, date: 'c.650',
+    desc: 'Core nave + east apse — the first building',
+    colour: '#b8a060'
+  },
+  {
+    num: 2, date: 'c.725–50',
+    desc: '+ Gatehouse / Tower of St Martin (west)',
+    colour: '#6a9c72'
+  },
+  {
+    num: 3, date: 'c.750–70',
+    desc: '+ Larger apsidal chancel replaces original east end',
+    colour: '#5880a8'
+  },
+  {
+    num: 4, date: 'c.905',
+    desc: '+ Narrow north & south chapels',
+    colour: '#b06868'
+  },
+  {
+    num: 5, date: 'c.930',
+    desc: '+ Complementary north & south chapels',
+    colour: '#8868b0'
+  },
+  {
+    num: 6, date: '971–976',
+    desc: '+ St Swithun\'s Tower + two apsidal chapels',
+    colour: '#5898a8'
+  },
+  {
+    num: 7, date: '980',
+    desc: '+ Two-tower westwork (gatehouse rotated & integrated)',
+    colour: '#a87840'
+  },
+  {
+    num: 8, date: '992–994',
+    desc: '+ Extended east end — final form of the Minster',
+    colour: '#887098'
+  }
+];
+
+let currentPhase = 0;
+let showPrev = true;
+let mode = null; // 'ar' | 'cam'
+
+/* ════════════════════════════════════════════════════
+   FLOOR PLAN DRAWING
+   All measurements approximate, based on published plans.
+   Biddle & Kjølbye-Biddle proportions / Hayfield drawings.
+   ════════════════════════════════════════════════════ */
+
+// Helpers
+function rect(ctx, x, y, w, h)       { ctx.rect(x, y, w, h); }
+function semiE(ctx, cx, cy, r)        { ctx.arc(cx, cy, r, -Math.PI/2, Math.PI/2); }
+function semiW(ctx, cx, cy, r)        { ctx.arc(cx, cy, r, Math.PI/2, -Math.PI/2); }
+function semiN(ctx, cx, cy, r)        { ctx.arc(cx, cy, r, Math.PI, 0); }
+function semiS(ctx, cx, cy, r)        { ctx.arc(cx, cy, r, 0, Math.PI); }
+
+// Each phase: array of shape drawing functions [fill commands]
+// Called with (ctx) inside beginPath/fill or beginPath/stroke
+const SHAPES = [
+
+  /* Phase 1 — Core nave + east apse */
+  [
+    ctx => { rect(ctx, 270, 228, 168, 64); },               // nave
+    ctx => { semiE(ctx, 438, 260, 32); ctx.closePath(); }   // apse
+  ],
+
+  /* Phase 2 — West gatehouse tower */
+  [
+    ctx => { rect(ctx, 198, 232, 72, 56); }  // square tower W of nave
+  ],
+
+  /* Phase 3 — Extended apsidal chancel (E) */
+  [
+    ctx => { rect(ctx, 438, 234, 44, 52); },               // chancel body
+    ctx => { semiE(ctx, 482, 260, 38); ctx.closePath(); }   // larger apse
+  ],
+
+  /* Phase 4a — Narrow N & S chapels */
+  [
+    ctx => { rect(ctx, 278, 180, 96, 48); },   // N chapel
+    ctx => { rect(ctx, 278, 292, 96, 48); }    // S chapel
+  ],
+
+  /* Phase 4b — Complementary chapels */
+  [
+    ctx => { rect(ctx, 374, 180, 80, 48); },   // N chapel 2
+    ctx => { rect(ctx, 374, 292, 80, 48); }    // S chapel 2
+  ],
+
+  /* Phase 5 — St Swithun's Tower + apsidal chapels */
+  [
+    ctx => { rect(ctx, 200, 218, 80, 84); },              // tower body
+    ctx => { semiN(ctx, 240, 218, 30); ctx.closePath(); }, // N apse
+    ctx => { semiS(ctx, 240, 302, 30); ctx.closePath(); }  // S apse
+  ],
+
+  /* Phase 6 — Westwork (two towers) */
+  [
+    ctx => { rect(ctx, 108, 210, 100, 100); },  // westwork body
+    ctx => { rect(ctx, 108, 194, 36, 30); },    // NW tower
+    ctx => { rect(ctx, 108, 296, 36, 30); }     // SW tower
+  ],
+
+  /* Phase 7 / Phase 8 — Extended east end (992-4) */
+  [
+    ctx => { rect(ctx, 482, 218, 88, 84); },               // E extension body
+    ctx => { semiN(ctx, 526, 218, 36); ctx.closePath(); }, // N apse
+    ctx => { semiS(ctx, 526, 302, 36); ctx.closePath(); }, // S apse
+    ctx => { semiE(ctx, 570, 260, 48); ctx.closePath(); }, // far E apse
+    ctx => { rect(ctx, 558, 242, 28, 36); }                // belfry base
+  ]
+];
+
+/* ── Draw single phase shapes ── */
+function drawPhaseShapes(ctx, phaseIdx, fillColour, strokeColour, lineWidth, alpha) {
+  const shapes = SHAPES[phaseIdx];
+  if (!shapes) return;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  shapes.forEach(fn => {
+    ctx.beginPath();
+    fn(ctx);
+
+    if (fillColour) {
+      ctx.fillStyle = fillColour;
+      ctx.fill();
+    }
+    if (strokeColour) {
+      ctx.strokeStyle = strokeColour;
+      ctx.lineWidth = lineWidth || 2;
+      ctx.stroke();
+    }
+  });
+
+  ctx.restore();
+}
+
+/* ── Main draw function ── */
+function drawPlan(canvas, upTo, showPrevious) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;   // 800
+  const H = canvas.height;  // 500
+
+  ctx.clearRect(0, 0, W, H);
+
+  /* Background */
+  ctx.fillStyle = '#f0e4c0';
+  ctx.fillRect(0, 0, W, H);
+
+  /* Double border */
+  ctx.strokeStyle = '#2c1810';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(6, 6, W-12, H-12);
+  ctx.lineWidth = 1;
+  ctx.strokeRect(12, 12, W-24, H-24);
+
+  /* Title */
+  ctx.fillStyle = '#2c1810';
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 19px "Cormorant Garamond", Georgia, serif';
+  ctx.fillText('Winchester — Old Minster', W/2, 38);
+  ctx.font = 'italic 13px Georgia, serif';
+  ctx.fillStyle = '#5a3824';
+  ctx.fillText('Floor plan (schematic) — Assembly guide', W/2, 56);
+
+  /* Gold rule */
+  ctx.strokeStyle = '#c9a227';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(30, 64); ctx.lineTo(W-30, 64); ctx.stroke();
+
+  const startIdx = showPrevious ? 0 : upTo;
+
+  /* ── Draw fills (all shown phases, dim except current) ── */
+  for (let i = startIdx; i < upTo; i++) {
+    drawPhaseShapes(ctx, i, PHASES[i].colour, null, 0, 0.22);
+  }
+  /* Current phase fill: prominent */
+  drawPhaseShapes(ctx, upTo, PHASES[upTo].colour, null, 0, 0.75);
+
+  /* ── Draw wall outlines (all phases) ── */
+  for (let i = startIdx; i < upTo; i++) {
+    drawPhaseShapes(ctx, i, null, '#7a5030', 1.5, 0.45);
+  }
+  /* Current phase outline: bold */
+  drawPhaseShapes(ctx, upTo, null, '#1a0c08', 3, 1.0);
+
+  /* ── Cardinal labels on the building ── */
+  ctx.globalAlpha = 0.45;
+  ctx.fillStyle = '#2c1810';
+  ctx.font = 'italic 12px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('← west', 130, 265);
+  ctx.fillText('east →', 640, 265);
+  ctx.textAlign = 'left';
+  ctx.globalAlpha = 1;
+
+  /* ── Phase label box ── */
+  const p = PHASES[upTo];
+  ctx.fillStyle = 'rgba(240,228,192,0.92)';
+  ctx.fillRect(22, H-80, 400, 62);
+  ctx.strokeStyle = '#c9a227';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(22, H-80, 400, 62);
+
+  ctx.fillStyle = '#2c1810';
+  ctx.font = 'bold 16px "Cormorant Garamond", Georgia, serif';
+  ctx.textAlign = 'left';
+  ctx.fillText(`Phase ${p.num} — ${p.date}`, 32, H-57);
+  ctx.font = 'italic 13px Georgia, serif';
+  ctx.fillStyle = '#5a3824';
+  ctx.fillText(p.desc, 32, H-36);
+  ctx.fillStyle = '#8b1a1a';
+  const allPhases = `(showing phases 1–${upTo+1})`;
+  ctx.font = '11px Georgia, serif';
+  ctx.fillText(allPhases, 32, H-18);
+
+  /* ── Legend ── */
+  const lgX = W - 185, lgY = 76;
+  ctx.fillStyle = 'rgba(240,228,192,0.9)';
+  ctx.fillRect(lgX-6, lgY-4, 174, 18 + (upTo+1) * 18 + 4);
+  ctx.strokeStyle = '#c9a227'; ctx.lineWidth = 0.8;
+  ctx.strokeRect(lgX-6, lgY-4, 174, 18 + (upTo+1) * 18 + 4);
+
+  ctx.fillStyle = '#2c1810';
+  ctx.font = 'bold 11px Georgia, serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Construction phases:', lgX, lgY+10);
+
+  for (let i = startIdx; i <= upTo; i++) {
+    const ly = lgY + 22 + (i - startIdx) * 18;
+    const isActive = (i === upTo);
+
+    ctx.fillStyle = PHASES[i].colour;
+    ctx.globalAlpha = isActive ? 0.9 : 0.45;
+    ctx.fillRect(lgX, ly-10, 12, 12);
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = '#2c1810'; ctx.lineWidth = 0.5;
+    ctx.strokeRect(lgX, ly-10, 12, 12);
+
+    ctx.fillStyle = isActive ? '#2c1810' : '#7a5a3a';
+    ctx.font = isActive ? 'bold 11px Georgia, serif' : '10px Georgia, serif';
+    ctx.fillText(`${i+1}. ${PHASES[i].date}`, lgX+16, ly);
+  }
+
+  /* ── North arrow ── */
+  const ax = W-50, ay = 175;
+  ctx.save();
+  ctx.translate(ax, ay);
+  ctx.fillStyle = '#2c1810';
+  ctx.beginPath();
+  ctx.moveTo(0, -24); ctx.lineTo(-7, 8); ctx.lineTo(0, 3); ctx.lineTo(7, 8);
+  ctx.closePath(); ctx.fill();
+  ctx.font = 'bold 13px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('N', 0, -32);
+  ctx.restore();
+
+  /* ── Scale bar (8px/m, show 10m) ── */
+  const sx = 440, sy = H-30;
+  ctx.strokeStyle = '#2c1810'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sx, sy-4); ctx.lineTo(sx, sy+4);
+  ctx.moveTo(sx, sy); ctx.lineTo(sx+80, sy);
+  ctx.moveTo(sx+80, sy-4); ctx.lineTo(sx+80, sy+4);
+  ctx.stroke();
+  ctx.fillStyle = '#2c1810';
+  ctx.font = '11px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('10 m', sx+40, sy+14);
+  ctx.textAlign = 'left';
+}
+
+/* ════════════════════════════════════════════════════
+   TEXTURE UPDATE
+   ════════════════════════════════════════════════════ */
+const planCanvas = document.getElementById('plan-canvas');
+
+function updateTexture() {
+  drawPlan(planCanvas, currentPhase, showPrev);
+
+  if (mode === 'ar') {
+    const plane = document.getElementById('plan-plane');
+    if (plane) {
+      const dataUrl = planCanvas.toDataURL('image/png');
+      plane.setAttribute('material', {
+        src: dataUrl,
+        transparent: true,
+        side: 'double',
+        alphaTest: 0.05,
+        depthWrite: false
+      });
+    }
+  }
+
+  if (mode === 'cam') {
+    document.getElementById('cam-plan-img').src = planCanvas.toDataURL('image/png');
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   PHASE UI
+   ════════════════════════════════════════════════════ */
+function buildPips() {
+  const container = document.getElementById('phase-pips');
+  container.innerHTML = '';
+  PHASES.forEach((p, i) => {
+    const pip = document.createElement('div');
+    pip.className = 'pip' + (i < currentPhase ? ' built' : '') + (i === currentPhase ? ' active' : '');
+    pip.textContent = i + 1;
+    pip.title = `Phase ${p.num}: ${p.date}`;
+    pip.addEventListener('click', () => { currentPhase = i; updateUI(); });
+    container.appendChild(pip);
+  });
+}
+
+function updateUI() {
+  const p = PHASES[currentPhase];
+  document.getElementById('phase-title').textContent = `Phase ${p.num}`;
+  document.getElementById('phase-date').textContent = p.date;
+  document.getElementById('phase-desc').textContent = p.desc;
+  document.getElementById('prev-btn').disabled = currentPhase === 0;
+  document.getElementById('next-btn').disabled = currentPhase === PHASES.length - 1;
+  buildPips();
+  updateTexture();
+}
+
+document.getElementById('prev-btn').addEventListener('click', () => {
+  if (currentPhase > 0) { currentPhase--; updateUI(); }
+});
+document.getElementById('next-btn').addEventListener('click', () => {
+  if (currentPhase < PHASES.length - 1) { currentPhase++; updateUI(); }
+});
+document.getElementById('show-prev').addEventListener('change', e => {
+  showPrev = e.checked; updateTexture();
+});
+document.getElementById('exit-btn').addEventListener('click', () => location.reload());
+
+/* ════════════════════════════════════════════════════
+   MODES
+   ════════════════════════════════════════════════════ */
+
+/* ── WebXR / AR.js mode ── */
+document.getElementById('btn-start-ar').addEventListener('click', () => {
+  mode = 'ar';
+  document.getElementById('setup').style.display = 'none';
+  document.getElementById('ar-scene').style.display = 'block';
+  document.getElementById('hud').style.display = 'block';
+
+  // Wait for A-Frame scene to be ready, then set initial texture
+  const scene = document.getElementById('ar-scene');
+  if (scene.hasLoaded) {
+    delayedInit();
+  } else {
+    scene.addEventListener('loaded', delayedInit);
+  }
+
+  // Hide marker hint once marker is found
+  const marker = document.getElementById('the-marker');
+  marker.addEventListener('markerFound', () => {
+    const hint = document.getElementById('marker-hint');
+    if (hint) hint.style.opacity = '0';
+  });
+  marker.addEventListener('markerLost', () => {
+    const hint = document.getElementById('marker-hint');
+    if (hint) hint.style.opacity = '1';
+    if (hint) hint.textContent = 'Marker lost — point camera at the Hiro marker';
+  });
+});
+
+function delayedInit() {
+  buildPips();
+  // Small delay ensures material system is ready
+  setTimeout(() => { updateUI(); }, 800);
+}
+
+/* ── Camera overlay fallback mode (iOS) ── */
+document.getElementById('btn-start-cam').addEventListener('click', async () => {
+  mode = 'cam';
+  document.getElementById('setup').style.display = 'none';
+  document.getElementById('hud').style.display = 'block';
+  document.getElementById('cam-video').style.display = 'block';
+  document.getElementById('cam-overlay').style.display = 'block';
+
+  // Hide AR-specific elements
+  document.getElementById('marker-hint').style.display = 'none';
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' } }, audio: false
+    });
+    document.getElementById('cam-video').srcObject = stream;
+  } catch {
+    document.getElementById('cam-video').style.display = 'none';
+  }
+
+  buildPips();
+  updateUI();
+});
+
+/* ── Draw preview on setup screen load ── */
+window.addEventListener('load', () => {
+  drawPlan(planCanvas, 0, false);
+});
+</script>
+</body>
+</html>
