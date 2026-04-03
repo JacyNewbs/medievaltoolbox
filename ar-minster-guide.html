@@ -7,9 +7,9 @@
   <script>if(sessionStorage.getItem("ar_auth")!=="9e7cd9cb5a63a3591e16f4d835f32a1c4a84ab66e39ae27aa448c03b66bf63e7")window.location.href="ar-login.html";</script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-  <!-- AR.js + A-Frame: Hiro-marker-based AR, works iOS Safari + Android Chrome -->
-  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <!-- A-Frame + AR.js via jsDelivr (stable, versioned) -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.3.0/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
 
   <style>
     :root {
@@ -266,10 +266,7 @@
   <p class="tip">AR marker tracking works in Android Chrome &amp; Firefox.<br>For iOS Safari, use Camera Overlay mode instead.</p>
 </div>
 
-<!-- ── Plan Canvas (hidden) ──────────────────────── -->
-<canvas id="plan-canvas" width="800" height="500"></canvas>
-
-<!-- ── A-Frame AR Scene ──────────────────────────── -->
+<!-- ── Plan Canvas lives inside a-assets so A-Frame owns the texture ── -->
 <a-scene id="ar-scene"
   embedded
   arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.75;"
@@ -277,23 +274,21 @@
   vr-mode-ui="enabled: false">
 
   <a-assets>
-    <!-- Canvas injected via JS after scene loads -->
+    <canvas id="plan-canvas" width="800" height="500"></canvas>
   </a-assets>
 
   <a-marker preset="hiro" id="the-marker">
     <!--
-      The floor plan appears as a flat plane anchored to the Hiro marker.
-      width=3 / height=1.875 → matches 800:500 canvas aspect ratio.
-      Positioned slightly south of marker centre so modules placed north
-      of marker align with the plan. Adjust position/rotation as needed.
+      width=3 / height=1.875 keeps the 800:500 canvas ratio.
+      Positioned flat on the table; adjust position y offset if needed.
     -->
     <a-plane
       id="plan-plane"
-      position="0 0 0"
+      position="0 0.001 0"
       rotation="-90 0 0"
       width="3"
       height="1.875"
-      material="transparent: true; side: double; alphaTest: 0.05;">
+      material="src: #plan-canvas; transparent: true; side: double; alphaTest: 0.05; depthWrite: false;">
     </a-plane>
   </a-marker>
 
@@ -624,6 +619,8 @@ function drawPlan(canvas, upTo, showPrevious) {
 
 /* ════════════════════════════════════════════════════
    TEXTURE UPDATE
+   Canvas lives in <a-assets>; A-Frame creates a CanvasTexture
+   from it automatically. We just redraw and set needsUpdate.
    ════════════════════════════════════════════════════ */
 const planCanvas = document.getElementById('plan-canvas');
 
@@ -632,15 +629,15 @@ function updateTexture() {
 
   if (mode === 'ar') {
     const plane = document.getElementById('plan-plane');
-    if (plane) {
-      const dataUrl = planCanvas.toDataURL('image/png');
-      plane.setAttribute('material', {
-        src: dataUrl,
-        transparent: true,
-        side: 'double',
-        alphaTest: 0.05,
-        depthWrite: false
-      });
+    if (!plane) return;
+
+    // First call: A-Frame may not have created the mesh yet — set src attr
+    const mesh = plane.getObject3D('mesh');
+    if (mesh && mesh.material && mesh.material.map) {
+      mesh.material.map.needsUpdate = true;
+    } else {
+      // Fallback: re-set attribute to force A-Frame to re-read the canvas
+      plane.setAttribute('material', 'src', '#plan-canvas');
     }
   }
 
@@ -721,8 +718,18 @@ document.getElementById('btn-start-ar').addEventListener('click', () => {
 
 function delayedInit() {
   buildPips();
-  // Small delay ensures material system is ready
-  setTimeout(() => { updateUI(); }, 800);
+  // Draw canvas immediately so texture is populated when marker first fires
+  drawPlan(planCanvas, currentPhase, showPrev);
+  // Then let A-Frame settle before triggering needsUpdate
+  setTimeout(() => {
+    const plane = document.getElementById('plan-plane');
+    if (plane) {
+      const mesh = plane.getObject3D('mesh');
+      if (mesh && mesh.material && mesh.material.map) {
+        mesh.material.map.needsUpdate = true;
+      }
+    }
+  }, 1200);
 }
 
 /* ── Camera overlay fallback mode (iOS) ── */
