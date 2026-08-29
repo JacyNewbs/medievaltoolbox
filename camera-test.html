@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Camera test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f5ead0; color: #3a2e1e;
+    padding: 24px; display: flex; flex-direction: column;
+    gap: 16px; align-items: center; min-height: 100vh;
+  }
+  h1 { font-size: 20px; font-weight: 600; }
+  button {
+    font: inherit; font-size: 17px; padding: 14px 30px; cursor: pointer;
+    background: #3a2e1e; color: #f5ead0; border: 0; border-radius: 4px;
+  }
+  #env {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px; line-height: 1.8; white-space: pre-wrap; word-break: break-word;
+    background: #ece0c2; border: 1px solid #d4c5a0; border-radius: 4px;
+    padding: 12px 14px; width: 100%; max-width: 480px;
+  }
+  #out { font-size: 15px; line-height: 1.5; max-width: 480px; text-align: center; min-height: 3em; }
+  .bad { color: #8b2020; font-weight: 600; }
+  .good { color: #2a6a2a; font-weight: 600; }
+  video { width: 100%; max-width: 480px; border-radius: 6px; background: #000; }
+</style>
+</head>
+<body>
+  <h1>Camera test</h1>
+  <p style="font-size:14px;max-width:44ch;text-align:center">
+    No AR, no password, no libraries. If the camera does not appear here, the problem is the
+    hosting or the browser, not the AR code.
+  </p>
+
+  <pre id="env">reading…</pre>
+  <button id="go" type="button">Open the camera</button>
+  <div id="out"></div>
+  <video id="v" playsinline autoplay muted></video>
+
+<script>
+(function () {
+  const env = document.getElementById('env');
+  const out = document.getElementById('out');
+  const go  = document.getElementById('go');
+  const v   = document.getElementById('v');
+
+  const secure   = window.isSecureContext;
+  const hasMD    = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const hasCrypt = !!(window.crypto && window.crypto.subtle);
+
+  env.textContent = [
+    'URL protocol   : ' + location.protocol,
+    'Hostname       : ' + (location.hostname || '(none)'),
+    'Secure context : ' + secure + (secure ? '' : '   <-- CAMERA WILL NOT WORK'),
+    'getUserMedia   : ' + hasMD + (hasMD ? '' : '   <-- BLOCKED BY BROWSER'),
+    'crypto.subtle  : ' + hasCrypt + (hasCrypt ? '' : '   <-- PASSWORD CHECK WILL FAIL'),
+    'Browser        : ' + navigator.userAgent
+  ].join('\n');
+
+  go.addEventListener('click', async () => {
+    out.textContent = 'Requesting…';
+    out.className = '';
+
+    if (!hasMD) {
+      out.className = 'bad';
+      out.textContent = secure
+        ? 'This browser does not expose getUserMedia at all. If you are in an in-app browser '
+          + '(Instagram, Facebook, Gmail), open the page in Safari or Chrome instead.'
+        : 'The page is not on a secure origin, so the browser has removed the camera API. '
+          + 'Serve it over https:// or from localhost.';
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' } }, audio: false
+      });
+      v.srcObject = stream;
+      const track = stream.getVideoTracks()[0];
+      const s = track.getSettings();
+      out.className = 'good';
+      out.textContent = 'Camera open: ' + track.label + ' (' + s.width + '\u00d7' + s.height + ')';
+    } catch (err) {
+      out.className = 'bad';
+      out.textContent = err.name + ': ' + err.message;
+    }
+  });
+})();
+</script>
+</body>
+</html>

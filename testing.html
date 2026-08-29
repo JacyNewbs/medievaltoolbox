@@ -222,9 +222,20 @@
     start.textContent = label;
   }
 
-  async function sha256(text) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  // crypto.subtle is undefined on non-secure origins (file://, plain http://),
+  // which would otherwise kill the password check before you reach the camera.
+  const CRYPTO_OK = !!(window.crypto && window.crypto.subtle);
+  const PLAIN = 'Test';
+
+  async function passwordMatches(text) {
+    if (!CRYPTO_OK) return text === PLAIN;
+    try {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      return hex === HASH;
+    } catch (e) {
+      return text === PLAIN;
+    }
   }
 
   function showStartPanel() {
@@ -234,21 +245,40 @@
     start.focus();
   }
 
-  if (sessionStorage.getItem('tk_test') === HASH) showStartPanel();
+  // Say this up front, not after three taps.
+  if (!window.isSecureContext) {
+    note.textContent = 'This page is being served over ' + location.protocol
+      + ' — the browser blocks camera access outside https:// and localhost.';
+    report([
+      'protocol      : ' + location.protocol,
+      'hostname      : ' + (location.hostname || '(none)'),
+      'secureContext : false',
+      'getUserMedia  : ' + !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    ]);
+  }
+
+  try {
+    if (sessionStorage.getItem('tk_test') === HASH) showStartPanel();
+  } catch (e) {}
 
   async function tryUnlock() {
     if (!pw.value) return;
     unlock.disabled = true;
-    const digest = await sha256(pw.value);
-    if (digest === HASH) {
-      sessionStorage.setItem('tk_test', HASH);
-      showStartPanel();
-    } else {
-      note.textContent = 'That password is not right.';
-      pw.value = '';
-      pw.focus();
+    try {
+      if (await passwordMatches(pw.value)) {
+        try { sessionStorage.setItem('tk_test', HASH); } catch (e) {}
+        showStartPanel();
+      } else {
+        note.textContent = 'That password is not right.';
+        pw.value = '';
+        pw.focus();
+      }
+    } catch (err) {
+      note.textContent = 'The password check failed.';
+      report([(err.name || 'Error') + ': ' + err.message]);
+    } finally {
+      unlock.disabled = false;
     }
-    unlock.disabled = false;
   }
   unlock.addEventListener('click', tryUnlock);
   pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
