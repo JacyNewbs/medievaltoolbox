@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Testing &middot; Medieval Toolbox</title>
+
+<!-- site-wide gate, same as the other pages -->
+<script>if(sessionStorage.getItem("tk_auth")!=="8ea752113563c9bbbcc7627e33051535919069af0999cb3ba4291ef055f1d38f")window.location.href="login.html";</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+
+<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<!-- only needed if your GLB carries baked animations -->
+<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: #8b6914; color: #fff; }
+  html, body { height: 100%; overflow: hidden; background: #000; }
+
+  /* ---------- gate: parchment, matches the toolbox ---------- */
+  #gate {
+    position: fixed; inset: 0; z-index: 30;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 20px; padding: 32px; text-align: center;
+    background: #f5ead0; color: #3a2e1e;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  #gate[hidden] { display: none; }
+
+  #gate .tag {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.4em;
+    color: #7a5c14; font-weight: 600;
+  }
+  #gate h1 {
+    font-size: clamp(30px, 7vw, 44px); font-weight: 300;
+    color: #2a1e0e; letter-spacing: 0.03em;
+  }
+  #gate .blurb {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 16px; line-height: 1.55; font-style: italic;
+    color: #7a6a4a; max-width: 34ch;
+  }
+
+  .panel { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .panel[hidden] { display: none; }
+
+  #pw {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 19px; text-align: center; letter-spacing: 0.08em;
+    width: min(78vw, 260px);
+    padding: 12px 16px;
+    background: #faf3e3;
+    border: 1px solid #d4c5a0; border-radius: 4px;
+    color: #2a1e0e;
+  }
+  #pw:focus { outline: none; border-color: #8b6914; background: #fff8eb; }
+
+  .btn {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px; font-weight: 500; letter-spacing: 0.06em;
+    padding: 12px 30px; cursor: pointer;
+    background: #3a2e1e; color: #f5ead0;
+    border: 1px solid #3a2e1e; border-radius: 4px;
+  }
+  .btn:hover { background: #2a1e0e; }
+  .btn:focus-visible { outline: 2px solid #8b6914; outline-offset: 3px; }
+  .btn:disabled { opacity: 0.55; cursor: default; }
+
+  .note {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 14px; line-height: 1.5; max-width: 34ch; min-height: 1.4em;
+    color: #8b2020;
+  }
+  .backlink {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13px; color: #9a8a6a; text-decoration: none;
+    border-bottom: 1px solid #d4c5a0; padding-bottom: 1px;
+  }
+  .backlink:hover { color: #7a5c14; }
+
+  /* ---------- in-camera chrome: dark, for legibility over video ---------- */
+  #ui {
+    position: fixed; inset: 0; z-index: 10; pointer-events: none;
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(20px, env(safe-area-inset-top)) 20px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  #status {
+    background: rgba(26, 20, 12, 0.74);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 234, 208, 0.3);
+    border-radius: 999px; padding: 9px 20px;
+    font-size: 16px; letter-spacing: 0.04em; color: #f5ead0;
+    transition: opacity 0.35s ease;
+  }
+  #status.faded { opacity: 0; }
+
+  #reticle {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: min(72vw, 340px);
+    aspect-ratio: 85.6 / 54;          /* ISO 7810 ID-1, a bank card */
+    border: 1.5px solid rgba(245, 234, 208, 0.4);
+    border-radius: 10px; pointer-events: none; z-index: 10;
+    transition: opacity 0.35s ease;
+  }
+  #reticle.faded { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ==================================================================
+     Change these three things:
+       imageTargetSrc  -> your compiled .mind file
+       #model src      -> your .glb
+       scale/rotation/position on <a-gltf-model>
+     ================================================================== -->
+<a-scene
+  mindar-image="imageTargetSrc: ./targets.mind;
+                autoStart: false;
+                uiScanning: no;
+                uiLoading: no;
+                uiError: no;
+                filterMinCF: 0.0001;
+                filterBeta: 0.001;
+                missTolerance: 5;
+                warmupTolerance: 1"
+  color-space="sRGB"
+  renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+  embedded>
+
+  <a-assets timeout="30000">
+    <a-asset-item id="model" src="./model.glb"></a-asset-item>
+  </a-assets>
+
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-entity light="type: hemisphere; color: #ffffff; groundColor: #8d8477; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; color: #fff6e8; intensity: 1.1" position="0.6 1.2 1"></a-entity>
+
+    <!-- 1 unit = the width of your target image (85.6 mm for a card).
+         scale 0.5 is therefore about 43 mm across. y=0 sits flush. -->
+    <a-gltf-model
+      id="ar-model"
+      src="#model"
+      position="0 0 0"
+      rotation="0 0 0"
+      scale="0.5 0.5 0.5"
+      animation-mixer>
+    </a-gltf-model>
+  </a-entity>
+</a-scene>
+
+<div id="ui">
+  <div id="status">Point at the target</div>
+</div>
+<div id="reticle" class="faded"></div>
+
+<div id="gate">
+  <div class="tag">Experimental</div>
+  <h1>Testing</h1>
+  <p class="blurb">An augmented reality viewer. Point a phone camera at the printed target to place the model on it.</p>
+
+  <div class="panel" id="panel-pw">
+    <input id="pw" type="password" inputmode="text" autocomplete="off"
+           autocapitalize="none" spellcheck="false" placeholder="Password" aria-label="Password">
+    <button class="btn" id="unlock" type="button">Unlock</button>
+  </div>
+
+  <div class="panel" id="panel-start" hidden>
+    <button class="btn" id="start" type="button">Start camera</button>
+  </div>
+
+  <p class="note" id="note" role="alert"></p>
+  <a class="backlink" href="index.html">Back to the toolbox</a>
+</div>
+
+<script>
+(function () {
+  const HASH = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
+
+  const gate     = document.getElementById('gate');
+  const panelPw  = document.getElementById('panel-pw');
+  const panelGo  = document.getElementById('panel-start');
+  const pw       = document.getElementById('pw');
+  const unlock   = document.getElementById('unlock');
+  const start    = document.getElementById('start');
+  const note     = document.getElementById('note');
+  const status   = document.getElementById('status');
+  const reticle  = document.getElementById('reticle');
+  const scene    = document.querySelector('a-scene');
+  const target   = document.querySelector('[mindar-image-target]');
+
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function showStartPanel() {
+    panelPw.hidden = true;
+    panelGo.hidden = false;
+    note.textContent = '';
+    start.focus();
+  }
+
+  // Camera needs a secure context: file:// and plain http:// will not work.
+  if (!window.isSecureContext && location.hostname !== 'localhost') {
+    note.textContent = 'This page has to be served over HTTPS before the camera will open.';
+  }
+
+  if (sessionStorage.getItem('tk_test') === HASH) showStartPanel();
+
+  async function tryUnlock() {
+    const entered = pw.value;
+    if (!entered) return;
+    unlock.disabled = true;
+    const digest = await sha256(entered);
+    if (digest === HASH) {
+      sessionStorage.setItem('tk_test', HASH);
+      showStartPanel();
+    } else {
+      note.textContent = 'That password is not right.';
+      pw.value = '';
+      pw.focus();
+    }
+    unlock.disabled = false;
+  }
+
+  unlock.addEventListener('click', tryUnlock);
+  pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+  let wakeLock = null;
+  async function keepAwake() {
+    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && gate.hidden) keepAwake();
+  });
+
+  start.addEventListener('click', async () => {
+    start.disabled = true;
+    start.textContent = 'Starting\u2026';
+    note.textContent = '';
+    try {
+      await scene.systems['mindar-image-system'].start();
+      gate.hidden = true;
+      reticle.classList.remove('faded');
+      keepAwake();
+    } catch (err) {
+      start.disabled = false;
+      start.textContent = 'Try again';
+      note.textContent = 'The camera did not open. Check that camera access is allowed for this site '
+        + 'and that nothing else is using the camera. (' + ((err && err.name) || 'unknown') + ')';
+    }
+  });
+
+  target.addEventListener('targetFound', () => {
+    status.classList.add('faded');
+    reticle.classList.add('faded');
+  });
+  target.addEventListener('targetLost', () => {
+    status.classList.remove('faded');
+    reticle.classList.remove('faded');
+  });
+})();
+</script>
+</body>
+</html>

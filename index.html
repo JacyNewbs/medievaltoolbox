@@ -104,7 +104,15 @@
     .card-carta .tool-tag { color: #8b2020; }
     .card-locus .tool-tag { color: #3a7a3a; }
     .card-nummus .tool-tag { color: #7a5c14; }
-    .card-leges .tool-tag  { color: #4a3080; }
+    .card-fontes .tool-tag { color: #8b6914; }
+    .card-test .tool-tag { color: #4a5a7a; }
+
+    /* experimental tools: dashed rule, quieter ground */
+    .tool-card.experimental {
+      border-style: dashed;
+      background: #f7f0e0;
+    }
+    .tool-card.experimental:hover { background: #fdf7e8; }
 
     footer {
       border-top: 1px solid #d4c5a0;
@@ -116,14 +124,6 @@
     }
   </style>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"><link rel="manifest" href="site.webmanifest">
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MHHVQF35D"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-5MHHVQF35D');
-  </script>
 </head>
 <body>
   <header>
@@ -167,11 +167,19 @@
       <h2>Nummus</h2>
       <p>Pounds, shillings, and pence calculator with denomination converter. Weights and measures from Zupko, covering linear, area, capacity, and weight systems.</p>
     </a>
-    <a href="leges.html" class="tool-card card-leges">
+
+    <a href="fontes.html" class="tool-card card-fontes">
       <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Statutes at Large</div>
-      <h2>Leges</h2>
-      <p>Browse the medieval English statutes extracted from the <em>Statutes at Large</em> (Eyre &amp; Strahan, 1811). Searchable by monarch, statute, and clause.</p>
+      <div class="tool-tag">Published Primary Sources</div>
+      <h2>Fontes</h2>
+      <p>Calendars, editions, and reference works for medieval English history. Browse by category, search by title or abbreviation, and find links to free online texts.</p>
+    </a>
+
+    <a href="testing.html" class="tool-card card-test experimental">
+      <span class="arrow">&#8599;</span>
+      <div class="tool-tag">Experimental &middot; Password required</div>
+      <h2>Testing</h2>
+      <p>Work in progress. Currently an augmented reality viewer: point a phone camera at a printed target to place a 3D model on it. Needs a rear camera and camera permission.</p>
     </a>
   </div>
 
