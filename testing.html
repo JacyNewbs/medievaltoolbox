@@ -11,7 +11,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 <!-- only needed if your GLB carries baked animations -->
 <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
@@ -110,6 +110,18 @@
   }
   #status.faded { opacity: 0; }
 
+  #live {
+    margin-top: 12px; pointer-events: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px; line-height: 1.7; text-align: left;
+    white-space: pre-wrap; word-break: break-word;
+    max-width: 92vw; color: #f5ead0;
+    background: rgba(26, 20, 12, 0.86);
+    border: 1px solid rgba(245, 234, 208, 0.3);
+    border-radius: 6px; padding: 10px 12px;
+  }
+  #live[hidden] { display: none; }
+
   #reticle {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: min(72vw, 340px);
@@ -119,6 +131,14 @@
     transition: opacity 0.35s ease;
   }
   #reticle.faded { opacity: 0; }
+
+  /* MindAR injects its own <video> into the body and A-Frame lays the WebGL
+     canvas over it. Only the stacking and the canvas background are touched
+     here — never the video's inline size or position, which MindAR sets to
+     keep the tracking maths aligned with the picture. */
+  body > video { z-index: 0 !important; }
+  .a-canvas { z-index: 1 !important; background: transparent !important; }
+  .a-enter-vr, .a-enter-ar, .a-orientation-modal { display: none !important; }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -142,7 +162,7 @@
                 missTolerance: 5;
                 warmupTolerance: 1"
   color-space="sRGB"
-  renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true"
+  renderer="colorManagement: true; alpha: true; antialias: true"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false">
 
@@ -171,6 +191,7 @@
 
 <div id="ui">
   <div id="status">Point at the target</div>
+  <pre id="live" hidden></pre>
 </div>
 <div id="reticle" class="faded"></div>
 
@@ -372,12 +393,49 @@
       gate.hidden = true;
       reticle.classList.remove('faded');
       keepAwake();
+      beginLiveReadout();
     } catch (err) {
       resetButton('Try again');
       note.textContent = 'The AR engine did not start.';
       report([(err.name || 'Error') + ': ' + err.message]);
     }
   });
+
+  // Tap the status pill to show what is actually behind the overlay.
+  const live = document.getElementById('live');
+  status.style.pointerEvents = 'auto';
+  status.addEventListener('click', () => { live.hidden = !live.hidden; });
+
+  function beginLiveReadout() {
+    const tick = () => {
+      const vid = document.querySelector('body > video');
+      const cvs = document.querySelector('.a-canvas');
+      const lines = [];
+
+      if (!vid) {
+        lines.push('video element : MISSING — MindAR never injected it');
+      } else {
+        const cs = getComputedStyle(vid);
+        lines.push('video stream  : ' + vid.videoWidth + '\u00d7' + vid.videoHeight
+                   + '  readyState ' + vid.readyState + (vid.paused ? '  PAUSED' : '  playing'));
+        lines.push('video css     : ' + cs.display + ' / vis ' + cs.visibility
+                   + ' / op ' + cs.opacity + ' / z ' + cs.zIndex);
+        lines.push('video box     : ' + Math.round(vid.getBoundingClientRect().width)
+                   + '\u00d7' + Math.round(vid.getBoundingClientRect().height));
+      }
+
+      if (!cvs) {
+        lines.push('canvas        : MISSING');
+      } else {
+        const cc = getComputedStyle(cvs);
+        lines.push('canvas        : z ' + cc.zIndex + ' / bg ' + cc.backgroundColor);
+      }
+      lines.push('screen        : ' + window.innerWidth + '\u00d7' + window.innerHeight);
+      live.textContent = lines.join('\n');
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
 
   target.addEventListener('targetFound', () => {
     status.classList.add('faded');
