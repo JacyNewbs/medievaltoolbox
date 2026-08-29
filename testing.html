@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Testing &middot; Medieval Toolbox</title>
 
-<!-- site-wide gate, same as the other pages -->
+<!-- site-wide gate, same as the other pages. Delete this line if you want to
+     share the test page without handing over the main site password. -->
 <script>if(sessionStorage.getItem("tk_auth")!=="8ea752113563c9bbbcc7627e33051535919069af0999cb3ba4291ef055f1d38f")window.location.href="login.html";</script>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
@@ -18,16 +19,17 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: #8b6914; color: #fff; }
-  html, body { height: 100%; overflow: hidden; background: #000; }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: #000; }
 
   /* ---------- gate: parchment, matches the toolbox ---------- */
   #gate {
     position: fixed; inset: 0; z-index: 30;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    gap: 20px; padding: 32px; text-align: center;
+    gap: 18px; padding: 32px; text-align: center;
     background: #f5ead0; color: #3a2e1e;
     font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-y: auto;
   }
   #gate[hidden] { display: none; }
 
@@ -72,9 +74,18 @@
 
   .note {
     font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 14px; line-height: 1.5; max-width: 34ch; min-height: 1.4em;
+    font-size: 14px; line-height: 1.5; max-width: 38ch; min-height: 1.4em;
     color: #8b2020;
   }
+  .diag {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px; line-height: 1.7; text-align: left;
+    max-width: 38ch; color: #6a5a3a;
+    background: #ece0c2; border: 1px solid #d4c5a0; border-radius: 4px;
+    padding: 10px 12px; white-space: pre-wrap; word-break: break-word;
+  }
+  .diag[hidden] { display: none; }
+
   .backlink {
     font-family: 'Crimson Pro', Georgia, serif;
     font-size: 13px; color: #9a8a6a; text-decoration: none;
@@ -133,10 +144,9 @@
   color-space="sRGB"
   renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true"
   vr-mode-ui="enabled: false"
-  device-orientation-permission-ui="enabled: false"
-  embedded>
+  device-orientation-permission-ui="enabled: false">
 
-  <a-assets timeout="30000">
+  <a-assets timeout="20000">
     <a-asset-item id="model" src="./model.glb"></a-asset-item>
   </a-assets>
 
@@ -180,24 +190,37 @@
   </div>
 
   <p class="note" id="note" role="alert"></p>
+  <pre class="diag" id="diag" hidden></pre>
   <a class="backlink" href="index.html">Back to the toolbox</a>
 </div>
 
 <script>
 (function () {
   const HASH = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
+  const MIND_FILE  = './targets.mind';
+  const MODEL_FILE = './model.glb';
 
-  const gate     = document.getElementById('gate');
-  const panelPw  = document.getElementById('panel-pw');
-  const panelGo  = document.getElementById('panel-start');
-  const pw       = document.getElementById('pw');
-  const unlock   = document.getElementById('unlock');
-  const start    = document.getElementById('start');
-  const note     = document.getElementById('note');
-  const status   = document.getElementById('status');
-  const reticle  = document.getElementById('reticle');
-  const scene    = document.querySelector('a-scene');
-  const target   = document.querySelector('[mindar-image-target]');
+  const gate    = document.getElementById('gate');
+  const panelPw = document.getElementById('panel-pw');
+  const panelGo = document.getElementById('panel-start');
+  const pw      = document.getElementById('pw');
+  const unlock  = document.getElementById('unlock');
+  const start   = document.getElementById('start');
+  const note    = document.getElementById('note');
+  const diag    = document.getElementById('diag');
+  const status  = document.getElementById('status');
+  const reticle = document.getElementById('reticle');
+  const scene   = document.querySelector('a-scene');
+  const target  = document.querySelector('[mindar-image-target]');
+
+  function report(lines) {
+    diag.textContent = lines.join('\n');
+    diag.hidden = false;
+  }
+  function resetButton(label) {
+    start.disabled = false;
+    start.textContent = label;
+  }
 
   async function sha256(text) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -211,18 +234,12 @@
     start.focus();
   }
 
-  // Camera needs a secure context: file:// and plain http:// will not work.
-  if (!window.isSecureContext && location.hostname !== 'localhost') {
-    note.textContent = 'This page has to be served over HTTPS before the camera will open.';
-  }
-
   if (sessionStorage.getItem('tk_test') === HASH) showStartPanel();
 
   async function tryUnlock() {
-    const entered = pw.value;
-    if (!entered) return;
+    if (!pw.value) return;
     unlock.disabled = true;
-    const digest = await sha256(entered);
+    const digest = await sha256(pw.value);
     if (digest === HASH) {
       sessionStorage.setItem('tk_test', HASH);
       showStartPanel();
@@ -233,9 +250,39 @@
     }
     unlock.disabled = false;
   }
-
   unlock.addEventListener('click', tryUnlock);
   pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+  // --- preflight: the things that actually stop the camera ---------------
+  async function preflight() {
+    const problems = [];
+
+    if (!window.isSecureContext) {
+      problems.push('Not a secure context (' + location.protocol + '). The camera only works '
+        + 'over https:// or on localhost. Opening the file straight off disk will never work.');
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      problems.push('This browser exposes no getUserMedia. In-app browsers (Instagram, '
+        + 'Facebook, some mail clients) block it — open the page in Safari or Chrome.');
+    }
+    for (const [label, url] of [['targets.mind', MIND_FILE], ['model.glb', MODEL_FILE]]) {
+      try {
+        const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+        if (!res.ok) problems.push(label + ' returned HTTP ' + res.status + ' — it is not sitting next to this page.');
+      } catch (e) {
+        problems.push(label + ' could not be fetched: ' + e.message);
+      }
+    }
+    return problems;
+  }
+
+  function withTimeout(promise, ms, label) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error(label + ' timed out after ' + (ms / 1000) + 's')), ms))
+    ]);
+  }
 
   let wakeLock = null;
   async function keepAwake() {
@@ -249,16 +296,56 @@
     start.disabled = true;
     start.textContent = 'Starting\u2026';
     note.textContent = '';
+    diag.hidden = true;
+
+    // 1. Ask for the camera inside the tap itself, so the permission prompt is
+    //    tied to a real user gesture. Release the stream again straight away.
     try {
-      await scene.systems['mindar-image-system'].start();
+      const probe = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' } }, audio: false
+      });
+      probe.getTracks().forEach(t => t.stop());
+    } catch (err) {
+      resetButton('Try again');
+      if (err.name === 'NotAllowedError') {
+        note.textContent = 'Camera access was refused. Allow it for this site, then reload. '
+          + 'On iOS: tap aA in the address bar, then Website Settings, then Camera.';
+      } else if (err.name === 'NotFoundError' || err.name === 'OverconstrainedError') {
+        note.textContent = 'No rear camera was found on this device.';
+      } else {
+        note.textContent = 'The camera could not be opened.';
+      }
+      report([err.name + ': ' + err.message].concat(await preflight()));
+      return;
+    }
+
+    // 2. Everything else that can go wrong.
+    const problems = await preflight();
+    if (problems.length) {
+      resetButton('Try again');
+      note.textContent = 'The camera works, but the page is not set up correctly yet.';
+      report(problems);
+      return;
+    }
+
+    // 3. Wait for A-Frame, then hand over to MindAR.
+    try {
+      if (!scene.hasLoaded) {
+        await withTimeout(new Promise(r => scene.addEventListener('loaded', r, { once: true })),
+                          25000, 'Scene load');
+      }
+      const system = scene.systems['mindar-image-system'];
+      if (!system) throw new Error('mindar-image-system is missing: the MindAR script did not load.');
+
+      await withTimeout(system.start(), 20000, 'MindAR start');
+
       gate.hidden = true;
       reticle.classList.remove('faded');
       keepAwake();
     } catch (err) {
-      start.disabled = false;
-      start.textContent = 'Try again';
-      note.textContent = 'The camera did not open. Check that camera access is allowed for this site '
-        + 'and that nothing else is using the camera. (' + ((err && err.name) || 'unknown') + ')';
+      resetButton('Try again');
+      note.textContent = 'The AR engine did not start.';
+      report([(err.name || 'Error') + ': ' + err.message]);
     }
   });
 
