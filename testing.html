@@ -132,6 +132,47 @@
   }
   #reticle.faded { opacity: 0; }
 
+  #adjust-toggle {
+    position: fixed; right: 12px; bottom: 12px; z-index: 26;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 15px; letter-spacing: 0.06em;
+    padding: 9px 18px; cursor: pointer;
+    background: rgba(26, 20, 12, 0.8); color: #f5ead0;
+    border: 1px solid rgba(245, 234, 208, 0.35); border-radius: 999px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+
+  #adjust {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 27;
+    background: rgba(20, 16, 10, 0.93);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(245, 234, 208, 0.25);
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+    color: #f5ead0; max-height: 68vh; overflow-y: auto;
+  }
+  #adjust[hidden] { display: none; }
+  #adjust .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  #adjust label {
+    font-family: ui-monospace, Menlo, monospace; font-size: 11px;
+    width: 44px; flex: none; color: rgba(245, 234, 208, 0.75);
+  }
+  #adjust input[type=range] { flex: 1; min-width: 0; accent-color: #c9a227; }
+  #adjust output {
+    font-family: ui-monospace, Menlo, monospace; font-size: 11px;
+    width: 46px; flex: none; text-align: right;
+  }
+  #snippet {
+    font-family: ui-monospace, Menlo, monospace; font-size: 10.5px;
+    line-height: 1.6; white-space: pre-wrap; word-break: break-all;
+    background: rgba(0, 0, 0, 0.45); border-radius: 4px;
+    padding: 8px 10px; margin: 10px 0; color: #e8dcc0;
+  }
+  #adjust .btns button {
+    flex: 1; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px;
+    padding: 9px 0; cursor: pointer; border-radius: 4px;
+    background: #f5ead0; color: #2a1e0e; border: 0;
+  }
+
   #build {
     position: fixed; left: 10px; bottom: 10px; z-index: 25;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -169,7 +210,7 @@
                 uiError: no;
                 filterMinCF: 0.0001;
                 filterBeta: 0.001;
-                missTolerance: 5;
+                missTolerance: 10;
                 warmupTolerance: 1"
   color-space="sRGB"
   renderer="colorManagement: true; alpha: true; antialias: true"
@@ -187,12 +228,14 @@
     <a-entity light="type: directional; color: #fff6e8; intensity: 1.1" position="0.6 1.2 1"></a-entity>
 
     <!-- 1 unit = the width of your target image (85.6 mm for a card).
-         scale 0.5 is therefore about 43 mm across. y=0 sits flush. -->
+         The card's own plane is XY with Z pointing out of it, so a standard
+         Y-up GLB needs rotation x=90 to stand ON the card rather than in it.
+         Use the Adjust panel to find your numbers, then paste them here. -->
     <a-gltf-model
       id="ar-model"
       src="#model"
       position="0 0 0"
-      rotation="0 0 0"
+      rotation="90 0 0"
       scale="0.5 0.5 0.5"
       animation-mixer>
     </a-gltf-model>
@@ -203,7 +246,25 @@
   <div id="status">Point at the target</div>
   <pre id="live" hidden></pre>
 </div>
-<div id="build">build 5</div>
+<div id="build">build 6</div>
+
+<button id="adjust-toggle" type="button">Adjust</button>
+
+<div id="adjust" hidden>
+  <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1" value="90"><output id="rx-o">90</output></div>
+  <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1" value="0"><output id="ry-o">0</output></div>
+  <div class="row"><label>Rot Z</label><input type="range" id="rz" min="-180" max="180" step="1" value="0"><output id="rz-o">0</output></div>
+  <div class="row"><label>Pos X</label><input type="range" id="px" min="-1" max="1" step="0.01" value="0"><output id="px-o">0</output></div>
+  <div class="row"><label>Pos Y</label><input type="range" id="py" min="-1" max="1" step="0.01" value="0"><output id="py-o">0</output></div>
+  <div class="row"><label>Pos Z</label><input type="range" id="pz" min="-1" max="1" step="0.01" value="0"><output id="pz-o">0</output></div>
+  <div class="row"><label>Scale</label><input type="range" id="sc" min="0.01" max="3" step="0.01" value="0.5"><output id="sc-o">0.5</output></div>
+  <pre id="snippet"></pre>
+  <div class="row btns">
+    <button type="button" id="copy">Copy</button>
+    <button type="button" id="reset">Reset</button>
+    <button type="button" id="close">Close</button>
+  </div>
+</div>
 <div id="reticle" class="faded"></div>
 
 <div id="gate">
@@ -447,6 +508,42 @@
     tick();
     setInterval(tick, 1000);
   }
+
+  // ---- live model adjustment -------------------------------------------
+  const model  = document.getElementById('ar-model');
+  const adjust = document.getElementById('adjust');
+  const snippet = document.getElementById('snippet');
+  const DEFAULTS = { rx: 90, ry: 0, rz: 0, px: 0, py: 0, pz: 0, sc: 0.5 };
+  const ids = Object.keys(DEFAULTS);
+  const el = {};
+  ids.forEach(k => { el[k] = document.getElementById(k); el[k + 'o'] = document.getElementById(k + '-o'); });
+
+  function applyModel() {
+    const v = {};
+    ids.forEach(k => { v[k] = parseFloat(el[k].value); el[k + 'o'].textContent = el[k].value; });
+    model.setAttribute('rotation', v.rx + ' ' + v.ry + ' ' + v.rz);
+    model.setAttribute('position', v.px + ' ' + v.py + ' ' + v.pz);
+    model.setAttribute('scale', v.sc + ' ' + v.sc + ' ' + v.sc);
+    snippet.textContent =
+      'position="' + v.px + ' ' + v.py + ' ' + v.pz + '"\n' +
+      'rotation="' + v.rx + ' ' + v.ry + ' ' + v.rz + '"\n' +
+      'scale="' + v.sc + ' ' + v.sc + ' ' + v.sc + '"';
+  }
+  ids.forEach(k => el[k].addEventListener('input', applyModel));
+  applyModel();
+
+  document.getElementById('adjust-toggle').addEventListener('click', () => { adjust.hidden = false; });
+  document.getElementById('close').addEventListener('click', () => { adjust.hidden = true; });
+  document.getElementById('reset').addEventListener('click', () => {
+    ids.forEach(k => { el[k].value = DEFAULTS[k]; });
+    applyModel();
+  });
+  document.getElementById('copy').addEventListener('click', async () => {
+    const btn = document.getElementById('copy');
+    try { await navigator.clipboard.writeText(snippet.textContent); btn.textContent = 'Copied'; }
+    catch (e) { btn.textContent = 'Select it'; }
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
 
   target.addEventListener('targetFound', () => {
     status.classList.add('faded');
