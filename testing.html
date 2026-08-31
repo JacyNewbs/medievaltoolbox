@@ -246,7 +246,7 @@
   <div id="status">Point at the target</div>
   <pre id="live" hidden></pre>
 </div>
-<div id="build">build 6</div>
+<div id="build">build 7</div>
 
 <button id="adjust-toggle" type="button">Adjust</button>
 
@@ -449,6 +449,27 @@
       note.textContent = 'The camera works, but the page is not set up correctly yet.';
       report(problems);
       return;
+    }
+
+    // MindAR calls getUserMedia with no resolution constraint, so Chrome hands
+    // back about 480x640. Wrap it once to ask for something usable for feature
+    // tracking. 'ideal' means the browser falls back gracefully if unsupported.
+    if (!navigator.mediaDevices.__resPatched) {
+      const orig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+      navigator.mediaDevices.getUserMedia = function (constraints) {
+        if (constraints && constraints.video) {
+          const v = (typeof constraints.video === 'object') ? constraints.video : {};
+          constraints = Object.assign({}, constraints, {
+            video: Object.assign({}, v, {
+              width:  { ideal: 1280 },
+              height: { ideal: 960 },
+              facingMode: v.facingMode || { ideal: 'environment' }
+            })
+          });
+        }
+        return orig(constraints);
+      };
+      navigator.mediaDevices.__resPatched = true;
     }
 
     // 3. Wait for A-Frame, then hand over to MindAR.
