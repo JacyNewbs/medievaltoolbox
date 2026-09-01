@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ArUco detection test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; background: #000; }
+  #video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #overlay { position: fixed; inset: 0; width: 100%; height: 100%; }
+
+  #hud {
+    position: fixed; top: max(12px, env(safe-area-inset-top)); left: 12px; right: 12px;
+    z-index: 10; pointer-events: none;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; line-height: 1.7;
+    color: #f5ead0; background: rgba(20, 16, 10, 0.78);
+    border: 1px solid rgba(245, 234, 208, 0.28); border-radius: 6px;
+    padding: 9px 12px; white-space: pre-wrap;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+
+  #gate {
+    position: fixed; inset: 0; z-index: 30;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; padding: 32px; text-align: center;
+    background: #f5ead0; color: #3a2e1e;
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  #gate[hidden] { display: none; }
+  #gate h1 { font-size: 21px; font-weight: 600; }
+  #gate p { font-size: 14px; line-height: 1.55; max-width: 38ch; color: #6a5a3a; }
+  button {
+    font: inherit; font-size: 17px; padding: 13px 30px; cursor: pointer;
+    background: #3a2e1e; color: #f5ead0; border: 0; border-radius: 4px;
+  }
+  #err { color: #8b2020; font-size: 14px; max-width: 38ch; }
+  #build {
+    position: fixed; left: 10px; bottom: 10px; z-index: 20;
+    font-family: ui-monospace, Menlo, monospace; font-size: 10px;
+    color: rgba(245,234,208,0.55); background: rgba(26,20,12,0.6);
+    padding: 3px 7px; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+  <video id="video" playsinline autoplay muted></video>
+  <canvas id="overlay"></canvas>
+  <div id="hud">starting…</div>
+  <div id="build">aruco test build 1</div>
+
+  <div id="gate">
+    <h1>ArUco detection test</h1>
+    <p>Detection only — no 3D yet. Point the camera at your markers; each one found
+       is outlined with its ID. The corner dot shows the marker's own top-left.</p>
+    <button id="start" type="button">Start camera</button>
+    <div id="err" role="alert"></div>
+  </div>
+
+<script src="./aruco4x4.js"></script>
+<script>
+(function () {
+  var video = document.getElementById('video');
+  var overlay = document.getElementById('overlay');
+  var ctx = overlay.getContext('2d');
+  var hud = document.getElementById('hud');
+  var gate = document.getElementById('gate');
+  var startBtn = document.getElementById('start');
+  var errEl = document.getElementById('err');
+
+  // Detection runs on a downscaled copy: markers are big, and this is what
+  // keeps the frame budget sane on a phone.
+  var work = document.createElement('canvas');
+  var wctx = work.getContext('2d', { willReadFrequently: true });
+  var WORK_W = 480;
+
+  var frames = 0, lastFpsAt = 0, fps = 0, lastMs = 0;
+  var seen = {};   // id -> timestamp last seen
+
+  startBtn.addEventListener('click', async function () {
+    startBtn.disabled = true;
+    startBtn.textContent = 'Starting…';
+    errEl.textContent = '';
+    try {
+      var stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: 'environment' },
+                 width: { ideal: 1280 }, height: { ideal: 960 } },
+        audio: false
+      });
+      video.srcObject = stream;
+      await video.play();
+      gate.hidden = true;
+      if ('wakeLock' in navigator) { try { await navigator.wakeLock.request('screen'); } catch (e) {} }
+      requestAnimationFrame(loop);
+    } catch (e) {
+      startBtn.disabled = false;
+      startBtn.textContent = 'Try again';
+      errEl.textContent = e.name + ': ' + e.message +
+        (window.isSecureContext ? '' : ' — page is not on a secure origin.');
+    }
+  });
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    overlay.width = Math.round(window.innerWidth * dpr);
+    overlay.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  /* The video is drawn with object-fit: cover, so part of it is cropped.
+     Detected coordinates are in video space and must be mapped through the
+     same transform or the outlines will not sit on the markers. */
+  function coverMap() {
+    var vw = video.videoWidth, vh = video.videoHeight;
+    var sw = window.innerWidth, sh = window.innerHeight;
+    var s = Math.max(sw / vw, sh / vh);
+    return { s: s, ox: (sw - vw * s) / 2, oy: (sh - vh * s) / 2 };
+  }
+
+  function loop(ts) {
+    requestAnimationFrame(loop);
+    if (!video.videoWidth) return;
+
+    var scale = WORK_W / video.videoWidth;
+    work.width = WORK_W;
+    work.height = Math.round(video.videoHeight * scale);
+    wctx.drawImage(video, 0, 0, work.width, work.height);
+    var img = wctx.getImageData(0, 0, work.width, work.height);
+
+    var t0 = performance.now();
+    var found = Aruco4x4.detect(img.data, work.width, work.height);
+    lastMs = performance.now() - t0;
+
+    var m = coverMap();
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    found.forEach(function (d) {
+      seen[d.id] = ts;
+      var pts = d.corners.map(function (p) {
+        return [p[0] / scale * m.s + m.ox, p[1] / scale * m.s + m.oy];
+      });
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (var i = 1; i < 4; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.closePath();
+      ctx.strokeStyle = '#3ad07a'; ctx.lineWidth = 3; ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(pts[0][0], pts[0][1], 7, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffb020'; ctx.fill();
+
+      var cx = (pts[0][0] + pts[2][0]) / 2, cy = (pts[0][1] + pts[2][1]) / 2;
+      ctx.font = 'bold 26px ui-monospace, Menlo, monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(0,0,0,0.75)';
+      ctx.strokeText(String(d.id), cx, cy);
+      ctx.fillStyle = '#f5ead0'; ctx.fillText(String(d.id), cx, cy);
+    });
+
+    frames++;
+    if (ts - lastFpsAt > 500) {
+      fps = Math.round(frames * 1000 / (ts - lastFpsAt));
+      frames = 0; lastFpsAt = ts;
+    }
+
+    var recent = Object.keys(seen).filter(function (k) { return ts - seen[k] < 1500; });
+    hud.textContent =
+      'camera   ' + video.videoWidth + '\u00d7' + video.videoHeight +
+      '   processing at ' + work.width + '\u00d7' + work.height + '\n' +
+      'fps      ' + fps + '   detect ' + lastMs.toFixed(1) + 'ms\n' +
+      'now      ' + (found.length ? found.map(function (d) {
+                       return d.id + (d.err ? '(' + d.err + 'b)' : '');
+                     }).join('  ') : '\u2014') + '\n' +
+      'seen     ' + (recent.length ? recent.sort(function(a,b){return a-b;}).join('  ') : '\u2014');
+  }
+})();
+</script>
+</body>
+</html>
