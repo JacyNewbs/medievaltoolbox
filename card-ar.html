@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Card AR · Medieval Toolbox</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; background: #000; }
+  #video  { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #gl     { position: fixed; inset: 0; width: 100%; height: 100%; }
+
+  #hud {
+    position: fixed; top: max(10px, env(safe-area-inset-top)); left: 10px;
+    z-index: 12; pointer-events: none;
+    font-family: ui-monospace, Menlo, monospace; font-size: 11px; line-height: 1.65;
+    color: #f5ead0; background: rgba(20,16,10,0.72);
+    border: 1px solid rgba(245,234,208,0.25); border-radius: 5px;
+    padding: 7px 10px; white-space: pre;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  #hud[hidden] { display: none; }
+
+  #gate {
+    position: fixed; inset: 0; z-index: 30;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 32px; text-align: center;
+    background: #f5ead0; color: #3a2e1e;
+    font-family: 'Cormorant Garamond', Georgia, serif; overflow-y: auto;
+  }
+  #gate[hidden] { display: none; }
+  #gate .tag { font-size: 11px; text-transform: uppercase; letter-spacing: .4em; color: #7a5c14; font-weight: 600; }
+  #gate h1 { font-size: clamp(28px,7vw,42px); font-weight: 300; color: #2a1e0e; }
+  #gate p { font-family: Georgia, serif; font-size: 15px; line-height: 1.55; max-width: 34ch; color: #7a6a4a; font-style: italic; }
+  .btn {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; letter-spacing: .06em;
+    padding: 12px 30px; cursor: pointer; border-radius: 4px;
+    background: #3a2e1e; color: #f5ead0; border: 1px solid #3a2e1e;
+  }
+  .btn:disabled { opacity: .55; }
+  #note { font-family: Georgia, serif; font-size: 14px; color: #8b2020; max-width: 38ch; min-height: 1.3em; }
+
+  #panelBtn {
+    position: fixed; right: 12px; bottom: 12px; z-index: 26;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px;
+    padding: 9px 18px; cursor: pointer; color: #f5ead0;
+    background: rgba(26,20,12,.8); border: 1px solid rgba(245,234,208,.35); border-radius: 999px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  #panel {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 27;
+    background: rgba(20,16,10,.94); color: #f5ead0;
+    border-top: 1px solid rgba(245,234,208,.25);
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    max-height: 70vh; overflow-y: auto;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  }
+  #panel[hidden] { display: none; }
+  .row { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+  .row label { font-family: ui-monospace, Menlo, monospace; font-size: 11px; width: 52px; flex: none; color: rgba(245,234,208,.75); }
+  .row input[type=range] { flex: 1; min-width: 0; accent-color: #c9a227; }
+  .row output { font-family: ui-monospace, Menlo, monospace; font-size: 11px; width: 52px; flex: none; text-align: right; }
+  #snippet {
+    font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; line-height: 1.6;
+    background: rgba(0,0,0,.45); border-radius: 4px; padding: 8px 10px; margin: 9px 0;
+    white-space: pre-wrap; word-break: break-all; color: #e8dcc0;
+  }
+  .btns { display: flex; gap: 8px; }
+  .btns button { flex: 1; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px;
+    padding: 9px 0; border: 0; border-radius: 4px; background: #f5ead0; color: #2a1e0e; cursor: pointer; }
+  #build { position: fixed; left: 10px; bottom: 10px; z-index: 20;
+    font-family: ui-monospace, Menlo, monospace; font-size: 10px;
+    color: rgba(245,234,208,.5); background: rgba(26,20,12,.6); padding: 3px 7px; border-radius: 3px; }
+</style>
+</head>
+<body>
+  <video id="video" playsinline autoplay muted></video>
+  <canvas id="gl"></canvas>
+  <div id="hud">starting…</div>
+  <div id="build">card-ar build 1</div>
+  <button id="panelBtn" type="button">Adjust</button>
+
+  <div id="panel" hidden>
+    <div class="row"><label>Size</label><input type="range" id="size" min="10" max="400" step="1" value="80"><output id="size-o">80mm</output></div>
+    <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1" value="0"><output id="rx-o">0</output></div>
+    <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1" value="0"><output id="ry-o">0</output></div>
+    <div class="row"><label>Rot Z</label><input type="range" id="rz" min="-180" max="180" step="1" value="0"><output id="rz-o">0</output></div>
+    <div class="row"><label>Off X</label><input type="range" id="ox" min="-60" max="60" step="0.5" value="0"><output id="ox-o">0</output></div>
+    <div class="row"><label>Off Y</label><input type="range" id="oy" min="-60" max="60" step="0.5" value="0"><output id="oy-o">0</output></div>
+    <div class="row"><label>Lift</label><input type="range" id="oz" min="-30" max="60" step="0.5" value="0"><output id="oz-o">0</output></div>
+    <div class="row"><label>FOV</label><input type="range" id="fov" min="40" max="90" step="1" value="62"><output id="fov-o">62°</output></div>
+    <div class="row"><label>Smooth</label><input type="range" id="sm" min="0" max="95" step="5" value="55"><output id="sm-o">55</output></div>
+    <pre id="snippet"></pre>
+    <div class="btns">
+      <button type="button" id="seat">Seat on card</button>
+      <button type="button" id="copy">Copy</button>
+      <button type="button" id="close">Close</button>
+    </div>
+  </div>
+
+  <div id="gate">
+    <div class="tag">Experimental</div>
+    <h1>Card AR</h1>
+    <p>Point the camera at the marker card. Either face works.</p>
+    <button class="btn" id="start" type="button">Start camera</button>
+    <div id="note" role="alert"></div>
+  </div>
+
+<script src="./aruco4x4.js"></script>
+<script src="./pose.js"></script>
+<script type="importmap">
+{ "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const MODEL_URL = './model.glb';
+const WORK_W    = 480;          // detection resolution; raise for more range
+
+const video = document.getElementById('video');
+const glc   = document.getElementById('gl');
+const hud   = document.getElementById('hud');
+const gate  = document.getElementById('gate');
+const note  = document.getElementById('note');
+const startBtn = document.getElementById('start');
+
+const work = document.createElement('canvas');
+const wctx = work.getContext('2d', { willReadFrequently: true });
+
+let board = null, objFront = null, objBack = null;
+let modelRoot = null, modelInner = null, baseSize = 1;
+
+/* ---------- three.js ---------------------------------------------------- */
+const renderer = new THREE.WebGLRenderer({ canvas: glc, alpha: true, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene  = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera();   // projection set manually from K
+camera.matrixAutoUpdate = false;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8d8477, 2.0));
+const key = new THREE.DirectionalLight(0xfff6e8, 2.2);
+key.position.set(60, 120, 100);
+scene.add(key);
+
+const anchor = new THREE.Group();               // card pose lives here
+anchor.matrixAutoUpdate = false;
+scene.add(anchor);
+
+/* ---------- controls ---------------------------------------------------- */
+const ui = {};
+['size','rx','ry','rz','ox','oy','oz','fov','sm'].forEach(k => {
+  ui[k] = document.getElementById(k);
+  ui[k + 'o'] = document.getElementById(k + '-o');
+});
+const snippet = document.getElementById('snippet');
+
+function applyModel() {
+  ui.sizeo.textContent = ui.size.value + 'mm';
+  ui.fovo.textContent  = ui.fov.value + '\u00b0';
+  ['rx','ry','rz','ox','oy','oz','sm'].forEach(k => ui[k + 'o'].textContent = ui[k].value);
+  if (!modelRoot) return;
+  const s = (+ui.size.value) / baseSize;
+  modelRoot.scale.setScalar(s);
+  modelRoot.rotation.set(
+    THREE.MathUtils.degToRad(+ui.rx.value),
+    THREE.MathUtils.degToRad(+ui.ry.value),
+    THREE.MathUtils.degToRad(+ui.rz.value));
+  modelRoot.position.set(+ui.ox.value, +ui.oy.value, +ui.oz.value);
+  snippet.textContent =
+    `size ${ui.size.value}mm   rot ${ui.rx.value} ${ui.ry.value} ${ui.rz.value}\n` +
+    `offset ${ui.ox.value} ${ui.oy.value} ${ui.oz.value}   fov ${ui.fov.value}\u00b0`;
+}
+Object.keys(ui).forEach(k => { if (ui[k] && ui[k].tagName === 'INPUT') ui[k].addEventListener('input', applyModel); });
+
+document.getElementById('panelBtn').onclick = () => { document.getElementById('panel').hidden = false; };
+document.getElementById('close').onclick    = () => { document.getElementById('panel').hidden = true; };
+document.getElementById('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(snippet.textContent); } catch (e) {}
+};
+/* Drop the model so its lowest point rests on the card face. */
+document.getElementById('seat').onclick = () => {
+  if (!modelRoot) return;
+  modelRoot.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(modelRoot);
+  ui.oz.value = (+ui.oz.value - box.min.z).toFixed(1);
+  applyModel();
+};
+
+/* ---------- camera intrinsics + GL projection --------------------------- */
+function intrinsics(w, h) {
+  const fovx = THREE.MathUtils.degToRad(+ui.fov.value);
+  const fx = w / (2 * Math.tan(fovx / 2));
+  return { fx, fy: fx, cx: w / 2, cy: h / 2 };
+}
+function setProjection(K, w, h, near, far) {
+  // OpenCV intrinsics -> OpenGL clip space
+  const m = new THREE.Matrix4();
+  m.set(
+    2*K.fx/w, 0,          1 - 2*K.cx/w,               0,
+    0,        2*K.fy/h,   2*K.cy/h - 1,               0,
+    0,        0,          -(far+near)/(far-near),     -2*far*near/(far-near),
+    0,        0,          -1,                          0
+  );
+  camera.projectionMatrix.copy(m);
+  camera.projectionMatrixInverse.copy(m).invert();
+}
+
+/* ---------- pose smoothing ---------------------------------------------- */
+const smPos = new THREE.Vector3();
+const smQuat = new THREE.Quaternion();
+let haveSmooth = false, lostFrames = 0;
+
+function poseToMatrix(pose) {
+  const R = pose.R, t = pose.t;
+  // OpenCV (y down, z forward) -> three.js (y up, z back): negate rows 2 and 3
+  return new THREE.Matrix4().set(
+     R[0],  R[1],  0, t[0],
+    -R[3], -R[4],  0, -t[1],
+    -R[6], -R[7],  0, -t[2],
+     0,     0,     0, 1
+  );
+}
+function poseToRotQuat(pose) {
+  const R = pose.R;
+  const m = new THREE.Matrix4().set(
+     R[0],  R[1],  R[2], 0,
+    -R[3], -R[4], -R[5], 0,
+    -R[6], -R[7], -R[8], 0,
+     0,     0,     0,    1
+  );
+  return new THREE.Quaternion().setFromRotationMatrix(m);
+}
+
+/* ---------- boot -------------------------------------------------------- */
+async function boot() {
+  board = await (await fetch('./board.json', { cache: 'no-store' })).json();
+  objFront = BoardPose.boardObjectPoints(board.faces.front);
+  objBack  = BoardPose.boardObjectPoints(board.faces.back);
+
+  await new Promise((res) => {
+    new GLTFLoader().load(MODEL_URL, (gltf) => {
+      modelInner = gltf.scene;
+      const box = new THREE.Box3().setFromObject(modelInner);
+      const size = new THREE.Vector3(); box.getSize(size);
+      baseSize = Math.max(size.x, size.y, size.z) || 1;
+      const c = new THREE.Vector3(); box.getCenter(c);
+      modelInner.position.sub(c);                    // centre it on its own origin
+      modelRoot = new THREE.Group();
+      modelRoot.add(modelInner);
+      anchor.add(modelRoot);
+      applyModel();
+      res();
+    }, undefined, (err) => {
+      note.textContent = 'model.glb did not load — check it is next to this page.';
+      // still run: detection and pose remain useful without a model
+      modelRoot = new THREE.Group();
+      const fallback = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({ color: 0xc9a227 }));
+      modelRoot.add(fallback); baseSize = 1;
+      anchor.add(modelRoot); applyModel();
+      res();
+    });
+  });
+}
+
+startBtn.addEventListener('click', async () => {
+  startBtn.disabled = true; startBtn.textContent = 'Starting…'; note.textContent = '';
+  try {
+    await boot();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } },
+      audio: false
+    });
+    video.srcObject = stream;
+    await video.play();
+    gate.hidden = true;
+    if ('wakeLock' in navigator) { try { await navigator.wakeLock.request('screen'); } catch (e) {} }
+    resize(); requestAnimationFrame(loop);
+  } catch (e) {
+    startBtn.disabled = false; startBtn.textContent = 'Try again';
+    note.textContent = e.name + ': ' + e.message +
+      (window.isSecureContext ? '' : ' — not a secure origin.');
+  }
+});
+
+function resize() {
+  renderer.setSize(innerWidth, innerHeight, false);
+}
+addEventListener('resize', resize);
+
+/* The video uses object-fit: cover, so the visible region is a crop of the
+   frame. The GL projection must describe that same crop or the model will
+   not sit on the card. */
+function coverGeometry() {
+  const vw = video.videoWidth, vh = video.videoHeight;
+  const s = Math.max(innerWidth / vw, innerHeight / vh);
+  return { s, ox: (innerWidth - vw * s) / 2, oy: (innerHeight - vh * s) / 2, vw, vh };
+}
+
+let fps = 0, frames = 0, lastFps = 0, detMs = 0;
+
+function loop(ts) {
+  requestAnimationFrame(loop);
+  if (!video.videoWidth) return;
+
+  const scale = WORK_W / video.videoWidth;
+  work.width = WORK_W;
+  work.height = Math.round(video.videoHeight * scale);
+  wctx.drawImage(video, 0, 0, work.width, work.height);
+  const img = wctx.getImageData(0, 0, work.width, work.height);
+
+  const t0 = performance.now();
+  const found = Aruco4x4.detect(img.data, work.width, work.height);
+  detMs = performance.now() - t0;
+
+  // which face are we looking at?
+  const frontIds = board.faces.front.map(m => m.id);
+  const onFront = found.some(d => frontIds.includes(d.id));
+  const objMap  = onFront ? objFront : objBack;
+
+  // corners are in work-canvas pixels; pose maths wants full-frame pixels
+  const dets = found
+    .filter(d => objMap[d.id])
+    .map(d => ({ id: d.id, corners: d.corners.map(p => [p[0] / scale, p[1] / scale]) }));
+
+  const g = coverGeometry();
+  const K = intrinsics(g.vw, g.vh);
+  setProjection(K, g.vw, g.vh, 10, 20000);
+
+  // match the GL viewport to the covered crop
+  const dpr = renderer.getPixelRatio();
+  renderer.setViewport(g.ox, innerHeight - (g.oy + g.vh * g.s), g.vw * g.s, g.vh * g.s);
+  renderer.setScissor(0, 0, innerWidth, innerHeight);
+
+  let pose = null;
+  if (dets.length) pose = BoardPose.estimateBoardPose(dets, objMap, K);
+
+  if (pose && pose.reprojError < 6) {
+    lostFrames = 0;
+    const q = poseToRotQuat(pose);
+    const p = new THREE.Vector3(pose.t[0], -pose.t[1], -pose.t[2]);
+    const a = (+ui.sm.value) / 100;
+    if (!haveSmooth) { smPos.copy(p); smQuat.copy(q); haveSmooth = true; }
+    else { smPos.lerp(p, 1 - a); smQuat.slerp(q, 1 - a); }
+    anchor.visible = true;
+    anchor.matrix.compose(smPos, smQuat, new THREE.Vector3(1, 1, 1));
+  } else {
+    lostFrames++;
+    if (lostFrames > 12) { anchor.visible = false; haveSmooth = false; }
+  }
+
+  camera.matrix.identity();
+  camera.matrixWorldInverse.identity();
+  renderer.render(scene, camera);
+
+  frames++;
+  if (ts - lastFps > 500) { fps = Math.round(frames * 1000 / (ts - lastFps)); frames = 0; lastFps = ts; }
+  hud.textContent =
+    `cam ${g.vw}\u00d7${g.vh}  work ${work.width}  fps ${fps}  det ${detMs.toFixed(0)}ms\n` +
+    `face ${onFront ? 'front' : 'back'}  ids [${found.map(d => d.id).join(' ')}]\n` +
+    (pose ? `dist ${(pose.t[2] / 10).toFixed(1)}cm  reproj ${pose.reprojError.toFixed(2)}px  n=${pose.markers}`
+          : 'no pose');
+}
+</script>
+</body>
+</html>
