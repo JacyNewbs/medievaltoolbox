@@ -65,6 +65,15 @@
     background: rgba(0,0,0,.45); border-radius: 4px; padding: 8px 10px; margin: 9px 0;
     white-space: pre-wrap; word-break: break-all; color: #e8dcc0;
   }
+  .seg { display: flex; gap: 5px; flex: 1; }
+  .seg button {
+    flex: 1; font-family: ui-monospace, Menlo, monospace; font-size: 12px;
+    padding: 7px 0; cursor: pointer; border-radius: 4px;
+    background: rgba(245,234,208,.14); color: #f5ead0;
+    border: 1px solid rgba(245,234,208,.3);
+  }
+  .seg button.on { background: #f5ead0; color: #2a1e0e; border-color: #f5ead0; }
+
   .btns { display: flex; gap: 8px; }
   .btns button { flex: 1; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px;
     padding: 9px 0; border: 0; border-radius: 4px; background: #f5ead0; color: #2a1e0e; cursor: pointer; }
@@ -77,10 +86,19 @@
   <video id="video" playsinline autoplay muted></video>
   <canvas id="gl"></canvas>
   <div id="hud">starting…</div>
-  <div id="build">card-ar build 1</div>
+  <div id="build">card-ar build 2</div>
   <button id="panelBtn" type="button">Adjust</button>
 
   <div id="panel" hidden>
+    <div class="row">
+      <label>Up axis</label>
+      <div class="seg" id="upaxis">
+        <button type="button" data-up="y" class="on">Y&#8593;</button>
+        <button type="button" data-up="z">Z&#8593;</button>
+        <button type="button" data-up="-y">Y&#8595;</button>
+        <button type="button" data-up="-z">Z&#8595;</button>
+      </div>
+    </div>
     <div class="row"><label>Size</label><input type="range" id="size" min="10" max="400" step="1" value="80"><output id="size-o">80mm</output></div>
     <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1" value="0"><output id="rx-o">0</output></div>
     <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1" value="0"><output id="ry-o">0</output></div>
@@ -93,6 +111,7 @@
     <pre id="snippet"></pre>
     <div class="btns">
       <button type="button" id="seat">Seat on card</button>
+      <button type="button" id="shadow">Shadow: on</button>
       <button type="button" id="copy">Copy</button>
       <button type="button" id="close">Close</button>
     </div>
@@ -152,6 +171,39 @@ const anchor = new THREE.Group();               // card pose lives here
 anchor.matrixAutoUpdate = false;
 scene.add(anchor);
 
+/* Card space: +x right across the card, +y up the card, +z out of the card
+   face. So "sitting on the card" means the model's own up axis must point
+   along +z and its base must reach z = 0. glTF is Y-up by convention, but
+   photogrammetry and Blender exports are frequently Z-up, hence the choice. */
+const UP_ROT = {
+  'y':  [ Math.PI / 2, 0, 0],   // model +y -> card +z
+  'z':  [ 0, 0, 0],             // already Z-up
+  '-y': [-Math.PI / 2, 0, 0],
+  '-z': [ Math.PI, 0, 0]
+};
+let upGroup = null;
+
+/* A soft contact shadow on the card plane. Without one the model reads as
+   floating even when the geometry is exactly seated. */
+function makeShadow() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const g = c.getContext('2d');
+  const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grd.addColorStop(0,    'rgba(0,0,0,0.55)');
+  grd.addColorStop(0.55, 'rgba(0,0,0,0.22)');
+  grd.addColorStop(1,    'rgba(0,0,0,0)');
+  g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
+  const tex = new THREE.CanvasTexture(c);
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1),
+    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false })
+  );
+  mesh.position.z = 0.3;          // a hair above the card to avoid z-fighting
+  return mesh;
+}
+let shadowMesh = null, shadowOn = true;
+
 /* ---------- controls ---------------------------------------------------- */
 const ui = {};
 ['size','rx','ry','rz','ox','oy','oz','fov','sm'].forEach(k => {
@@ -175,6 +227,7 @@ function applyModel() {
   snippet.textContent =
     `size ${ui.size.value}mm   rot ${ui.rx.value} ${ui.ry.value} ${ui.rz.value}\n` +
     `offset ${ui.ox.value} ${ui.oy.value} ${ui.oz.value}   fov ${ui.fov.value}\u00b0`;
+  if (typeof updateShadow === 'function') updateShadow();
 }
 Object.keys(ui).forEach(k => { if (ui[k] && ui[k].tagName === 'INPUT') ui[k].addEventListener('input', applyModel); });
 
@@ -183,14 +236,72 @@ document.getElementById('close').onclick    = () => { document.getElementById('p
 document.getElementById('copy').onclick = async () => {
   try { await navigator.clipboard.writeText(snippet.textContent); } catch (e) {}
 };
-/* Drop the model so its lowest point rests on the card face. */
-document.getElementById('seat').onclick = () => {
+/* Measure the model's bounding box in CARD space. The previous version used
+   setFromObject, which returns a world-space box — and world space here is
+   the camera, not the card, so the seat height came out meaningless as soon
+   as the card was not square-on. */
+function boxInCardSpace() {
+  anchor.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(anchor.matrixWorld).invert();
+  const box = new THREE.Box3();
+  const v = new THREE.Vector3();
+  let any = false;
+  modelRoot.traverse((o) => {
+    if (!o.isMesh || !o.geometry) return;
+    if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+    const bb = o.geometry.boundingBox;
+    for (let i = 0; i < 8; i++) {
+      v.set(i & 1 ? bb.max.x : bb.min.x,
+            i & 2 ? bb.max.y : bb.min.y,
+            i & 4 ? bb.max.z : bb.min.z)
+       .applyMatrix4(o.matrixWorld).applyMatrix4(inv);
+      box.expandByPoint(v);
+      any = true;
+    }
+  });
+  return any ? box : null;
+}
+
+function seatOnCard() {
   if (!modelRoot) return;
-  modelRoot.updateMatrixWorld(true);
-  const box = new THREE.Box3().setFromObject(modelRoot);
+  const box = boxInCardSpace();
+  if (!box) return;
   ui.oz.value = (+ui.oz.value - box.min.z).toFixed(1);
   applyModel();
+  updateShadow();
+}
+document.getElementById('seat').onclick = seatOnCard;
+
+function updateShadow() {
+  if (!shadowMesh || !modelRoot) return;
+  shadowMesh.visible = shadowOn;
+  if (!shadowOn) return;
+  const box = boxInCardSpace();
+  if (!box) return;
+  const w = (box.max.x - box.min.x) * 1.5;
+  const h = (box.max.y - box.min.y) * 1.5;
+  shadowMesh.scale.set(Math.max(w, 1), Math.max(h, 1), 1);
+  shadowMesh.position.x = (box.max.x + box.min.x) / 2;
+  shadowMesh.position.y = (box.max.y + box.min.y) / 2;
+}
+
+document.getElementById('shadow').onclick = (e) => {
+  shadowOn = !shadowOn;
+  e.target.textContent = 'Shadow: ' + (shadowOn ? 'on' : 'off');
+  updateShadow();
 };
+
+document.getElementById('upaxis').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b || !upGroup) return;
+  document.querySelectorAll('#upaxis button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  const r = UP_ROT[b.dataset.up];
+  upGroup.rotation.set(r[0], r[1], r[2]);
+  ui.oz.value = 0;
+  applyModel();
+  seatOnCard();
+});
 
 /* ---------- camera intrinsics + GL projection --------------------------- */
 function intrinsics(w, h) {
@@ -244,28 +355,39 @@ async function boot() {
   objBack  = BoardPose.boardObjectPoints(board.faces.back);
 
   await new Promise((res) => {
+    function install(obj, fallbackSize) {
+      const box = new THREE.Box3().setFromObject(obj);
+      const size = new THREE.Vector3(); box.getSize(size);
+      baseSize = Math.max(size.x, size.y, size.z) || fallbackSize || 1;
+      const c = new THREE.Vector3(); box.getCenter(c);
+      obj.position.sub(c);                            // centre on its own origin
+
+      upGroup = new THREE.Group();                    // model up axis -> card +z
+      const r = UP_ROT['y'];
+      upGroup.rotation.set(r[0], r[1], r[2]);
+      upGroup.add(obj);
+
+      modelRoot = new THREE.Group();
+      modelRoot.add(upGroup);
+      anchor.add(modelRoot);
+
+      shadowMesh = makeShadow();
+      anchor.add(shadowMesh);
+
+      applyModel();
+      seatOnCard();                                   // base flush with the card
+      res();
+    }
+
     new GLTFLoader().load(MODEL_URL, (gltf) => {
       modelInner = gltf.scene;
-      const box = new THREE.Box3().setFromObject(modelInner);
-      const size = new THREE.Vector3(); box.getSize(size);
-      baseSize = Math.max(size.x, size.y, size.z) || 1;
-      const c = new THREE.Vector3(); box.getCenter(c);
-      modelInner.position.sub(c);                    // centre it on its own origin
-      modelRoot = new THREE.Group();
-      modelRoot.add(modelInner);
-      anchor.add(modelRoot);
-      applyModel();
-      res();
-    }, undefined, (err) => {
+      install(modelInner);
+    }, undefined, () => {
       note.textContent = 'model.glb did not load — check it is next to this page.';
-      // still run: detection and pose remain useful without a model
-      modelRoot = new THREE.Group();
-      const fallback = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
+      modelInner = new THREE.Mesh(
+        new THREE.ConeGeometry(0.5, 1.2, 6),
         new THREE.MeshStandardMaterial({ color: 0xc9a227 }));
-      modelRoot.add(fallback); baseSize = 1;
-      anchor.add(modelRoot); applyModel();
-      res();
+      install(modelInner, 1.2);
     });
   });
 }
