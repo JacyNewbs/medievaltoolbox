@@ -4,35 +4,36 @@
     85.6,
     53.98
   ],
-  "marker_size_mm": 37.0,
-  "note": "cx/cy are marker centres in mm from card centre, +x right, +y up",
+  "marker_size_mm": 33.0,
+  "quiet_mm": 6.533,
+  "note": "cx/cy are marker centres in mm from card centre, +x right, +y up, viewed face-on",
   "faces": {
     "front": [
       {
         "id": 0,
-        "cx_mm": -21.0,
-        "cy_mm": 5.49,
-        "size_mm": 37.0
+        "cx_mm": -19.767,
+        "cy_mm": 4.49,
+        "size_mm": 33.0
       },
       {
         "id": 19,
-        "cx_mm": 21.0,
-        "cy_mm": 5.49,
-        "size_mm": 37.0
+        "cx_mm": 19.767,
+        "cy_mm": 4.49,
+        "size_mm": 33.0
       }
     ],
     "back": [
       {
         "id": 1,
-        "cx_mm": -21.0,
-        "cy_mm": 5.49,
-        "size_mm": 37.0
+        "cx_mm": -19.767,
+        "cy_mm": 4.49,
+        "size_mm": 33.0
       },
       {
         "id": 20,
-        "cx_mm": 21.0,
-        "cy_mm": 5.49,
-        "size_mm": 37.0
+        "cx_mm": 19.767,
+        "cy_mm": 4.49,
+        "size_mm": 33.0
       }
     ]
   }
