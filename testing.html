@@ -265,9 +265,8 @@ Drop a .sog / .spz / .ply / .splat file here to view it.</p>
     <button class="btn" id="unlock" type="button">Unlock</button>
   </div>
 
-  <div class="panel" id="panel-start" hidden>
-    <button class="btn" id="start" type="button">Open viewer</button>
-    <button class="btn ghost" id="demo" type="button" hidden>Load a demo splat instead</button>
+  <div class="panel" id="panel-retry" hidden>
+    <button class="btn" id="retry" type="button">Try again</button>
   </div>
 
   <p class="note" id="note" role="alert"></p>
@@ -285,8 +284,7 @@ Drop a .sog / .spz / .ply / .splat file here to view it.</p>
 //  You can also try another file without editing: testing.html?file=other.spz
 // ======================================================================
 const CONFIG = {
-  splatUrl: './chapterhouse.spz',
-  demoUrl:  'https://sparkjs.dev/assets/splats/butterfly.spz',
+  splatUrl: './chapterhouse.sog',
   // Most splat tools export upside-down relative to three.js, hence rx 180.
   transform: { rx: 180, ry: 0, rz: 0, px: 0, py: 0, pz: -3, sc: 1 },
 };
@@ -295,8 +293,8 @@ const HASH  = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
 const PLAIN = 'Test';
 
 const $ = id => document.getElementById(id);
-const gate = $('gate'), panelPw = $('panel-pw'), panelGo = $('panel-start');
-const pw = $('pw'), unlock = $('unlock'), start = $('start'), demo = $('demo');
+const gate = $('gate'), panelPw = $('panel-pw'), panelRetry = $('panel-retry');
+const pw = $('pw'), unlock = $('unlock'), retry = $('retry');
 const note = $('note'), diag = $('diag');
 const status = $('status'), progress = $('progress'), bar = progress.firstElementChild;
 const vrBtn = $('vr-btn');
@@ -333,21 +331,6 @@ async function passwordMatches(text) {
   }
 }
 
-async function showStartPanel() {
-  panelPw.hidden = true;
-  panelGo.hidden = false;
-  setNote('');
-  start.focus();
-
-  // Say up front whether the splat is actually there yet.
-  if (!(await fileExists(SPLAT_URL))) {
-    start.textContent = 'Open empty viewer';
-    demo.hidden = false;
-    setNote('No splat has been uploaded yet — expected ' + SPLAT_URL.replace('./', '')
-            + ' next to this page. You can still test the viewer and VR with a demo.', true);
-  }
-}
-
 async function fileExists(url) {
   try {
     const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
@@ -355,7 +338,8 @@ async function fileExists(url) {
   } catch (e) { return false; }
 }
 
-try { if (sessionStorage.getItem('tk_test') === HASH) showStartPanel(); } catch (e) {}
+// Already unlocked this session? Go straight to the scene.
+try { if (sessionStorage.getItem('tk_test') === HASH) openViewer(); } catch (e) {}
 
 async function tryUnlock() {
   if (!pw.value) return;
@@ -363,7 +347,7 @@ async function tryUnlock() {
   try {
     if (await passwordMatches(pw.value)) {
       try { sessionStorage.setItem('tk_test', HASH); } catch (e) {}
-      showStartPanel();
+      openViewer();
     } else {
       setNote('That password is not right.');
       pw.value = '';
@@ -383,37 +367,41 @@ pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
 // three and Spark are loaded only once someone is past the gate.
 let viewer = null;
 
-start.addEventListener('click', () => openViewer(SPLAT_URL));
-demo.addEventListener('click', () => openViewer(CONFIG.demoUrl, true));
+retry.addEventListener('click', () => openViewer());
 
-async function openViewer(url, isDemo) {
-  start.disabled = demo.disabled = true;
-  setNote('');
+// Runs straight after the password: no extra button, the scene just loads.
+async function openViewer() {
+  const name = SPLAT_URL.replace('./', '');
+  panelPw.hidden = true;
+  panelRetry.hidden = true;
   diag.hidden = true;
+  setNote('Opening ' + name + '\u2026', true);
 
   if (!document.createElement('canvas').getContext('webgl2')) {
-    start.disabled = demo.disabled = false;
     setNote('This browser has no WebGL 2, which the splat renderer needs.');
+    return;
+  }
+  if (!(await fileExists(SPLAT_URL))) {
+    setNote(name + ' could not be found next to this page. Upload it to the same folder '
+            + 'as testing.html, then try again.');
+    panelRetry.hidden = false;
     return;
   }
 
   try {
     if (!viewer) viewer = await createViewer();
   } catch (err) {
-    start.disabled = demo.disabled = false;
     setNote('The viewer did not start.');
     report([(err.name || 'Error') + ': ' + err.message,
             'If this mentions a module or import, the CDN may be blocked on this network.']);
+    panelRetry.hidden = false;
     return;
   }
 
+  setNote('');
   gate.hidden = true;
   keepAwake();
-  if (isDemo || await fileExists(url)) {
-    viewer.load({ url, label: isDemo ? 'demo splat' : url.replace('./', ''), isDemo });
-  } else {
-    say('No splat yet — drop a file here, or add ' + url.replace('./', '') + ' to the site');
-  }
+  viewer.load({ url: SPLAT_URL, label: name });
 }
 
 async function createViewer() {
@@ -473,11 +461,9 @@ async function createViewer() {
     mesh.scale.setScalar(transform.sc);
   }
 
-  function load({ url, fileBytes, fileName, label, isDemo }) {
+  function load({ url, fileBytes, fileName, label }) {
     if (mesh) { scene.remove(mesh); mesh.dispose?.(); mesh = null; }
-    // The demo butterfly is framed for the camera; keep your own numbers otherwise.
-    transform = isDemo ? { rx: 180, ry: 0, rz: 0, px: 0, py: 0, pz: -3, sc: 1 }
-                       : { ...CONFIG.transform };
+    transform = { ...CONFIG.transform };
     syncSliders(transform);
 
     say('Loading ' + label + '…');
@@ -498,7 +484,7 @@ async function createViewer() {
       progress.hidden = true;
       const n = typeof thisMesh.numSplats === 'number' ? thisMesh.numSplats
                                                        : thisMesh.packedSplats?.numSplats;
-      say((n ? n.toLocaleString() + ' splats' : 'Loaded') + (isDemo ? ' · demo' : ''), { fade: true });
+      say((n ? n.toLocaleString() + ' splats' : 'Loaded'), { fade: true });
     }).catch(err => {
       if (thisMesh !== mesh) return;
       progress.hidden = true;
