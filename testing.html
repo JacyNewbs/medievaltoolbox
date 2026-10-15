@@ -11,15 +11,25 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
-<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-<!-- only needed if your GLB carries baked animations -->
-<script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
+<!-- Spark (World Labs) Gaussian splat renderer on three.js. Pinned versions:
+     Spark 2.3.1 is built against three 0.180.0 — bump them together. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+    "@sparkjsdev/spark": "https://cdn.jsdelivr.net/npm/@sparkjsdev/spark@2.3.1/dist/spark.module.min.js"
+  }
+}
+</script>
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: #8b6914; color: #fff; }
   html, body { height: 100%; margin: 0; overflow: hidden; background: #000; }
+
+  #stage { position: fixed; inset: 0; z-index: 0; }
+  #stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 
   /* ---------- gate: parchment, matches the toolbox ---------- */
   #gate {
@@ -44,7 +54,7 @@
   #gate .blurb {
     font-family: 'Crimson Pro', Georgia, serif;
     font-size: 16px; line-height: 1.55; font-style: italic;
-    color: #7a6a4a; max-width: 34ch;
+    color: #7a6a4a; max-width: 36ch;
   }
 
   .panel { display: flex; flex-direction: column; align-items: center; gap: 14px; }
@@ -71,12 +81,16 @@
   .btn:hover { background: #2a1e0e; }
   .btn:focus-visible { outline: 2px solid #8b6914; outline-offset: 3px; }
   .btn:disabled { opacity: 0.55; cursor: default; }
+  .btn.ghost { background: transparent; color: #3a2e1e; }
+  .btn.ghost:hover { background: #ece0c2; }
+  .btn[hidden] { display: none; }
 
   .note {
     font-family: 'Crimson Pro', Georgia, serif;
     font-size: 14px; line-height: 1.5; max-width: 38ch; min-height: 1.4em;
     color: #8b2020;
   }
+  .note.calm { color: #7a6a4a; }
   .diag {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: 11px; line-height: 1.7; text-align: left;
@@ -93,11 +107,14 @@
   }
   .backlink:hover { color: #7a5c14; }
 
-  /* ---------- in-camera chrome: dark, for legibility over video ---------- */
+  /* ---------- in-viewer chrome: dark, for legibility over the scene ---------- */
+  .chrome { transition: opacity 0.35s ease; }
+  body.in-xr .chrome { display: none !important; }
+
   #ui {
-    position: fixed; inset: 0; z-index: 10; pointer-events: none;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10; pointer-events: none;
     display: flex; flex-direction: column; align-items: center;
-    padding: max(20px, env(safe-area-inset-top)) 20px;
+    padding: max(20px, env(safe-area-inset-top)) 20px 0;
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
   #status {
@@ -106,31 +123,40 @@
     border: 1px solid rgba(245, 234, 208, 0.3);
     border-radius: 999px; padding: 9px 20px;
     font-size: 16px; letter-spacing: 0.04em; color: #f5ead0;
+    max-width: 92vw; text-align: center;
     transition: opacity 0.35s ease;
   }
   #status.faded { opacity: 0; }
+  #status.error { border-color: rgba(220, 120, 100, 0.7); }
 
-  #live {
-    margin-top: 12px; pointer-events: auto;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 11px; line-height: 1.7; text-align: left;
-    white-space: pre-wrap; word-break: break-word;
-    max-width: 92vw; color: #f5ead0;
-    background: rgba(26, 20, 12, 0.86);
-    border: 1px solid rgba(245, 234, 208, 0.3);
-    border-radius: 6px; padding: 10px 12px;
+  #progress {
+    margin-top: 8px; width: min(60vw, 240px); height: 3px;
+    background: rgba(245, 234, 208, 0.2); border-radius: 2px; overflow: hidden;
   }
-  #live[hidden] { display: none; }
+  #progress[hidden] { display: none; }
+  #progress > div { height: 100%; width: 0; background: #c9a227; transition: width 0.2s; }
 
-  #reticle {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: min(72vw, 340px);
-    aspect-ratio: 85.6 / 54;          /* ISO 7810 ID-1, a bank card */
-    border: 1.5px solid rgba(245, 234, 208, 0.4);
-    border-radius: 10px; pointer-events: none; z-index: 10;
-    transition: opacity 0.35s ease;
+  /* Spark shows this element only once it knows immersive-vr is supported. */
+  #vr-btn {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 26;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 19px; font-weight: 500; letter-spacing: 0.08em;
+    padding: 12px 34px; cursor: pointer;
+    background: #f5ead0; color: #2a1e0e;
+    border: 1px solid #f5ead0; border-radius: 999px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   }
-  #reticle.faded { opacity: 0; }
+  #vr-btn:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+
+  #help {
+    position: fixed; left: 10px; bottom: 34px; z-index: 25;
+    font-family: 'Crimson Pro', Georgia, serif; font-size: 13px; line-height: 1.5;
+    color: rgba(245, 234, 208, 0.75);
+    background: rgba(26, 20, 12, 0.6);
+    padding: 6px 10px; border-radius: 4px; max-width: 44ch;
+    pointer-events: none;
+  }
 
   #adjust-toggle {
     position: fixed; right: 12px; bottom: 12px; z-index: 26;
@@ -173,6 +199,15 @@
     background: #f5ead0; color: #2a1e0e; border: 0;
   }
 
+  #drop {
+    position: fixed; inset: 0; z-index: 28; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(26, 20, 12, 0.6);
+    border: 2px dashed rgba(245, 234, 208, 0.6);
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; color: #f5ead0;
+  }
+  #drop[hidden] { display: none; }
+
   #build {
     position: fixed; left: 10px; bottom: 10px; z-index: 25;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -183,81 +218,32 @@
     pointer-events: none;
   }
 
-  /* MindAR injects its own <video> into the body and A-Frame lays the WebGL
-     canvas over it. Only the stacking and the canvas background are touched
-     here — never the video's inline size or position, which MindAR sets to
-     keep the tracking maths aligned with the picture. */
-  body > video { z-index: 0 !important; }
-  .a-canvas { z-index: 1 !important; background: transparent !important; }
-  .a-enter-vr, .a-enter-ar, .a-orientation-modal { display: none !important; }
-
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 
-<!-- ==================================================================
-     Change these three things:
-       imageTargetSrc  -> your compiled .mind file
-       #model src      -> your .glb
-       scale/rotation/position on <a-gltf-model>
-     ================================================================== -->
-<a-scene
-  mindar-image="imageTargetSrc: ./targets.mind;
-                autoStart: false;
-                uiScanning: no;
-                uiLoading: no;
-                uiError: no;
-                filterMinCF: 0.0001;
-                filterBeta: 0.001;
-                missTolerance: 10;
-                warmupTolerance: 1"
-  color-space="sRGB"
-  renderer="colorManagement: true; alpha: true; antialias: true"
-  vr-mode-ui="enabled: false"
-  device-orientation-permission-ui="enabled: false">
+<div id="stage"></div>
 
-  <a-assets timeout="20000">
-    <a-asset-item id="model" src="./model.glb"></a-asset-item>
-  </a-assets>
-
-  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-  <a-entity mindar-image-target="targetIndex: 0">
-    <a-entity light="type: hemisphere; color: #ffffff; groundColor: #8d8477; intensity: 0.9"></a-entity>
-    <a-entity light="type: directional; color: #fff6e8; intensity: 1.1" position="0.6 1.2 1"></a-entity>
-
-    <!-- 1 unit = the width of your target image (85.6 mm for a card).
-         The card's own plane is XY with Z pointing out of it, so a standard
-         Y-up GLB needs rotation x=90 to stand ON the card rather than in it.
-         Use the Adjust panel to find your numbers, then paste them here. -->
-    <a-gltf-model
-      id="ar-model"
-      src="#model"
-      position="0 0 0"
-      rotation="90 0 0"
-      scale="0.5 0.5 0.5"
-      animation-mixer>
-    </a-gltf-model>
-  </a-entity>
-</a-scene>
-
-<div id="ui">
-  <div id="status">Point at the target</div>
-  <pre id="live" hidden></pre>
+<div id="ui" class="chrome">
+  <div id="status">Loading&hellip;</div>
+  <div id="progress" hidden><div></div></div>
 </div>
-<div id="build">build 7</div>
 
-<button id="adjust-toggle" type="button">Adjust</button>
+<button id="vr-btn" type="button" class="chrome">Enter VR</button>
+<p id="help" class="chrome">Drag to look &middot; WASD / arrows to move &middot; Q/E up and down &middot; Shift faster.<br>
+Drop a .sog / .spz / .ply / .splat file here to view it.</p>
+<button id="adjust-toggle" type="button" class="chrome">Adjust</button>
+<div id="build" class="chrome">build 8 &middot; splat</div>
 
 <div id="adjust" hidden>
-  <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1" value="90"><output id="rx-o">90</output></div>
-  <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1" value="0"><output id="ry-o">0</output></div>
-  <div class="row"><label>Rot Z</label><input type="range" id="rz" min="-180" max="180" step="1" value="0"><output id="rz-o">0</output></div>
-  <div class="row"><label>Pos X</label><input type="range" id="px" min="-1" max="1" step="0.01" value="0"><output id="px-o">0</output></div>
-  <div class="row"><label>Pos Y</label><input type="range" id="py" min="-1" max="1" step="0.01" value="0"><output id="py-o">0</output></div>
-  <div class="row"><label>Pos Z</label><input type="range" id="pz" min="-1" max="1" step="0.01" value="0"><output id="pz-o">0</output></div>
-  <div class="row"><label>Scale</label><input type="range" id="sc" min="0.01" max="3" step="0.01" value="0.5"><output id="sc-o">0.5</output></div>
+  <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1"><output id="rx-o"></output></div>
+  <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1"><output id="ry-o"></output></div>
+  <div class="row"><label>Rot Z</label><input type="range" id="rz" min="-180" max="180" step="1"><output id="rz-o"></output></div>
+  <div class="row"><label>Pos X</label><input type="range" id="px" min="-10" max="10" step="0.05"><output id="px-o"></output></div>
+  <div class="row"><label>Pos Y</label><input type="range" id="py" min="-10" max="10" step="0.05"><output id="py-o"></output></div>
+  <div class="row"><label>Pos Z</label><input type="range" id="pz" min="-10" max="10" step="0.05"><output id="pz-o"></output></div>
+  <div class="row"><label>Scale</label><input type="range" id="sc" min="0.05" max="10" step="0.05"><output id="sc-o"></output></div>
   <pre id="snippet"></pre>
   <div class="row btns">
     <button type="button" id="copy">Copy</button>
@@ -265,12 +251,13 @@
     <button type="button" id="close">Close</button>
   </div>
 </div>
-<div id="reticle" class="faded"></div>
+
+<div id="drop" hidden>Drop the splat file to view it</div>
 
 <div id="gate">
   <div class="tag">Experimental</div>
   <h1>Testing</h1>
-  <p class="blurb">An augmented reality viewer. Point a phone camera at the printed target to place the model on it.</p>
+  <p class="blurb">A Gaussian splat viewer. Explore the scene on screen, or open this page in the Quest browser and step into it in VR.</p>
 
   <div class="panel" id="panel-pw">
     <input id="pw" type="password" inputmode="text" autocomplete="off"
@@ -279,7 +266,8 @@
   </div>
 
   <div class="panel" id="panel-start" hidden>
-    <button class="btn" id="start" type="button">Start camera</button>
+    <button class="btn" id="start" type="button">Open viewer</button>
+    <button class="btn ghost" id="demo" type="button" hidden>Load a demo splat instead</button>
   </div>
 
   <p class="note" id="note" role="alert"></p>
@@ -287,294 +275,304 @@
   <a class="backlink" href="index.html">Back to the toolbox</a>
 </div>
 
-<script>
-(function () {
-  const HASH = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
-  const MIND_FILE  = './targets.mind';
-  const MODEL_FILE = './model.glb';
+<script type="module">
+// ======================================================================
+//  Change these when the splat is ready.
+//    splatUrl  -> your file, sitting next to this page. .sog or .spz are
+//                 best for the Quest: far smaller than .ply, same picture.
+//                 An unpacked SOG works too: point this at its meta.json.
+//    transform -> paste the numbers the Adjust panel gives you
+//  You can also try another file without editing: testing.html?file=other.spz
+// ======================================================================
+const CONFIG = {
+  splatUrl: './scene.spz',
+  demoUrl:  'https://sparkjs.dev/assets/splats/butterfly.spz',
+  // Most splat tools export upside-down relative to three.js, hence rx 180.
+  transform: { rx: 180, ry: 0, rz: 0, px: 0, py: 0, pz: -3, sc: 1 },
+};
 
-  const gate    = document.getElementById('gate');
-  const panelPw = document.getElementById('panel-pw');
-  const panelGo = document.getElementById('panel-start');
-  const pw      = document.getElementById('pw');
-  const unlock  = document.getElementById('unlock');
-  const start   = document.getElementById('start');
-  const note    = document.getElementById('note');
-  const diag    = document.getElementById('diag');
-  const status  = document.getElementById('status');
-  const reticle = document.getElementById('reticle');
-  const scene   = document.querySelector('a-scene');
-  const target  = document.querySelector('[mindar-image-target]');
+const HASH  = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
+const PLAIN = 'Test';
 
-  function report(lines) {
-    diag.textContent = lines.join('\n');
-    diag.hidden = false;
+const $ = id => document.getElementById(id);
+const gate = $('gate'), panelPw = $('panel-pw'), panelGo = $('panel-start');
+const pw = $('pw'), unlock = $('unlock'), start = $('start'), demo = $('demo');
+const note = $('note'), diag = $('diag');
+const status = $('status'), progress = $('progress'), bar = progress.firstElementChild;
+const vrBtn = $('vr-btn');
+
+// ?file=name.spz overrides the configured file. Only plain relative paths.
+const fileParam = new URLSearchParams(location.search).get('file');
+const SPLAT_URL = (fileParam && /^[\w\-./]+\.(spz|sog|ply|splat|ksplat|json)$/i.test(fileParam)
+                   && !fileParam.includes('..')) ? './' + fileParam.replace(/^\.?\//, '')
+                                                 : CONFIG.splatUrl;
+
+function report(lines) { diag.textContent = lines.join('\n'); diag.hidden = false; }
+function setNote(text, calm) { note.textContent = text; note.classList.toggle('calm', !!calm); }
+
+let fadeTimer = 0;
+function say(text, { fade = false, error = false } = {}) {
+  clearTimeout(fadeTimer);
+  status.textContent = text;
+  status.classList.remove('faded');
+  status.classList.toggle('error', error);
+  if (fade) fadeTimer = setTimeout(() => status.classList.add('faded'), 4000);
+}
+
+// ---- password (unchanged behaviour) --------------------------------------
+// crypto.subtle is undefined on non-secure origins (file://, plain http://).
+const CRYPTO_OK = !!(window.crypto && window.crypto.subtle);
+async function passwordMatches(text) {
+  if (!CRYPTO_OK) return text === PLAIN;
+  try {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    return hex === HASH;
+  } catch (e) {
+    return text === PLAIN;
   }
-  function resetButton(label) {
-    start.disabled = false;
-    start.textContent = label;
+}
+
+async function showStartPanel() {
+  panelPw.hidden = true;
+  panelGo.hidden = false;
+  setNote('');
+  start.focus();
+
+  // Say up front whether the splat is actually there yet.
+  if (!(await fileExists(SPLAT_URL))) {
+    start.textContent = 'Open empty viewer';
+    demo.hidden = false;
+    setNote('No splat has been uploaded yet — expected ' + SPLAT_URL.replace('./', '')
+            + ' next to this page. You can still test the viewer and VR with a demo.', true);
   }
+}
 
-  // crypto.subtle is undefined on non-secure origins (file://, plain http://),
-  // which would otherwise kill the password check before you reach the camera.
-  const CRYPTO_OK = !!(window.crypto && window.crypto.subtle);
-  const PLAIN = 'Test';
+async function fileExists(url) {
+  try {
+    const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+    return res.ok;
+  } catch (e) { return false; }
+}
 
-  async function passwordMatches(text) {
-    if (!CRYPTO_OK) return text === PLAIN;
-    try {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-      const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-      return hex === HASH;
-    } catch (e) {
-      return text === PLAIN;
+try { if (sessionStorage.getItem('tk_test') === HASH) showStartPanel(); } catch (e) {}
+
+async function tryUnlock() {
+  if (!pw.value) return;
+  unlock.disabled = true;
+  try {
+    if (await passwordMatches(pw.value)) {
+      try { sessionStorage.setItem('tk_test', HASH); } catch (e) {}
+      showStartPanel();
+    } else {
+      setNote('That password is not right.');
+      pw.value = '';
+      pw.focus();
     }
+  } catch (err) {
+    setNote('The password check failed.');
+    report([(err.name || 'Error') + ': ' + err.message]);
+  } finally {
+    unlock.disabled = false;
   }
+}
+unlock.addEventListener('click', tryUnlock);
+pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
 
-  function showStartPanel() {
-    panelPw.hidden = true;
-    panelGo.hidden = false;
-    note.textContent = '';
-    start.focus();
-  }
+// ---- viewer ---------------------------------------------------------------
+// three and Spark are loaded only once someone is past the gate.
+let viewer = null;
 
-  // Say this up front, not after three taps.
-  if (!window.isSecureContext) {
-    note.textContent = 'This page is being served over ' + location.protocol
-      + ' — the browser blocks camera access outside https:// and localhost.';
-    report([
-      'protocol      : ' + location.protocol,
-      'hostname      : ' + (location.hostname || '(none)'),
-      'secureContext : false',
-      'getUserMedia  : ' + !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
-    ]);
+start.addEventListener('click', () => openViewer(SPLAT_URL));
+demo.addEventListener('click', () => openViewer(CONFIG.demoUrl, true));
+
+async function openViewer(url, isDemo) {
+  start.disabled = demo.disabled = true;
+  setNote('');
+  diag.hidden = true;
+
+  if (!document.createElement('canvas').getContext('webgl2')) {
+    start.disabled = demo.disabled = false;
+    setNote('This browser has no WebGL 2, which the splat renderer needs.');
+    return;
   }
 
   try {
-    if (sessionStorage.getItem('tk_test') === HASH) showStartPanel();
-  } catch (e) {}
-
-  async function tryUnlock() {
-    if (!pw.value) return;
-    unlock.disabled = true;
-    try {
-      if (await passwordMatches(pw.value)) {
-        try { sessionStorage.setItem('tk_test', HASH); } catch (e) {}
-        showStartPanel();
-      } else {
-        note.textContent = 'That password is not right.';
-        pw.value = '';
-        pw.focus();
-      }
-    } catch (err) {
-      note.textContent = 'The password check failed.';
-      report([(err.name || 'Error') + ': ' + err.message]);
-    } finally {
-      unlock.disabled = false;
-    }
-  }
-  unlock.addEventListener('click', tryUnlock);
-  pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
-
-  // --- preflight: the things that actually stop the camera ---------------
-  async function preflight() {
-    const problems = [];
-
-    if (!window.isSecureContext) {
-      problems.push('Not a secure context (' + location.protocol + '). The camera only works '
-        + 'over https:// or on localhost. Opening the file straight off disk will never work.');
-    }
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      problems.push('This browser exposes no getUserMedia. In-app browsers (Instagram, '
-        + 'Facebook, some mail clients) block it — open the page in Safari or Chrome.');
-    }
-    for (const [label, url] of [['targets.mind', MIND_FILE], ['model.glb', MODEL_FILE]]) {
-      try {
-        const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
-        if (!res.ok) problems.push(label + ' returned HTTP ' + res.status + ' — it is not sitting next to this page.');
-      } catch (e) {
-        problems.push(label + ' could not be fetched: ' + e.message);
-      }
-    }
-    return problems;
+    if (!viewer) viewer = await createViewer();
+  } catch (err) {
+    start.disabled = demo.disabled = false;
+    setNote('The viewer did not start.');
+    report([(err.name || 'Error') + ': ' + err.message,
+            'If this mentions a module or import, the CDN may be blocked on this network.']);
+    return;
   }
 
-  function withTimeout(promise, ms, label) {
-    return Promise.race([
-      promise,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error(label + ' timed out after ' + (ms / 1000) + 's')), ms))
-    ]);
+  gate.hidden = true;
+  keepAwake();
+  if (isDemo || await fileExists(url)) {
+    viewer.load({ url, label: isDemo ? 'demo splat' : url.replace('./', ''), isDemo });
+  } else {
+    say('No splat yet — drop a file here, or add ' + url.replace('./', '') + ' to the site');
+  }
+}
+
+async function createViewer() {
+  const THREE = await import('three');
+  const { SparkRenderer, SplatMesh, SparkControls, SparkXr } = await import('@sparkjsdev/spark');
+
+  const stage = $('stage');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: false });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  stage.appendChild(renderer.domElement);
+
+  // Slightly narrower splats (sqrt(5) std devs) — noticeably faster on the
+  // Quest, and very hard to tell apart from the default.
+  const spark = new SparkRenderer({ renderer, maxStdDev: Math.sqrt(5) });
+  scene.add(spark);
+
+  // The camera rides inside this group. Desktop controls and the Quest
+  // thumbsticks both move the group; in VR the headset moves the camera
+  // within it, so walking about the room still works.
+  const rig = new THREE.Group();
+  rig.add(camera);
+  scene.add(rig);
+
+  const controls = new SparkControls({ canvas: renderer.domElement });
+
+  const xr = new SparkXr({
+    renderer,
+    elementId: 'vr-btn',
+    mode: 'vr',
+    // 0.5 is Spark's default; raise towards 1.0 for sharper but slower VR.
+    frameBufferScaleFactor: 0.5,
+    onReady: supported => {
+      if (!supported) $('help').insertAdjacentText('beforeend',
+        ' VR is not available in this browser — open the page in the Quest browser.');
+    },
+    onEnterXr: () => { document.body.classList.add('in-xr'); vrBtn.textContent = 'Exit VR'; },
+    onExitXr:  () => { document.body.classList.remove('in-xr'); vrBtn.textContent = 'Enter VR'; },
+  });
+
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  let mesh = null;
+  let transform = { ...CONFIG.transform };
+
+  function applyTransform() {
+    if (!mesh) return;
+    const d = THREE.MathUtils.degToRad;
+    mesh.rotation.set(d(transform.rx), d(transform.ry), d(transform.rz));
+    mesh.position.set(transform.px, transform.py, transform.pz);
+    mesh.scale.setScalar(transform.sc);
   }
 
-  let wakeLock = null;
-  async function keepAwake() {
-    try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
-  }
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && gate.hidden) keepAwake();
-  });
+  function load({ url, fileBytes, fileName, label, isDemo }) {
+    if (mesh) { scene.remove(mesh); mesh.dispose?.(); mesh = null; }
+    // The demo butterfly is framed for the camera; keep your own numbers otherwise.
+    transform = isDemo ? { rx: 180, ry: 0, rz: 0, px: 0, py: 0, pz: -3, sc: 1 }
+                       : { ...CONFIG.transform };
+    syncSliders(transform);
 
-  start.addEventListener('click', async () => {
-    start.disabled = true;
-    start.textContent = 'Starting\u2026';
-    note.textContent = '';
-    diag.hidden = true;
+    say('Loading ' + label + '…');
+    progress.hidden = false; bar.style.width = '0';
 
-    // 1. Ask for the camera inside the tap itself, so the permission prompt is
-    //    tied to a real user gesture. Release the stream again straight away.
-    try {
-      const probe = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: 'environment' } }, audio: false
-      });
-      probe.getTracks().forEach(t => t.stop());
-    } catch (err) {
-      resetButton('Try again');
-      if (err.name === 'NotAllowedError') {
-        note.textContent = 'Camera access was refused. Allow it for this site, then reload. '
-          + 'On iOS: tap aA in the address bar, then Website Settings, then Camera.';
-      } else if (err.name === 'NotFoundError' || err.name === 'OverconstrainedError') {
-        note.textContent = 'No rear camera was found on this device.';
-      } else {
-        note.textContent = 'The camera could not be opened.';
-      }
-      report([err.name + ': ' + err.message].concat(await preflight()));
-      return;
-    }
+    mesh = new SplatMesh({
+      url, fileBytes, fileName,
+      onProgress: e => {
+        if (e.lengthComputable && e.total) bar.style.width = (100 * e.loaded / e.total).toFixed(1) + '%';
+      },
+    });
+    applyTransform();
+    scene.add(mesh);
 
-    // 2. Everything else that can go wrong.
-    const problems = await preflight();
-    if (problems.length) {
-      resetButton('Try again');
-      note.textContent = 'The camera works, but the page is not set up correctly yet.';
-      report(problems);
-      return;
-    }
-
-    // MindAR calls getUserMedia with no resolution constraint, so Chrome hands
-    // back about 480x640. Wrap it once to ask for something usable for feature
-    // tracking. 'ideal' means the browser falls back gracefully if unsupported.
-    if (!navigator.mediaDevices.__resPatched) {
-      const orig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-      navigator.mediaDevices.getUserMedia = function (constraints) {
-        if (constraints && constraints.video) {
-          const v = (typeof constraints.video === 'object') ? constraints.video : {};
-          constraints = Object.assign({}, constraints, {
-            video: Object.assign({}, v, {
-              width:  { ideal: 1280 },
-              height: { ideal: 960 },
-              facingMode: v.facingMode || { ideal: 'environment' }
-            })
-          });
-        }
-        return orig(constraints);
-      };
-      navigator.mediaDevices.__resPatched = true;
-    }
-
-    // 3. Wait for A-Frame, then hand over to MindAR.
-    try {
-      if (!scene.hasLoaded) {
-        await withTimeout(new Promise(r => scene.addEventListener('loaded', r, { once: true })),
-                          25000, 'Scene load');
-      }
-      const system = scene.systems['mindar-image-system'];
-      if (!system) throw new Error('mindar-image-system is missing: the MindAR script did not load.');
-
-      await withTimeout(system.start(), 20000, 'MindAR start');
-
-      gate.hidden = true;
-      reticle.classList.remove('faded');
-      keepAwake();
-      beginLiveReadout();
-    } catch (err) {
-      resetButton('Try again');
-      note.textContent = 'The AR engine did not start.';
-      report([(err.name || 'Error') + ': ' + err.message]);
-    }
-  });
-
-  // Tap the status pill to show what is actually behind the overlay.
-  const live = document.getElementById('live');
-  status.style.pointerEvents = 'auto';
-  status.addEventListener('click', () => { live.hidden = !live.hidden; });
-
-  function beginLiveReadout() {
-    const tick = () => {
-      const vid = document.querySelector('body > video');
-      const cvs = document.querySelector('.a-canvas');
-      const lines = [];
-
-      if (!vid) {
-        lines.push('video element : MISSING — MindAR never injected it');
-      } else {
-        const cs = getComputedStyle(vid);
-        lines.push('video stream  : ' + vid.videoWidth + '\u00d7' + vid.videoHeight
-                   + '  readyState ' + vid.readyState + (vid.paused ? '  PAUSED' : '  playing'));
-        lines.push('video css     : ' + cs.display + ' / vis ' + cs.visibility
-                   + ' / op ' + cs.opacity + ' / z ' + cs.zIndex);
-        lines.push('video box     : ' + Math.round(vid.getBoundingClientRect().width)
-                   + '\u00d7' + Math.round(vid.getBoundingClientRect().height));
-      }
-
-      if (!cvs) {
-        lines.push('canvas        : MISSING');
-      } else {
-        const cc = getComputedStyle(cvs);
-        lines.push('canvas        : z ' + cc.zIndex + ' / bg ' + cc.backgroundColor);
-      }
-      lines.push('screen        : ' + window.innerWidth + '\u00d7' + window.innerHeight);
-      live.textContent = lines.join('\n');
-    };
-    tick();
-    setInterval(tick, 1000);
+    const thisMesh = mesh;
+    mesh.initialized.then(() => {
+      if (thisMesh !== mesh) return;
+      progress.hidden = true;
+      const n = typeof thisMesh.numSplats === 'number' ? thisMesh.numSplats
+                                                       : thisMesh.packedSplats?.numSplats;
+      say((n ? n.toLocaleString() + ' splats' : 'Loaded') + (isDemo ? ' · demo' : ''), { fade: true });
+    }).catch(err => {
+      if (thisMesh !== mesh) return;
+      progress.hidden = true;
+      say('Could not load ' + label + ': ' + (err.message || err), { error: true });
+    });
   }
 
-  // ---- live model adjustment -------------------------------------------
-  const model  = document.getElementById('ar-model');
-  const adjust = document.getElementById('adjust');
-  const snippet = document.getElementById('snippet');
-  const DEFAULTS = { rx: 90, ry: 0, rz: 0, px: 0, py: 0, pz: 0, sc: 0.5 };
-  const ids = Object.keys(DEFAULTS);
-  const el = {};
-  ids.forEach(k => { el[k] = document.getElementById(k); el[k + 'o'] = document.getElementById(k + '-o'); });
+  renderer.setAnimationLoop(() => {
+    if (renderer.xr.isPresenting) xr.updateControllers(camera);
+    else controls.update(rig);
+    renderer.render(scene, camera);
+  });
 
-  function applyModel() {
-    const v = {};
-    ids.forEach(k => { v[k] = parseFloat(el[k].value); el[k + 'o'].textContent = el[k].value; });
-    model.setAttribute('rotation', v.rx + ' ' + v.ry + ' ' + v.rz);
-    model.setAttribute('position', v.px + ' ' + v.py + ' ' + v.pz);
-    model.setAttribute('scale', v.sc + ' ' + v.sc + ' ' + v.sc);
-    snippet.textContent =
-      'position="' + v.px + ' ' + v.py + ' ' + v.pz + '"\n' +
-      'rotation="' + v.rx + ' ' + v.ry + ' ' + v.rz + '"\n' +
-      'scale="' + v.sc + ' ' + v.sc + ' ' + v.sc + '"';
+  return {
+    load,
+    setTransform(t) { transform = t; applyTransform(); },
+  };
+}
+
+// ---- drag and drop a local file ------------------------------------------
+const drop = $('drop');
+let dragDepth = 0;
+addEventListener('dragenter', e => { e.preventDefault(); if (viewer) { dragDepth++; drop.hidden = false; } });
+addEventListener('dragleave', e => { e.preventDefault(); if (--dragDepth <= 0) { dragDepth = 0; drop.hidden = true; } });
+addEventListener('dragover',  e => e.preventDefault());
+addEventListener('drop', async e => {
+  e.preventDefault();
+  dragDepth = 0; drop.hidden = true;
+  const file = e.dataTransfer?.files?.[0];
+  if (!file || !viewer) return;
+  if (!/\.(spz|sog|ply|splat|ksplat|zip)$/i.test(file.name)) {
+    say(file.name + ' is not a splat file (.sog, .spz, .ply, .splat, .ksplat)', { error: true });
+    return;
   }
-  ids.forEach(k => el[k].addEventListener('input', applyModel));
-  applyModel();
+  viewer.load({ fileBytes: new Uint8Array(await file.arrayBuffer()), fileName: file.name, label: file.name });
+});
 
-  document.getElementById('adjust-toggle').addEventListener('click', () => { adjust.hidden = false; });
-  document.getElementById('close').addEventListener('click', () => { adjust.hidden = true; });
-  document.getElementById('reset').addEventListener('click', () => {
-    ids.forEach(k => { el[k].value = DEFAULTS[k]; });
-    applyModel();
-  });
-  document.getElementById('copy').addEventListener('click', async () => {
-    const btn = document.getElementById('copy');
-    try { await navigator.clipboard.writeText(snippet.textContent); btn.textContent = 'Copied'; }
-    catch (e) { btn.textContent = 'Select it'; }
-    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
-  });
+// ---- screen wake lock ------------------------------------------------------
+async function keepAwake() {
+  try { if ('wakeLock' in navigator) await navigator.wakeLock.request('screen'); } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && gate.hidden) keepAwake();
+});
 
-  target.addEventListener('targetFound', () => {
-    status.classList.add('faded');
-    reticle.classList.add('faded');
-  });
-  target.addEventListener('targetLost', () => {
-    status.classList.remove('faded');
-    reticle.classList.remove('faded');
-  });
-})();
+// ---- Adjust panel: line the splat up, then paste the numbers into CONFIG ---
+const adjust = $('adjust'), snippet = $('snippet');
+const ids = ['rx', 'ry', 'rz', 'px', 'py', 'pz', 'sc'];
+
+function syncSliders(t) {
+  ids.forEach(k => { $(k).value = t[k]; $(k + '-o').textContent = t[k]; });
+  writeSnippet(t);
+}
+function writeSnippet(t) {
+  snippet.textContent = 'transform: { ' + ids.map(k => k + ': ' + t[k]).join(', ') + ' },';
+}
+function readSliders() {
+  const t = {};
+  ids.forEach(k => { t[k] = parseFloat($(k).value); $(k + '-o').textContent = $(k).value; });
+  writeSnippet(t);
+  viewer?.setTransform(t);
+}
+ids.forEach(k => $(k).addEventListener('input', readSliders));
+syncSliders(CONFIG.transform);
+
+$('adjust-toggle').addEventListener('click', () => { adjust.hidden = false; });
+$('close').addEventListener('click', () => { adjust.hidden = true; });
+$('reset').addEventListener('click', () => { syncSliders(CONFIG.transform); readSliders(); });
+$('copy').addEventListener('click', async () => {
+  const btn = $('copy');
+  try { await navigator.clipboard.writeText(snippet.textContent); btn.textContent = 'Copied'; }
+  catch (e) { btn.textContent = 'Select it'; }
+  setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+});
 </script>
 </body>
 </html>
