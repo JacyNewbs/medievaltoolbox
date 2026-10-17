@@ -11,14 +11,12 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
-<!-- Spark (World Labs) Gaussian splat renderer on three.js. Pinned versions:
-     Spark 2.3.1 is built against three 0.180.0 — bump them together. -->
+<!-- three.js, pinned. The decoder folders further down use the same version. -->
 <script type="importmap">
 {
   "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
-    "@sparkjsdev/spark": "https://cdn.jsdelivr.net/npm/@sparkjsdev/spark@2.3.1/dist/spark.module.min.js"
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
   }
 }
 </script>
@@ -26,7 +24,7 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: #8b6914; color: #fff; }
-  html, body { height: 100%; margin: 0; overflow: hidden; background: #000; }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: #14100a; }
 
   #stage { position: fixed; inset: 0; z-index: 0; }
   #stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
@@ -81,9 +79,6 @@
   .btn:hover { background: #2a1e0e; }
   .btn:focus-visible { outline: 2px solid #8b6914; outline-offset: 3px; }
   .btn:disabled { opacity: 0.55; cursor: default; }
-  .btn.ghost { background: transparent; color: #3a2e1e; }
-  .btn.ghost:hover { background: #ece0c2; }
-  .btn[hidden] { display: none; }
 
   .note {
     font-family: 'Crimson Pro', Georgia, serif;
@@ -108,7 +103,6 @@
   .backlink:hover { color: #7a5c14; }
 
   /* ---------- in-viewer chrome: dark, for legibility over the scene ---------- */
-  .chrome { transition: opacity 0.35s ease; }
   body.in-xr .chrome { display: none !important; }
 
   #ui {
@@ -136,7 +130,6 @@
   #progress[hidden] { display: none; }
   #progress > div { height: 100%; width: 0; background: #c9a227; transition: width 0.2s; }
 
-  /* Spark shows this element only once it knows immersive-vr is supported. */
   #vr-btn {
     position: fixed; left: 50%; transform: translateX(-50%);
     bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 26;
@@ -147,6 +140,7 @@
     border: 1px solid #f5ead0; border-radius: 999px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   }
+  #vr-btn[hidden] { display: none; }
   #vr-btn:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
 
   #help {
@@ -182,7 +176,9 @@
     font-family: ui-monospace, Menlo, monospace; font-size: 11px;
     width: 44px; flex: none; color: rgba(245, 234, 208, 0.75);
   }
+  #adjust label.wide { width: auto; display: flex; align-items: center; gap: 8px; cursor: pointer; }
   #adjust input[type=range] { flex: 1; min-width: 0; accent-color: #c9a227; }
+  #adjust input[type=checkbox] { accent-color: #c9a227; width: 16px; height: 16px; }
   #adjust output {
     font-family: ui-monospace, Menlo, monospace; font-size: 11px;
     width: 46px; flex: none; text-align: right;
@@ -230,20 +226,21 @@
   <div id="progress" hidden><div></div></div>
 </div>
 
-<button id="vr-btn" type="button" class="chrome">Enter VR</button>
-<p id="help" class="chrome">Drag to look &middot; WASD / arrows to move &middot; Q/E up and down &middot; Shift faster.<br>
-Drop a .sog / .spz / .ply / .splat file here to view it.</p>
+<button id="vr-btn" type="button" class="chrome" hidden>Enter VR</button>
+<p id="help" class="chrome">Drag to orbit &middot; right-drag or two fingers to pan &middot; scroll or pinch to zoom.<br>
+Drop a .glb or .obj file here to view it.</p>
 <button id="adjust-toggle" type="button" class="chrome">Adjust</button>
-<div id="build" class="chrome">build 8 &middot; splat</div>
+<div id="build" class="chrome">build 10 &middot; obj / glb</div>
 
 <div id="adjust" hidden>
   <div class="row"><label>Rot X</label><input type="range" id="rx" min="-180" max="180" step="1"><output id="rx-o"></output></div>
   <div class="row"><label>Rot Y</label><input type="range" id="ry" min="-180" max="180" step="1"><output id="ry-o"></output></div>
   <div class="row"><label>Rot Z</label><input type="range" id="rz" min="-180" max="180" step="1"><output id="rz-o"></output></div>
-  <div class="row"><label>Pos X</label><input type="range" id="px" min="-10" max="10" step="0.05"><output id="px-o"></output></div>
-  <div class="row"><label>Pos Y</label><input type="range" id="py" min="-10" max="10" step="0.05"><output id="py-o"></output></div>
-  <div class="row"><label>Pos Z</label><input type="range" id="pz" min="-10" max="10" step="0.05"><output id="pz-o"></output></div>
-  <div class="row"><label>Scale</label><input type="range" id="sc" min="0.05" max="10" step="0.05"><output id="sc-o"></output></div>
+  <div class="row"><label>Pos X</label><input type="range" id="px" min="-20" max="20" step="0.05"><output id="px-o"></output></div>
+  <div class="row"><label>Pos Y</label><input type="range" id="py" min="-20" max="20" step="0.05"><output id="py-o"></output></div>
+  <div class="row"><label>Pos Z</label><input type="range" id="pz" min="-20" max="20" step="0.05"><output id="pz-o"></output></div>
+  <div class="row"><label>Scale</label><input type="range" id="sc" min="0.01" max="10" step="0.01"><output id="sc-o"></output></div>
+  <div class="row"><label class="wide"><input type="checkbox" id="unlit"> Unlit (best for photogrammetry, which has its lighting baked in)</label></div>
   <pre id="snippet"></pre>
   <div class="row btns">
     <button type="button" id="copy">Copy</button>
@@ -252,12 +249,12 @@ Drop a .sog / .spz / .ply / .splat file here to view it.</p>
   </div>
 </div>
 
-<div id="drop" hidden>Drop the splat file to view it</div>
+<div id="drop" hidden>Drop the .glb or .obj to view it</div>
 
 <div id="gate">
   <div class="tag">Experimental</div>
   <h1>Testing</h1>
-  <p class="blurb">A Gaussian splat viewer. Explore the scene on screen, or open this page in the Quest browser and step into it in VR.</p>
+  <p class="blurb">A 3D model viewer. Explore the model on screen, or open this page in the Quest browser and step into it in VR.</p>
 
   <div class="panel" id="panel-pw">
     <input id="pw" type="password" inputmode="text" autocomplete="off"
@@ -276,18 +273,26 @@ Drop a .sog / .spz / .ply / .splat file here to view it.</p>
 
 <script type="module">
 // ======================================================================
-//  Change these when the splat is ready.
-//    splatUrl  -> your file, sitting next to this page. .sog or .spz are
-//                 best for the Quest: far smaller than .ply, same picture.
-//                 An unpacked SOG works too: point this at its meta.json.
-//    transform -> paste the numbers the Adjust panel gives you
-//  You can also try another file without editing: testing.html?file=other.spz
+//  Change these when the model is ready.
+//    modelUrl  -> your .obj or .glb, sitting next to this page. The name is
+//                 case-sensitive on the live site: ChapterTest.obj is not
+//                 chaptertest.obj. An .obj picks up its .mtl and textures
+//                 automatically if they sit in the same folder.
+//    unlit     -> true for photogrammetry (lighting already in the texture),
+//                 false for modelled reconstructions that need lighting
+//    transform -> paste the numbers the Adjust panel gives you. The model is
+//                 first centred with its base on the floor, then this is
+//                 applied, so all zeros and scale 1 is a sensible start.
+//  You can also try another file without editing: testing.html?file=other.obj
 // ======================================================================
 const CONFIG = {
-  splatUrl: './chapterhouse.sog',
-  // Most splat tools export upside-down relative to three.js, hence rx 180.
-  transform: { rx: 180, ry: 0, rz: 0, px: 0, py: 0, pz: -3, sc: 1 },
+  modelUrl: './ChapterTest.obj',
+  unlit: true,
+  transform: { rx: 0, ry: 0, rz: 0, px: 0, py: 0, pz: 0, sc: 1 },
 };
+
+const THREE_VERSION = '0.180.0';   // keep in step with the import map
+const LIBS = `https://cdn.jsdelivr.net/npm/three@${THREE_VERSION}/examples/jsm/libs/`;
 
 const HASH  = "532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25";
 const PLAIN = 'Test';
@@ -299,11 +304,11 @@ const note = $('note'), diag = $('diag');
 const status = $('status'), progress = $('progress'), bar = progress.firstElementChild;
 const vrBtn = $('vr-btn');
 
-// ?file=name.spz overrides the configured file. Only plain relative paths.
+// ?file=name.glb overrides the configured file. Only plain relative paths.
 const fileParam = new URLSearchParams(location.search).get('file');
-const SPLAT_URL = (fileParam && /^[\w\-./]+\.(spz|sog|ply|splat|ksplat|json)$/i.test(fileParam)
+const MODEL_URL = (fileParam && /^[\w\-./]+\.(glb|gltf|obj)$/i.test(fileParam)
                    && !fileParam.includes('..')) ? './' + fileParam.replace(/^\.?\//, '')
-                                                 : CONFIG.splatUrl;
+                                                 : CONFIG.modelUrl;
 
 function report(lines) { diag.textContent = lines.join('\n'); diag.hidden = false; }
 function setNote(text, calm) { note.textContent = text; note.classList.toggle('calm', !!calm); }
@@ -314,7 +319,7 @@ function say(text, { fade = false, error = false } = {}) {
   status.textContent = text;
   status.classList.remove('faded');
   status.classList.toggle('error', error);
-  if (fade) fadeTimer = setTimeout(() => status.classList.add('faded'), 4000);
+  if (fade) fadeTimer = setTimeout(() => status.classList.add('faded'), 5000);
 }
 
 // ---- password (unchanged behaviour) --------------------------------------
@@ -337,9 +342,6 @@ async function fileExists(url) {
     return res.ok;
   } catch (e) { return false; }
 }
-
-// Already unlocked this session? Go straight to the scene.
-try { if (sessionStorage.getItem('tk_test') === HASH) openViewer(); } catch (e) {}
 
 async function tryUnlock() {
   if (!pw.value) return;
@@ -364,24 +366,25 @@ unlock.addEventListener('click', tryUnlock);
 pw.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
 
 // ---- viewer ---------------------------------------------------------------
-// three and Spark are loaded only once someone is past the gate.
+// three.js is loaded only once someone is past the gate.
 let viewer = null;
 
 retry.addEventListener('click', () => openViewer());
 
-// Runs straight after the password: no extra button, the scene just loads.
+// Runs straight after the password: no extra button, the model just loads.
 async function openViewer() {
-  const name = SPLAT_URL.replace('./', '');
+  const name = MODEL_URL.replace('./', '');
   panelPw.hidden = true;
   panelRetry.hidden = true;
   diag.hidden = true;
-  setNote('Opening ' + name + '\u2026', true);
+  setNote('Opening ' + name + '…', true);
 
-  if (!document.createElement('canvas').getContext('webgl2')) {
-    setNote('This browser has no WebGL 2, which the splat renderer needs.');
+  if (location.protocol === 'file:') {
+    setNote('This page has been opened straight from disk, so it cannot read ' + name
+            + '. Open it through the website (or a local server) instead.');
     return;
   }
-  if (!(await fileExists(SPLAT_URL))) {
+  if (!(await fileExists(MODEL_URL))) {
     setNote(name + ' could not be found next to this page. Upload it to the same folder '
             + 'as testing.html, then try again.');
     panelRetry.hidden = false;
@@ -401,48 +404,330 @@ async function openViewer() {
   setNote('');
   gate.hidden = true;
   keepAwake();
-  viewer.load({ url: SPLAT_URL, label: name });
+  viewer.load({ url: MODEL_URL, label: name });
 }
+
+// Already unlocked this session? Go straight to the model.
+try { if (sessionStorage.getItem('tk_test') === HASH) openViewer(); } catch (e) {}
 
 async function createViewer() {
   const THREE = await import('three');
-  const { SparkRenderer, SplatMesh, SparkControls, SparkXr } = await import('@sparkjsdev/spark');
+  const { OrbitControls }   = await import('three/addons/controls/OrbitControls.js');
+  const { GLTFLoader }      = await import('three/addons/loaders/GLTFLoader.js');
+  const { OBJLoader }       = await import('three/addons/loaders/OBJLoader.js');
+  const { MTLLoader }       = await import('three/addons/loaders/MTLLoader.js');
+  const { DRACOLoader }     = await import('three/addons/loaders/DRACOLoader.js');
+  const { KTX2Loader }      = await import('three/addons/loaders/KTX2Loader.js');
+  const { MeshoptDecoder }  = await import('three/addons/libs/meshopt_decoder.module.js');
+  const { XRControllerModelFactory } = await import('three/addons/webxr/XRControllerModelFactory.js');
 
   const stage = $('stage');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: false });
+  scene.background = new THREE.Color(0x14100a);
+
+  const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.01, 2000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
+  renderer.xr.enabled = true;
+  renderer.xr.setReferenceSpaceType('local-floor');   // y = 0 is your real floor
   stage.appendChild(renderer.domElement);
 
-  // Slightly narrower splats (sqrt(5) std devs) — noticeably faster on the
-  // Quest, and very hard to tell apart from the default.
-  const spark = new SparkRenderer({ renderer, maxStdDev: Math.sqrt(5) });
-  scene.add(spark);
+  // Soft, even light for models that are not unlit.
+  scene.add(new THREE.HemisphereLight(0xfff6e8, 0x5a5040, 1.6));
+  const sun = new THREE.DirectionalLight(0xfff2dc, 1.4);
+  sun.position.set(3, 6, 4);
+  scene.add(sun);
 
-  // The camera rides inside this group. Desktop controls and the Quest
-  // thumbsticks both move the group; in VR the headset moves the camera
-  // within it, so walking about the room still works.
+  // The camera rides inside this rig. In VR the thumbsticks move the rig and
+  // the headset moves the camera within it, so walking round the room works.
   const rig = new THREE.Group();
   rig.add(camera);
   scene.add(rig);
 
-  const controls = new SparkControls({ canvas: renderer.domElement });
+  const orbit = new OrbitControls(camera, renderer.domElement);
+  orbit.enableDamping = true;
+  orbit.dampingFactor = 0.08;
 
-  const xr = new SparkXr({
-    renderer,
-    elementId: 'vr-btn',
-    mode: 'vr',
-    // 0.5 is Spark's default; raise towards 1.0 for sharper but slower VR.
-    frameBufferScaleFactor: 0.5,
-    onReady: supported => {
-      if (!supported) $('help').insertAdjacentText('beforeend',
+  // Every model sits inside this holder, centred with its base at y = 0.
+  // The Adjust panel moves the holder, so your numbers never fight the centring.
+  const holder = new THREE.Group();
+  scene.add(holder);
+
+  // ---- loaders: plain, Draco, Meshopt and KTX2 GLBs all work ----
+  const draco = new DRACOLoader().setDecoderPath(LIBS + 'draco/gltf/');
+  const ktx2  = new KTX2Loader().setTranscoderPath(LIBS + 'basis/').detectSupport(renderer);
+  const loader = new GLTFLoader()
+    .setDRACOLoader(draco)
+    .setKTX2Loader(ktx2)
+    .setMeshoptDecoder(MeshoptDecoder);
+
+  let model = null;           // the loaded glTF scene
+  let size = new THREE.Vector3(1, 1, 1);
+  let transform = { ...CONFIG.transform };
+  let unlit = CONFIG.unlit;
+  const originalMaterials = new Map();
+
+  function applyTransform() {
+    const d = THREE.MathUtils.degToRad;
+    holder.rotation.set(d(transform.rx), d(transform.ry), d(transform.rz));
+    holder.position.set(transform.px, transform.py, transform.pz);
+    holder.scale.setScalar(transform.sc);
+  }
+
+  function applyUnlit() {
+    if (!model) return;
+    model.traverse(o => {
+      if (!o.isMesh) return;
+      if (!originalMaterials.has(o)) originalMaterials.set(o, o.material);
+      const orig = originalMaterials.get(o);
+      if (!unlit) { o.material = orig; return; }
+      const toBasic = m => new THREE.MeshBasicMaterial({
+        map: m.map || null, color: m.map ? 0xffffff : (m.color || 0xffffff),
+        vertexColors: !!m.vertexColors, side: m.side,
+        transparent: m.transparent, opacity: m.opacity, alphaTest: m.alphaTest,
+      });
+      o.material = Array.isArray(orig) ? orig.map(toBasic) : toBasic(orig);
+    });
+  }
+
+  function disposeModel() {
+    if (!model) return;
+    holder.remove(model);
+    model.traverse(o => {
+      if (!o.isMesh) return;
+      o.geometry?.dispose();
+      const mats = [originalMaterials.get(o), o.material].flat().filter(Boolean);
+      mats.forEach(m => {
+        Object.values(m).forEach(v => { if (v && v.isTexture) v.dispose(); });
+        m.dispose();
+      });
+    });
+    originalMaterials.clear();
+    model = null;
+  }
+
+  // Frame the desktop camera on the model.
+  function frameCamera() {
+    const radius = Math.max(size.x, size.y, size.z) * transform.sc * 0.5 || 1;
+    const target = new THREE.Vector3(transform.px, transform.py + size.y * transform.sc * 0.5, transform.pz);
+    const dist = radius / Math.sin(THREE.MathUtils.degToRad(camera.fov * 0.5)) * 1.1;
+    rig.position.set(0, 0, 0);
+    rig.rotation.set(0, 0, 0);
+    camera.position.copy(target).add(new THREE.Vector3(0.6, 0.35, 1).normalize().multiplyScalar(dist));
+    camera.near = Math.max(0.01, dist / 1000);
+    camera.far = dist * 100;
+    camera.updateProjectionMatrix();
+    orbit.target.copy(target);
+    orbit.update();
+  }
+
+  function onLoaded(gltf, label) {
+    disposeModel();
+    model = gltf.scene;
+
+    // Centre on x/z and stand it on the floor.
+    const box = new THREE.Box3().setFromObject(model);
+    box.getSize(size);
+    const centre = box.getCenter(new THREE.Vector3());
+    model.position.sub(new THREE.Vector3(centre.x, box.min.y, centre.z));
+    holder.add(model);
+
+    let tris = 0, meshes = 0;
+    model.traverse(o => {
+      if (!o.isMesh) return;
+      meshes++;
+      const g = o.geometry;
+      tris += (g.index ? g.index.count : g.attributes.position.count) / 3;
+    });
+
+    applyUnlit();
+    applyTransform();
+    frameCamera();
+
+    progress.hidden = true;
+    const dims = [size.x, size.y, size.z].map(v => v.toFixed(2)).join(' × ');
+    say(label + ' · ' + Math.round(tris).toLocaleString() + ' triangles · ' + dims + ' m', { fade: true });
+    if (tris > 1.5e6) {
+      setTimeout(() => say('Heavy model (' + (tris / 1e6).toFixed(1)
+        + 'M triangles) — it may stutter on the Quest. Decimate to under ~1M for VR.'), 5500);
+    }
+  }
+
+  function onError(err, label) {
+    progress.hidden = true;
+    say('Could not load ' + label + ': ' + (err?.message || err), { error: true });
+  }
+
+  const onProgress = e => {
+    if (e.lengthComputable && e.total) bar.style.width = (100 * e.loaded / e.total).toFixed(1) + '%';
+  };
+
+  // Photogrammetry software often writes texture paths as they were on the
+  // computer that made them (C:\Users\...\tex.jpg). Keep only the file name,
+  // so the textures are looked for next to the .mtl on the website.
+  function cleanMtl(text) {
+    return text.split(/\r?\n/).map(line => {
+      if (!/^\s*(map_\w+|bump|disp|decal|norm|refl)\s/i.test(line)) return line;
+      return line.replace(/\\/g, '/').replace(/(?:[A-Za-z]:)?\/?(?:[^\s\/]+\/)+/g, '');
+    }).join('\n');
+  }
+
+  async function fetchText(url) {
+    try {
+      const res = await fetch(url, { cache: 'no-cache' });
+      return res.ok ? await res.text() : null;
+    } catch (e) { return null; }
+  }
+
+  // OBJ: read the text, find its .mtl (named in the file, or same name as the
+  // .obj), load the materials and textures from the same folder, then build.
+  async function loadObj({ url, text, label }) {
+    const base = url ? url.slice(0, url.lastIndexOf('/') + 1) : './';
+    if (text == null) {
+      progress.hidden = false; bar.style.width = '0';
+      text = await new Promise((res, rej) => new THREE.FileLoader().load(url, res, onProgress, rej));
+    }
+    say('Building ' + label + '\u2026');
+    await new Promise(r => setTimeout(r, 30));   // let the status repaint first
+
+    const objLoader = new OBJLoader();
+    let mtlNote = '';
+    if (url) {
+      const named = [...text.matchAll(/^mtllib\s+(.+?)\s*$/gm)]
+        .map(m => m[1].replace(/\\/g, '/').split('/').pop());
+      const guess = url.split('/').pop().replace(/\.obj$/i, '.mtl');
+      for (const name of [...new Set([...named, guess])]) {
+        const mtlText = await fetchText(base + name);
+        if (mtlText == null) continue;
+        const materials = new MTLLoader().parse(cleanMtl(mtlText), base);
+        materials.preload();
+        objLoader.setMaterials(materials);
+        mtlNote = name;
+        break;
+      }
+      if (!mtlNote && named.length) mtlNote = 'missing:' + named.join(', ');
+    }
+    const group = objLoader.parse(text);
+    return { scene: group, mtlNote };
+  }
+
+  function load({ url, buffer, text, label }) {
+    transform = { ...CONFIG.transform };
+    unlit = CONFIG.unlit;
+    syncSliders(transform, unlit);
+    say('Loading ' + label + '\u2026');
+
+    if (/\.obj$/i.test(url || label)) {
+      loadObj({ url, text, label }).then(res => {
+        onLoaded(res, label);
+        if (res.mtlNote.startsWith('missing:')) {
+          setTimeout(() => say(label + ' expects ' + res.mtlNote.slice(8) + ', which is not on the site, '
+            + 'so it has no textures. Upload it and its images next to the .obj.', { error: true }), 5500);
+        }
+      }).catch(e => onError(e, label));
+      return;
+    }
+
+    if (buffer) {
+      loader.parse(buffer, '', g => onLoaded(g, label), e => onError(e, label));
+      return;
+    }
+    progress.hidden = false; bar.style.width = '0';
+    loader.load(url, g => onLoaded(g, label), onProgress, e => onError(e, label));
+  }
+
+  // ---- VR ------------------------------------------------------------------
+  const controllerFactory = new XRControllerModelFactory();
+  for (let i = 0; i < 2; i++) {
+    const grip = renderer.xr.getControllerGrip(i);
+    grip.add(controllerFactory.createControllerModel(grip));
+    rig.add(grip);
+  }
+
+  let xrSession = null;
+  if (navigator.xr) {
+    navigator.xr.isSessionSupported('immersive-vr').then(ok => {
+      if (ok) vrBtn.hidden = false;
+      else $('help').insertAdjacentText('beforeend',
         ' VR is not available in this browser — open the page in the Quest browser.');
-    },
-    onEnterXr: () => { document.body.classList.add('in-xr'); vrBtn.textContent = 'Exit VR'; },
-    onExitXr:  () => { document.body.classList.remove('in-xr'); vrBtn.textContent = 'Enter VR'; },
+    }).catch(() => {});
+  }
+
+  vrBtn.addEventListener('click', async () => {
+    if (xrSession) { xrSession.end(); return; }
+    try {
+      const session = await navigator.xr.requestSession('immersive-vr', {
+        optionalFeatures: ['local-floor', 'bounded-floor', 'hand-tracking'],
+      });
+      await renderer.xr.setSession(session);
+      xrSession = session;
+      document.body.classList.add('in-xr');
+      vrBtn.textContent = 'Exit VR';
+      placeForVr();
+      session.addEventListener('end', () => {
+        xrSession = null;
+        document.body.classList.remove('in-xr');
+        vrBtn.textContent = 'Enter VR';
+        frameCamera();
+      });
+    } catch (err) {
+      say('VR could not start: ' + err.message, { error: true });
+    }
   });
+
+  // Stand the viewer a comfortable distance from the model, facing it.
+  function placeForVr() {
+    camera.position.set(0, 0, 0);
+    camera.quaternion.identity();
+    const footprint = Math.max(size.x, size.z) * transform.sc;
+    rig.rotation.set(0, 0, 0);
+    rig.position.set(transform.px, 0, transform.pz + footprint * 0.5 + 1.2);
+  }
+
+  // Thumbsticks: left moves (where you are looking), right turns in 30° snaps,
+  // right up/down rises and sinks. Squeeze either grip to move faster.
+  const MOVE_SPEED = 1.6;        // metres per second
+  const SNAP = THREE.MathUtils.degToRad(30);
+  let snapArmed = true;
+  const headPos = new THREE.Vector3(), fwd = new THREE.Vector3(), right = new THREE.Vector3();
+  const UP = new THREE.Vector3(0, 1, 0);
+
+  function vrLocomotion(dt) {
+    const session = renderer.xr.getSession();
+    if (!session) return;
+    let lx = 0, ly = 0, rx = 0, ry = 0, fast = false;
+    for (const src of session.inputSources) {
+      const gp = src.gamepad;
+      if (!gp || gp.axes.length < 4) continue;
+      const x = gp.axes[2], y = gp.axes[3];
+      if (src.handedness === 'left') { lx = x; ly = y; }
+      if (src.handedness === 'right') { rx = x; ry = y; }
+      if (gp.buttons[1]?.pressed) fast = true;
+    }
+    const dz = v => Math.abs(v) < 0.15 ? 0 : v;
+    lx = dz(lx); ly = dz(ly); rx = dz(rx); ry = dz(ry);
+
+    const xrCam = renderer.xr.getCamera();
+    if (lx || ly || ry) {
+      xrCam.getWorldDirection(fwd); fwd.y = 0; fwd.normalize();
+      right.crossVectors(fwd, UP).normalize();
+      const speed = MOVE_SPEED * (fast ? 3 : 1) * dt;
+      rig.position.addScaledVector(fwd, -ly * speed);
+      rig.position.addScaledVector(right, lx * speed);
+      rig.position.y += -ry * speed * 0.6;
+    }
+    if (Math.abs(rx) > 0.6 && snapArmed) {
+      snapArmed = false;
+      // Turn about the head, not the rig origin, so you don't swing sideways.
+      xrCam.getWorldPosition(headPos);
+      const angle = rx > 0 ? -SNAP : SNAP;
+      rig.position.sub(headPos).applyAxisAngle(UP, angle).add(headPos);
+      rig.rotateY(angle);
+    } else if (Math.abs(rx) < 0.3) {
+      snapArmed = true;
+    }
+  }
 
   addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
@@ -450,57 +735,19 @@ async function createViewer() {
     renderer.setSize(innerWidth, innerHeight);
   });
 
-  let mesh = null;
-  let transform = { ...CONFIG.transform };
-
-  function applyTransform() {
-    if (!mesh) return;
-    const d = THREE.MathUtils.degToRad;
-    mesh.rotation.set(d(transform.rx), d(transform.ry), d(transform.rz));
-    mesh.position.set(transform.px, transform.py, transform.pz);
-    mesh.scale.setScalar(transform.sc);
-  }
-
-  function load({ url, fileBytes, fileName, label }) {
-    if (mesh) { scene.remove(mesh); mesh.dispose?.(); mesh = null; }
-    transform = { ...CONFIG.transform };
-    syncSliders(transform);
-
-    say('Loading ' + label + '…');
-    progress.hidden = false; bar.style.width = '0';
-
-    mesh = new SplatMesh({
-      url, fileBytes, fileName,
-      onProgress: e => {
-        if (e.lengthComputable && e.total) bar.style.width = (100 * e.loaded / e.total).toFixed(1) + '%';
-      },
-    });
-    applyTransform();
-    scene.add(mesh);
-
-    const thisMesh = mesh;
-    mesh.initialized.then(() => {
-      if (thisMesh !== mesh) return;
-      progress.hidden = true;
-      const n = typeof thisMesh.numSplats === 'number' ? thisMesh.numSplats
-                                                       : thisMesh.packedSplats?.numSplats;
-      say((n ? n.toLocaleString() + ' splats' : 'Loaded'), { fade: true });
-    }).catch(err => {
-      if (thisMesh !== mesh) return;
-      progress.hidden = true;
-      say('Could not load ' + label + ': ' + (err.message || err), { error: true });
-    });
-  }
-
+  const clock = new THREE.Clock();
   renderer.setAnimationLoop(() => {
-    if (renderer.xr.isPresenting) xr.updateControllers(camera);
-    else controls.update(rig);
+    const dt = Math.min(clock.getDelta(), 0.1);
+    if (renderer.xr.isPresenting) vrLocomotion(dt);
+    else orbit.update();
     renderer.render(scene, camera);
   });
 
   return {
     load,
     setTransform(t) { transform = t; applyTransform(); },
+    setUnlit(v) { unlit = v; applyUnlit(); },
+    reframe: frameCamera,
   };
 }
 
@@ -515,11 +762,16 @@ addEventListener('drop', async e => {
   dragDepth = 0; drop.hidden = true;
   const file = e.dataTransfer?.files?.[0];
   if (!file || !viewer) return;
-  if (!/\.(spz|sog|ply|splat|ksplat|zip)$/i.test(file.name)) {
-    say(file.name + ' is not a splat file (.sog, .spz, .ply, .splat, .ksplat)', { error: true });
+  if (/\.obj$/i.test(file.name)) {
+    // A dropped OBJ arrives without its .mtl and textures, so it shows untextured.
+    viewer.load({ text: await file.text(), label: file.name });
     return;
   }
-  viewer.load({ fileBytes: new Uint8Array(await file.arrayBuffer()), fileName: file.name, label: file.name });
+  if (!/\.glb$/i.test(file.name)) {
+    say(file.name + ' is not a .glb or .obj file.', { error: true });
+    return;
+  }
+  viewer.load({ buffer: await file.arrayBuffer(), label: file.name });
 });
 
 // ---- screen wake lock ------------------------------------------------------
@@ -530,29 +782,37 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && gate.hidden) keepAwake();
 });
 
-// ---- Adjust panel: line the splat up, then paste the numbers into CONFIG ---
-const adjust = $('adjust'), snippet = $('snippet');
+// ---- Adjust panel: line the model up, then paste the numbers into CONFIG ---
+const adjust = $('adjust'), snippet = $('snippet'), unlitBox = $('unlit');
 const ids = ['rx', 'ry', 'rz', 'px', 'py', 'pz', 'sc'];
 
-function syncSliders(t) {
+function syncSliders(t, isUnlit) {
   ids.forEach(k => { $(k).value = t[k]; $(k + '-o').textContent = t[k]; });
-  writeSnippet(t);
+  unlitBox.checked = isUnlit;
+  writeSnippet(t, isUnlit);
 }
-function writeSnippet(t) {
-  snippet.textContent = 'transform: { ' + ids.map(k => k + ': ' + t[k]).join(', ') + ' },';
+function writeSnippet(t, isUnlit) {
+  snippet.textContent = 'unlit: ' + isUnlit + ',\ntransform: { '
+    + ids.map(k => k + ': ' + t[k]).join(', ') + ' },';
 }
 function readSliders() {
   const t = {};
   ids.forEach(k => { t[k] = parseFloat($(k).value); $(k + '-o').textContent = $(k).value; });
-  writeSnippet(t);
+  writeSnippet(t, unlitBox.checked);
   viewer?.setTransform(t);
 }
 ids.forEach(k => $(k).addEventListener('input', readSliders));
-syncSliders(CONFIG.transform);
+unlitBox.addEventListener('change', () => { viewer?.setUnlit(unlitBox.checked); readSliders(); });
+syncSliders(CONFIG.transform, CONFIG.unlit);
 
 $('adjust-toggle').addEventListener('click', () => { adjust.hidden = false; });
-$('close').addEventListener('click', () => { adjust.hidden = true; });
-$('reset').addEventListener('click', () => { syncSliders(CONFIG.transform); readSliders(); });
+$('close').addEventListener('click', () => { adjust.hidden = true; viewer?.reframe(); });
+$('reset').addEventListener('click', () => {
+  syncSliders(CONFIG.transform, CONFIG.unlit);
+  viewer?.setUnlit(CONFIG.unlit);
+  readSliders();
+  viewer?.reframe();
+});
 $('copy').addEventListener('click', async () => {
   const btn = $('copy');
   try { await navigator.clipboard.writeText(snippet.textContent); btn.textContent = 'Copied'; }
