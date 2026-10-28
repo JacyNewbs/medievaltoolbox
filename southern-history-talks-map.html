@@ -134,6 +134,7 @@ select { width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-ra
 .act.primary { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 500; }
 .act:hover { border-color: var(--muted); }
 .empty { background: var(--panel); border: 1px dashed var(--line); border-radius: 10px; padding: 20px; text-align: center; color: var(--muted); }
+.report { font-size: .85rem; color: var(--muted); margin: 8px 0 0; }
 .tocheck { font-size: .88rem; color: var(--muted); background: var(--cream); border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; margin: 0; }
 .foot { font-size: .85rem; color: var(--muted); margin: 4px 0 8px; }
 
@@ -342,7 +343,22 @@ function parseCSV(text) {
   return rows.filter((r) => r.some((v) => v.trim())).map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] ?? "").trim()])));
 }
 const MODE_IN = { "in person": "in-person", "online": "online", "in person and streamed": "hybrid", "hybrid": "hybrid" };
+// A file re-saved by Excel has dates like 27/10/2026 and times like 19:30:00 or 7:30 PM – read those too
+function isoDay(v) {
+  v = (v || "").trim(); let m;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(v) || !v) return v;
+  if ((m = /^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2}|\d{4})/.exec(v))) { const y = +m[3] < 100 ? 2000 + +m[3] : +m[3]; return `${y}-${String(m[2]).padStart(2, "0")}-${String(m[1]).padStart(2, "0")}`; }
+  if ((m = /^(\d{4})[\/.](\d{1,2})[\/.](\d{1,2})$/.exec(v))) return `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
+  return v;
+}
+function hhmm(v) {
+  v = (v || "").trim(); const m = /^(\d{1,2})[:.](\d{2})(?::\d{2})?\s*([ap]\.?m\.?)?$/i.exec(v);
+  if (!m) return v;
+  let h = +m[1]; if (m[3] && /p/i.test(m[3]) && h < 12) h += 12; if (m[3] && /a/i.test(m[3]) && h === 12) h = 0;
+  return `${String(h).padStart(2, "0")}:${m[2]}`;
+}
 function rowToEvent(r, i) {
+  r.Event_date = isoDay(r.Event_date); r.End_date = isoDay(r.End_date); r.Start_time = hhmm(r.Start_time);
   const t = r.Start_time || "", lat = parseFloat(r.Latitude), lon = parseFloat(r.Longitude);
   const ev = { id: Number(r.id) || 100000 + i, org: r.Organisation, orgUrl: r.Organisation_URL, start: `${r.Event_date}T${t || "00:00"}`,
     timeKnown: !!t, end: r.End_date || undefined, type: r.Event_type, title: r.Event_title,
@@ -477,7 +493,9 @@ function cardHTML(e) {
   const access = e.access ? `<p class="tocheck"><strong>${esc(ACCESS_NOTE[e.access] || e.access)}</strong></p>` : "";
   const runs = e.end ? `<p><strong>Runs ${fmtShort(e.date)} ${e.date.getFullYear()} to ${fmtShort(e.end)} ${e.end.getFullYear()}.</strong> Check the website for opening days and times.</p>` : "";
   const notime = e.timeKnown === false && e.type !== "Exhibition" ? `<p class="tocheck">Start time not published: check the society's website or contact them.</p>` : "";
-  const check = e.check ? `<p class="tocheck"><strong>Collected automatically. Still to confirm:</strong> ${esc(e.check)}</p>` : "";
+  // Every listing invites corrections: the email opens with the event already named
+  const subj = `Talks map: correction to “${e.title || "event"}” (${e.org}, ${fmtShort(e.date)} ${e.date.getFullYear()})`;
+  const check = `<p class="report">If there is something wrong with this event, <a href="mailto:secretary@southernhistorysociety.org.uk?subject=${encodeURIComponent(subj)}">get in touch</a>.</p>`;
   return `<li class="ev" data-id="${e.id}" data-venue="${esc(e.venue || "")}">
     <button type="button" class="ev-head" aria-expanded="${open}" aria-controls="b${e.id}">
       <span class="ev-date">${e.ongoing ? `<span class="dow">Until</span><span class="day">${e.end.getDate()}</span><span class="time">${MON[e.end.getMonth()]}</span>` : `<span class="dow">${DOW[e.date.getDay()]}</span><span class="day">${e.date.getDate()}</span><span class="time">${e.timeKnown === false ? (e.end ? "until " + fmtShort(e.end) : "see website") : fmtTime(e.date)}</span>`}</span>
