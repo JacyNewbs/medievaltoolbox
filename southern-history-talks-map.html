@@ -357,12 +357,35 @@ function hhmm(v) {
   let h = +m[1]; if (m[3] && /p/i.test(m[3]) && h < 12) h += 12; if (m[3] && /a/i.test(m[3]) && h === 12) h = 0;
   return `${String(h).padStart(2, "0")}:${m[2]}`;
 }
+// Some sites' event data includes web-page markup ('<p>…</p>\n'); show it as plain text
+function plainText(s) {
+  s = String(s || "").replace(/\\n/g, "\n").replace(/<\s*br\s*\/?>|<\/p>/gi, "\n").replace(/<[^>]+>/g, "");
+  const t = document.createElement("textarea"); t.innerHTML = s;
+  return t.value.replace(/[ \t]+/g, " ").replace(/\n\s*\n+/g, "\n").trim();
+}
+// The same event listed by two organisations (a museum and a society that publicises it): same day, same place,
+// same or very similar title. Keep one – preferably the host, whose name appears in the venue.
+function dedupeEvents(list) {
+  const nt = (s) => plainText(s).toLowerCase().replace(/^(talk|lecture|exhibition|event)\s*[:\-–]\s*/, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const place = (e) => (e.postcode || "").toUpperCase().replace(/\s+/g, "") || (e.lat != null ? `${e.lat.toFixed(3)},${e.lon.toFixed(3)}` : e.mode || "");
+  const hosts = (e) => (e.address || "").toLowerCase().includes((e.org || "").toLowerCase().replace(/^(the|friends of( the)?)\s+/, ""));
+  const kept = [], byKey = new Map();
+  for (const e of list) {
+    const k = `${(e.start || "").slice(0, 10)}|${place(e)}`, t = nt(e.title);
+    const twins = byKey.get(k) || [];
+    const same = t && twins.find((o) => { const u = nt(o.title); return u === t || (Math.min(u.length, t.length) >= 8 && (u.includes(t) || t.includes(u))); });
+    if (!same) { twins.push(e); byKey.set(k, twins); kept.push(e); continue; }
+    if (hosts(e) && !hosts(same)) { Object.keys(e).forEach((f) => { if (e[f] || !same[f]) same[f] = e[f]; }); }
+    else Object.keys(e).forEach((f) => { if (!same[f] && e[f]) same[f] = e[f]; });
+  }
+  return kept;
+}
 function rowToEvent(r, i) {
   r.Event_date = isoDay(r.Event_date); r.End_date = isoDay(r.End_date); r.Start_time = hhmm(r.Start_time);
   const t = r.Start_time || "", lat = parseFloat(r.Latitude), lon = parseFloat(r.Longitude);
   const ev = { id: Number(r.id) || 100000 + i, org: r.Organisation, orgUrl: r.Organisation_URL, start: `${r.Event_date}T${t || "00:00"}`,
     timeKnown: !!t, end: r.End_date || undefined, type: r.Event_type, title: r.Event_title,
-    desc: [r.Speaker ? `Speaker: ${r.Speaker}.` : "", r.Description].filter(Boolean).join("\n"),
+    desc: [r.Speaker ? `Speaker: ${r.Speaker}.` : "", plainText(r.Description)].filter(Boolean).join("\n"),
     mode: MODE_IN[(r.Online_or_InPerson || "In person").toLowerCase()] || "in-person", access: r.Access,
     address: r.Venue_address, town: r.Town, county: r.County, postcode: r.Postcode, url: r.Event_URL, check: r.Still_to_confirm };
   if (isFinite(lat) && isFinite(lon)) { ev.lat = lat; ev.lon = lon; }
@@ -385,6 +408,7 @@ if (!csvText) $("loadnote").hidden = false;
 DATA.events = csvText ? parseCSV(csvText).filter((r) => r.Event_date && !/^no$/i.test(r.Shown_on_map || "")).map(rowToEvent) : [];
 const LISTED = csvName === CSV_FILE ? "from events.csv" : csvText ? `previewing ${csvName}` : "no events file loaded";
 
+DATA.events = dedupeEvents(DATA.events);
 const events = DATA.events.filter((e) => !SOCIAL.test(e.type || "")).map((e) => ({ ...e, type: TYPE_ALIAS[e.type] || e.type, date: parseLocal(e.start), end: e.end ? parseLocal(e.end + "T23:59") : null, town: townOf(e) }));
 events.forEach((e) => { e.ongoing = !!e.end && e.date < startOfToday && e.end >= startOfToday; e.past = (e.end || e.date) < startOfToday; e.sortDate = e.ongoing ? startOfToday : e.date; e.hay = [e.title, e.org, e.desc, e.town, e.address, e.county, e.type].join(" ").toLowerCase(); });
 events.sort((a, b) => (a.sortDate - b.sortDate) || ((a.end || a.date) - (b.end || b.date)));
