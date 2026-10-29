@@ -395,7 +395,10 @@ const project = (lon, lat) => { const s = Math.sin(lat * Math.PI / 180); return 
 const venues = new Map();
 events.forEach((e) => {
   if (e.lat == null) return;
-  const key = `${e.lat.toFixed(4)},${e.lon.toFixed(4)}`;
+  // The same hall can arrive with slightly different coordinates (typed in by hand, or from its postcode);
+  // treat events with the same postcode as one place (a full UK postcode covers a single street or building)
+  const pc = (e.postcode || "").toUpperCase().replace(/\s+/g, "");
+  const key = /^[A-Z]{1,2}\d[A-Z\d]?\d[A-Z]{2}$/.test(pc) ? `pc:${pc}` : `${e.lat.toFixed(4)},${e.lon.toFixed(4)}`;
   e.venue = key;
   if (!venues.has(key)) {
     const [x, y] = project(e.lon, e.lat);
