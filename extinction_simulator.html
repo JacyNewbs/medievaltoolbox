@@ -119,6 +119,10 @@
     visibility: visible;
   }
 
+  #overlay1 {
+    pointer-events: none; /* Allows clicks through the transparent container */
+  }
+
   .dialog {
     width: min(390px, 100%);
     padding: 30px 24px;
@@ -126,6 +130,7 @@
     background: white;
     box-shadow: 0 16px 55px rgba(0,0,0,.2);
     text-align: center;
+    pointer-events: auto;
   }
 
   .dialog h2 {
@@ -182,7 +187,7 @@
   </div>
 </div>
 
-<div class="overlay" id="overlay1" role="dialog" aria-modal="true" aria-labelledby="question" style="display: right; justify-content: right; background-color: #ffffff00;>
+<div class="overlay" id="overlay1" role="dialog" aria-modal="true" aria-labelledby="question" style="justify-content: right; background-color: transparent;">
   <div class="dialog">
     <h2>Keep Going!</h2>
   </div>
@@ -270,17 +275,22 @@
         }, 260);
       } else if (reinforcedTaps === 15) {
         freezeExperiment();
-		window.setTimeout(() => {
-    freezeExperiment();
-    document.getElementById('overlay1').classList.add('show');
-  }, 20);
+        window.setTimeout(() => {
+          document.getElementById('overlay1').classList.add('show');
+        }, 20);
       }
     });
   });
 
-  // 30-second timer to freeze and display the dialogue box overlay
+  // Timer to freeze and display the final dialogue box overlay
   window.setTimeout(() => {
     freezeExperiment();
+    
+    // Hide the 'Keep Going!' message when the final overlay appears
+    const keepGoingOverlay = document.getElementById('overlay1');
+    keepGoingOverlay.classList.remove('show');
+    keepGoingOverlay.style.display = 'none';
+
     document.getElementById('overlay').classList.add('show');
   }, 20000);
 })();
