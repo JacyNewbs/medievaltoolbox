@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extinction Experiment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e36c22;
+    --on-bg: #2b1305;
+    --panel: #ffffff;
+    --ink: #1f2d3d;
+    --muted: #5d6b7a;
+    --wall: #34495e;
+    --floor: #f5f8f7;
+    --dot: #d6336c;
+    --goal: #1f6f9f;
+    --goal-soft: #b6d6e8;
+    --gold: #f2b705;
+    --gold-dark: #b98300;
+    --line: #cfdad6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--on-bg);
+    font-family: "Libre Baskerville", Baskerville, "Baskerville Old Face", Georgia, serif;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px 40px;
+  }
+  main { width: 100%; max-width: 720px; }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: 1.25rem; line-height: 1.3; font-weight: 700; margin: 0; letter-spacing: 0.01em; }
+  .level { color: var(--on-bg); font-size: 1rem; margin-top: 2px; }
+
+  .purse {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 16px 6px 8px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    min-width: 92px;
+  }
+  .purse.bump { animation: bump 0.35s ease; }
+  @keyframes bump { 40% { transform: scale(1.14); } }
+  .coin-icon, .flying-coin {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe27a, var(--gold) 55%, var(--gold-dark));
+    border: 2px solid var(--gold-dark);
+    display: grid; place-items: center;
+    font-size: 0.8rem; font-weight: 700; color: #7a5400;
+  }
+  .flying-coin { position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none; }
+
+  .board {
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+  }
+  canvas#maze {
+    max-width: 100%;
+    height: auto;
+    touch-action: none;
+    cursor: grab;
+    border-radius: 12px;
+    outline: none;
+  }
+  canvas#maze:focus-visible { box-shadow: 0 0 0 3px var(--dot); }
+  canvas#maze.dragging { cursor: grabbing; }
+
+  .status {
+    min-height: 4.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .message { font-size: 1.05rem; line-height: 1.5; margin: 0; }
+
+  button {
+    font: inherit;
+    font-weight: 400;
+    font-size: 0.95rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 26px;
+    background: var(--goal);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.08); }
+  button:focus-visible { outline: 3px solid var(--dot); outline-offset: 3px; }
+  button.quiet {
+    background: transparent;
+    color: var(--on-bg);
+    text-decoration: underline;
+    padding: 6px 12px;
+    font-size: 0.95rem;
+  }
+  .hidden { display: none !important; }
+  .fade-in { animation: fade 0.8s ease both; }
+  @keyframes fade { from { opacity: 0; } }
+
+  .debrief {
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 24px;
+  }
+    .debrief p { color: var(--ink); line-height: 1.75; max-width: 62ch; margin: 0 0 14px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .stat { background: var(--floor); border-radius: 14px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 1.4rem; }
+  .stat span { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
+  @media (max-width: 520px) { .stats { grid-template-columns: 1fr; } }
+
+  #confetti {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 40;
+  }
+</style>
+</head>
+<body>
+<main>
+  <section id="game">
+    <header>
+      <div>
+        <h1>Drag the dot to the box</h1>
+        <div class="level" id="levelLabel">Level 1 of 3</div>
+      </div>
+      <div class="purse" id="purse" aria-label="Gold coins">
+        <div class="coin-icon" id="coinIcon">$</div>
+        <span id="coinCount">0</span>
+      </div>
+    </header>
+
+    <div class="board">
+      <canvas id="maze" tabindex="0" aria-label="Maze. Drag the dot to the box, or use the arrow keys."></canvas>
+    </div>
+
+    <div class="status">
+      <p class="message" id="message" aria-live="polite"></p>
+      <button id="nextBtn" class="hidden">Next level</button>
+      <button id="finishBtn" class="quiet hidden">I’m finished</button>
+    </div>
+  </section>
+
+  <section id="debrief" class="debrief hidden">
+    <p>Take note of your behaviour, and how you are feeling. Did you feel frustrated when you completed the maze but didn't receive a well-earned gold coin?<br><br>Did you try dragging the ball into that box again and again, or look around the screen hopelessly?<br><br>Using this experience, how would you define 'extinction'?</p>
+    <div class="stats">
+      <div class="stat"><b id="statCoins">0</b><span>coins earned</span></div>
+      <div class="stat"><b id="statArrivals">0</b><span>times you reached the box in the last level, with no reward</span></div>
+      <div class="stat"><b id="statTimes">–</b><span>seconds per level</span></div>
+    </div>
+    <button id="againBtn">Play again</button>
+  </section>
+</main>
+
+<canvas id="confetti"></canvas>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- Settings ---------- */
+  // reward: true  -> confetti + coin when the box is reached
+  // reward: false -> extinction: nothing happens
+  const LEVELS = [
+    { cols: 5,  rows: 4, seed: 7,  extraOpenings: 6, reward: true  },
+    { cols: 7,  rows: 5, seed: 21, extraOpenings: 2, reward: true  },
+    { cols: 8,  rows: 5, seed: 11, extraOpenings: 1, reward: true  },
+    { cols: 9,  rows: 6, seed: 5,  extraOpenings: 0, reward: true  },
+    { cols: 10, rows: 6, seed: 13, extraOpenings: 0, reward: false }
+  ];
+  const CELL = 64, WALL = 8, PAD = 12, DOT_R = 11;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Elements ---------- */
+  const canvas = document.getElementById('maze');
+  const ctx = canvas.getContext('2d');
+  const msg = document.getElementById('message');
+  const nextBtn = document.getElementById('nextBtn');
+  const finishBtn = document.getElementById('finishBtn');
+  const levelLabel = document.getElementById('levelLabel');
+  const coinCount = document.getElementById('coinCount');
+  const coinIcon = document.getElementById('coinIcon');
+  const purse = document.getElementById('purse');
+  const gameEl = document.getElementById('game');
+  const debriefEl = document.getElementById('debrief');
+
+  // Sound played with the confetti and coin (ding.ogg must sit in the same folder)
+  const ding = new Audio('ding.ogg');
+  ding.preload = 'auto';
+  function playDing() {
+    try { ding.currentTime = 0; const p = ding.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+  }
+
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+  /* ---------- State ---------- */
+  let levelIndex = 0, coins = 0;
+  let walls = [], goal = null, dot = { x: 0, y: 0 };
+  let width = 0, height = 0;
+  let dragging = false, dragOffset = { x: 0, y: 0 };
+  let locked = false;           // true after a rewarded win
+  let startTime = null;         // set on first grab
+  let times = [];               // seconds per level
+  let arrivals = 0, inBox = false;  // used in the extinction level
+
+  /* ---------- Maze generation ---------- */
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function buildMaze(cfg) {
+    const { cols, rows } = cfg;
+    const rand = rng(cfg.seed);
+    const h = Array.from({ length: rows + 1 }, () => Array(cols).fill(true));
+    const v = Array.from({ length: rows }, () => Array(cols + 1).fill(true));
+    const seen = Array.from({ length: rows }, () => Array(cols).fill(false));
+
+    // Depth-first carve
+    const stack = [[0, 0]];
+    seen[0][0] = true;
+    while (stack.length) {
+      const [r, c] = stack[stack.length - 1];
+      const options = [];
+      if (r > 0 && !seen[r - 1][c]) options.push([r - 1, c, () => h[r][c] = false]);
+      if (r < rows - 1 && !seen[r + 1][c]) options.push([r + 1, c, () => h[r + 1][c] = false]);
+      if (c > 0 && !seen[r][c - 1]) options.push([r, c - 1, () => v[r][c] = false]);
+      if (c < cols - 1 && !seen[r][c + 1]) options.push([r, c + 1, () => v[r][c + 1] = false]);
+      if (!options.length) { stack.pop(); continue; }
+      const [nr, nc, open] = options[Math.floor(rand() * options.length)];
+      open();
+      seen[nr][nc] = true;
+      stack.push([nr, nc]);
+    }
+
+    // Open a few extra walls to make shortcuts (easier levels)
+    for (let i = 0; i < cfg.extraOpenings; i++) {
+      if (rand() < 0.5) {
+        const r = 1 + Math.floor(rand() * (rows - 1)), c = Math.floor(rand() * cols);
+        h[r][c] = false;
+      } else {
+        const r = Math.floor(rand() * rows), c = 1 + Math.floor(rand() * (cols - 1));
+        v[r][c] = false;
+      }
+    }
+
+    // Turn walls into rectangles
+    const rects = [];
+    for (let r = 0; r <= rows; r++) for (let c = 0; c < cols; c++)
+      if (h[r][c]) rects.push({ x: c * CELL - WALL / 2, y: r * CELL - WALL / 2, w: CELL + WALL, h: WALL });
+    for (let r = 0; r < rows; r++) for (let c = 0; c <= cols; c++)
+      if (v[r][c]) rects.push({ x: c * CELL - WALL / 2, y: r * CELL - WALL / 2, w: WALL, h: CELL + WALL });
+    return rects;
+  }
+
+  /* ---------- Collision ---------- */
+  function hits(x, y) {
+    for (const w of walls) {
+      const cx = Math.max(w.x, Math.min(x, w.x + w.w));
+      const cy = Math.max(w.y, Math.min(y, w.y + w.h));
+      const dx = x - cx, dy = y - cy;
+      if (dx * dx + dy * dy < DOT_R * DOT_R) return true;
+    }
+    return false;
+  }
+
+  function moveToward(tx, ty) {
+    for (let i = 0; i < 300; i++) {
+      const dx = tx - dot.x, dy = ty - dot.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 0.5) break;
+      const step = Math.min(2.5, dist);
+      const nx = dot.x + dx / dist * step, ny = dot.y + dy / dist * step;
+      if (!hits(nx, ny)) { dot.x = nx; dot.y = ny; }
+      else if (!hits(nx, dot.y)) { dot.x = nx; }
+      else if (!hits(dot.x, ny)) { dot.y = ny; }
+      else break;
+    }
+  }
+
+  /* ---------- Levels ---------- */
+  function loadLevel(i) {
+    levelIndex = i;
+    const cfg = LEVELS[i];
+    walls = buildMaze(cfg);
+    width = cfg.cols * CELL; height = cfg.rows * CELL;
+    dot = { x: CELL / 2, y: CELL / 2 };
+    const gs = CELL * 0.58;
+    goal = { x: width - CELL / 2 - gs / 2, y: height - CELL / 2 - gs / 2, s: gs };
+
+    const dpr = window.devicePixelRatio || 1;
+    const cw = width + PAD * 2, ch = height + PAD * 2;
+    canvas.width = cw * dpr; canvas.height = ch * dpr;
+    canvas.style.width = cw + 'px';
+    canvas.style.aspectRatio = cw + ' / ' + ch;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    dragging = false; locked = false; startTime = null; arrivals = 0; inBox = false;
+    levelLabel.textContent = 'Level ' + (i + 1) + ' of ' + LEVELS.length;
+    msg.textContent = ['Drag the dot to the box.', 'A little trickier this time.', 'Keep going.', 'Nearly there.', 'One more.'][i];
+    nextBtn.classList.add('hidden');
+    finishBtn.classList.add('hidden');
+    draw();
+  }
+
+  function insideGoal() {
+    return dot.x > goal.x && dot.x < goal.x + goal.s && dot.y > goal.y && dot.y < goal.y + goal.s;
+  }
+
+  function checkGoal() {
+    if (locked) return;
+    const inside = insideGoal();
+    const cfg = LEVELS[levelIndex];
+    if (inside && !inBox) {
+      inBox = true;
+      if (cfg.reward) { win(); }
+      else {
+        // Extinction (final level): record quietly, give no feedback at all
+        arrivals++;
+        if (arrivals === 1) finishBtn.classList.remove('hidden', 'fade-in'), void finishBtn.offsetWidth, finishBtn.classList.add('fade-in');
+      }
+    } else if (!inside) {
+      inBox = false;
+    }
+  }
+
+  function win() {
+    locked = true; dragging = false;
+    canvas.classList.remove('dragging');
+    times.push(elapsed());
+    msg.textContent = 'You did it! +1 gold coin';
+    nextBtn.classList.remove('hidden');
+    nextBtn.focus({ preventScroll: true });
+    const r = canvas.getBoundingClientRect();
+    const sc = r.width / (width + PAD * 2);
+    const gx = r.left + (PAD + goal.x + goal.s / 2) * sc;
+    const gy = r.top + (PAD + goal.y + goal.s / 2) * sc;
+    playDing();
+    spray(gx, gy);
+    flyCoin(gx, gy);
+    draw();
+  }
+
+  function elapsed() {
+    return startTime ? Math.round((performance.now() - startTime) / 100) / 10 : 0;
+  }
+
+  /* ---------- Drawing ---------- */
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function draw() {
+    const cw = width + PAD * 2, ch = height + PAD * 2;
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.save();
+    ctx.translate(PAD, PAD);
+
+    ctx.fillStyle = css('--floor');
+    ctx.fillRect(-WALL / 2, -WALL / 2, width + WALL, height + WALL);
+
+    // Walls
+    ctx.fillStyle = css('--wall');
+    for (const w of walls) { roundRect(w.x, w.y, w.w, w.h, 3); ctx.fill(); }
+
+    // Goal box
+    ctx.fillStyle = css('--goal-soft');
+    roundRect(goal.x - 5, goal.y - 5, goal.s + 10, goal.s + 10, 10); ctx.fill();
+    ctx.fillStyle = css('--goal');
+    roundRect(goal.x, goal.y, goal.s, goal.s, 7); ctx.fill();
+
+    // Dot
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.28)';
+    ctx.shadowBlur = dragging ? 10 : 4;
+    ctx.shadowOffsetY = dragging ? 3 : 1.5;
+    ctx.fillStyle = css('--dot');
+    ctx.beginPath(); ctx.arc(dot.x, dot.y, dragging ? DOT_R + 1.5 : DOT_R, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.beginPath(); ctx.arc(dot.x - 3.5, dot.y - 3.5, 3, 0, Math.PI * 2); ctx.fill();
+
+    ctx.restore();
+  }
+
+  /* ---------- Input ---------- */
+  function pointerPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const sc = (width + PAD * 2) / r.width;
+    return { x: (e.clientX - r.left) * sc - PAD, y: (e.clientY - r.top) * sc - PAD, sc };
+  }
+
+  canvas.addEventListener('pointerdown', e => {
+    if (locked) return;
+    const p = pointerPos(e);
+    const grab = Math.max(DOT_R * 2.2, 26 * p.sc);   // generous grab area for fingers
+    if (Math.hypot(p.x - dot.x, p.y - dot.y) > grab) return;
+    dragging = true;
+    dragOffset = { x: dot.x - p.x, y: dot.y - p.y };
+    if (!startTime) startTime = performance.now();
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('dragging');
+    draw();
+    e.preventDefault();
+  });
+
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const p = pointerPos(e);
+    const tx = p.x + dragOffset.x, ty = p.y + dragOffset.y;
+    moveToward(tx, ty);
+    // If the pointer gets pulled far away (stuck on a wall), let go of the dot
+    if (Math.hypot(tx - dot.x, ty - dot.y) > 70) endDrag();
+    checkGoal();
+    draw();
+  });
+
+  function endDrag() {
+    dragging = false;
+    canvas.classList.remove('dragging');
+    draw();
+  }
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+
+  // Keyboard alternative
+  canvas.addEventListener('keydown', e => {
+    if (locked) return;
+    const d = { ArrowUp: [0, -6], ArrowDown: [0, 6], ArrowLeft: [-6, 0], ArrowRight: [6, 0] }[e.key];
+    if (!d) return;
+    e.preventDefault();
+    if (!startTime) startTime = performance.now();
+    moveToward(dot.x + d[0], dot.y + d[1]);
+    checkGoal();
+    draw();
+  });
+
+  nextBtn.addEventListener('click', () => loadLevel(levelIndex + 1));
+  finishBtn.addEventListener('click', showDebrief);
+  document.getElementById('againBtn').addEventListener('click', () => {
+    coins = 0; times = [];
+    coinCount.textContent = '0';
+    debriefEl.classList.add('hidden');
+    gameEl.classList.remove('hidden');
+    loadLevel(0);
+  });
+
+  function showDebrief() {
+    times.push(elapsed());
+    document.getElementById('statCoins').textContent = coins;
+    document.getElementById('statArrivals').textContent = arrivals;
+    document.getElementById('statTimes').textContent = times.join(' / ');
+    gameEl.classList.add('hidden');
+    debriefEl.classList.remove('hidden');
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ---------- Coin ---------- */
+  function flyCoin(fromX, fromY) {
+    const addCoin = () => {
+      coins++;
+      coinCount.textContent = coins;
+      purse.classList.remove('bump'); void purse.offsetWidth; purse.classList.add('bump');
+    };
+    if (reduceMotion) { addCoin(); return; }
+    const el = document.createElement('div');
+    el.className = 'flying-coin';
+    el.textContent = '1';
+    document.body.appendChild(el);
+    const t = coinIcon.getBoundingClientRect();
+    const toX = t.left + t.width / 2, toY = t.top + t.height / 2;
+    const anim = el.animate([
+      { transform: `translate(${fromX - 15}px, ${fromY - 15}px) scale(0.4)`, opacity: 0 },
+      { transform: `translate(${fromX - 15}px, ${fromY - 70}px) scale(1.5)`, opacity: 1, offset: 0.35 },
+      { transform: `translate(${toX - 15}px, ${toY - 15}px) scale(1)`, opacity: 1 }
+    ], { duration: 1100, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+    anim.onfinish = () => { el.remove(); addCoin(); };
+  }
+
+  /* ---------- Confetti ---------- */
+  const cv = document.getElementById('confetti');
+  const cx = cv.getContext('2d');
+  let particles = [], running = false;
+  const COLORS = ['#d6336c', '#f2b705', '#2a9d8f', '#3a86ff', '#ff7f50', '#8e5cf7', '#7bd389'];
+
+  function sizeConfetti() {
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  addEventListener('resize', sizeConfetti);
+  sizeConfetti();
+
+  function burst(x, y, count, centerAngle, spread, minV, maxV) {
+    for (let i = 0; i < count; i++) {
+      const a = centerAngle + (Math.random() - 0.5) * spread;
+      const v = minV + Math.random() * (maxV - minV);
+      particles.push({
+        x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+        w: 6 + Math.random() * 6, h: 4 + Math.random() * 5,
+        rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.4,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        life: 0, max: 150 + Math.random() * 100
+      });
+    }
+  }
+
+  function spray(x, y) {
+    const n = reduceMotion ? 40 : 160;
+    burst(x, y, n, -Math.PI / 2, Math.PI * 0.9, 7, 20);
+    if (!reduceMotion) {
+      setTimeout(() => {
+        burst(0, innerHeight * 0.8, 70, -Math.PI / 4, 0.8, 10, 22);
+        burst(innerWidth, innerHeight * 0.8, 70, -3 * Math.PI / 4, 0.8, 10, 22);
+      }, 180);
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+
+  function tick() {
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    particles = particles.filter(p => p.life < p.max && p.y < innerHeight + 30);
+    for (const p of particles) {
+      p.life++;
+      p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.32;
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      cx.save();
+      cx.globalAlpha = Math.min(1, (p.max - p.life) / 40);
+      cx.translate(p.x, p.y); cx.rotate(p.rot);
+      cx.fillStyle = p.color;
+      cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      cx.restore();
+    }
+    if (particles.length) requestAnimationFrame(tick);
+    else { running = false; cx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+
+  /* ---------- Go ---------- */
+  loadLevel(0);
+})();
+</script>
+</body>
+</html>
