@@ -62,8 +62,16 @@
       { id: "chancery", label: "Chancery" },
       { id: "exchequer", label: "Exchequer" },
       { id: "courts", label: "Courts" },
-      { id: "sc", label: "Special Collections" }
+      { id: "sc", label: "Special Collections" },
+      { id: "eccl", label: "Ecclesiastical", subs: ["Papal", "Episcopal", "Monastic", "Clergy"] }
     ];
+    const groupId = g => "group-" + g.toLowerCase().replace(/[^a-z]+/g, "-");
+    // "6 published · 8 unpublished" for diocese cards
+    const summariseStatus = vols => {
+      const n = s => vols.filter(v => v.status === s).length;
+      return [[n("Published"), "published"], [n("Unpublished"), "unpublished"]].filter(([c]) => c).map(([c, l]) => c + " " + l).join(" · ") || "no registers survive";
+    };
+    const branchById = id => BRANCHES.find(b => b.id === id) || BRANCHES[0];
 
     // Optional sub-headings within a tab
     const GROUPS = ["Estate Records", "Petitions and Letters", "Surveys"];
@@ -154,6 +162,16 @@
         centre();
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(centre);
       }, [branch]);
+      // Sub-tabs (Ecclesiastical only)
+      const [sub, setSub] = useState(() => {
+        const linked = recordFromHash();
+        if (linked && linked.sub) return linked.sub;
+        try { return localStorage.getItem("fontes-sub") || "Papal"; } catch (e) { return "Papal"; }
+      });
+      const chooseSub = (s) => {
+        setSub(s);
+        try { localStorage.setItem("fontes-sub", s); } catch (e) {}
+      };
       const chooseBranch = (b) => {
         setBranch(b);
         try { localStorage.setItem("fontes-branch", b); } catch (e) {}
@@ -194,6 +212,7 @@
           if (!r) return;
           setSearchTerm("");
           setBranch(r.branch);
+          if (r.sub) setSub(r.sub);
           setExpandedCards(prev => ({ ...prev, [r.id]: true }));
           scrollToCard(r.id);
         };
@@ -203,7 +222,8 @@
 
       const filteredRecords = useMemo(() => {
         const term = searchTerm.trim().toLowerCase();
-        const pool = term ? RECORDS : RECORDS.filter(r => r.branch === branch);
+        const subs = branchById(branch).subs;
+        const pool = term ? RECORDS : RECORDS.filter(r => r.branch === branch && (!subs || r.sub === (subs.includes(sub) ? sub : subs[0])));
         const matches = !term ? pool : pool.filter(r =>
           r.title.toLowerCase().includes(term) ||
           (r.tnaCode || '').toLowerCase().includes(term) ||
@@ -212,7 +232,7 @@
           r.desc.toLowerCase().includes(term)
         );
         return [...matches].sort((a, b) => (groupIndex(a) - groupIndex(b)) || (sortKey(a) - sortKey(b)));
-      }, [searchTerm, branch]);
+      }, [searchTerm, branch, sub]);
 
       // If user is searching, expand all matching cards automatically
       const isSearching = searchTerm.trim().length > 0;
@@ -254,6 +274,11 @@
             .repo-logo{width:14px;height:14px;display:block;object-fit:contain;flex-shrink:0}
             .tna-badge-sm{margin-top:6px;padding:2px 6px;font-size:11px;gap:5px}
             .tna-badge-sm .tna-logo{width:14px;height:14px}
+            .vol-who{font-weight:600}
+            .status-badge{display:inline-block;margin-left:8px;padding:0 8px;border-radius:3px;font-family:'EB Garamond',Georgia,serif;font-size:14px;font-weight:600;font-style:normal;letter-spacing:.02em;line-height:1.5;vertical-align:1px;border:1px solid}
+            .status-published{color:#2f5d2f;background:#e6efd9;border-color:#a9c48e}
+            .status-unpublished{color:#7a4a14;background:#f6e3c8;border-color:#d9b98a}
+            .status-no-register-known{color:#6a6a6a;background:#ececec;border-color:#c8c8c8}
             .vol-note{font-family:'Source Serif 4',Georgia,serif;font-size:13px;font-style:italic;color:#9a8a6a}
             .repo-btn-buy{border-style:dashed}
             .branch-tabs{position:relative;display:flex;gap:4px;box-shadow:inset 0 -1px 0 #d4c5a0;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -262,6 +287,10 @@
             .branch-tab{flex:none;white-space:nowrap;background:none;border:none;border-bottom:2px solid transparent;padding:8px 16px;font-family:'EB Garamond',Georgia,serif;font-size:19px;font-weight:500;color:#7a6a4a;cursor:pointer;transition:all .2s}
             .branch-tab:hover{color:#2a1e0e}
             .branch-tab.active{color:#2a1e0e;border-bottom-color:#7a5c14;font-weight:600}
+            .sub-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 16px}
+            .sub-tab{background:transparent;border:1px solid #d4c5a0;border-radius:999px;padding:4px 14px;font-family:'Source Serif 4',Georgia,serif;font-size:14px;color:#7a6a4a;cursor:pointer;transition:all .2s}
+            .sub-tab:hover{color:#2a1e0e;border-color:#b0a070}
+            .sub-tab.active{background:#ede0c4;border-color:#7a5c14;color:#2a1e0e;font-weight:600}
             .branch-count{font-family:'Source Serif 4',Georgia,serif;font-size:12px;color:#a0906a;font-weight:400;margin-left:2px}
             .header-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
             .branch-tag{font-family:'Source Serif 4',Georgia,serif;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#7a5c14;border:1px solid #c4b48a;border-radius:3px;padding:2px 7px}
@@ -277,6 +306,15 @@
             .card-link{background:none;border:1px solid transparent;border-radius:3px;color:#a0906a;cursor:pointer;padding:3px 6px;font-family:'Source Serif 4',Georgia,serif;font-size:11px;display:inline-flex;align-items:center}
             .card-link:hover{color:#2a1e0e;border-color:#c4b48a}
             .record-card{scroll-margin-top:16px}
+            .record-card.compact{padding:12px 20px;margin-bottom:10px}
+            .record-card.compact .record-header{border-bottom:none;padding-bottom:0;margin-bottom:0}
+            .record-card.compact .record-title{font-size:21px}
+            .group-heading{scroll-margin-top:16px}
+            .jump-links{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:-8px 0 18px;font-family:'Source Serif 4',Georgia,serif;font-size:14px;color:#7a6a4a}
+            .jump-label{font-style:italic;margin-right:2px}
+            .jump-link{background:none;border:none;padding:0;font:inherit;color:#7a5c14;cursor:pointer;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+            .jump-link:hover{color:#2a1e0e}
+            .jump-sep{color:#b0a070}
             .repo-btn:hover{background:#ede0c4;border-color:#7a5c14;color:#2a1e0e;transform:translateY(-1px)}
           `}</style>
 
@@ -291,7 +329,7 @@
           <div style={{borderBottom:"1px solid #d4c5a0",padding:"40px 24px 32px",textAlign:"center",background:"linear-gradient(180deg,#ede0c4,#f5ead0)"}}>
             <div style={{fontSize:"11px",textTransform:"uppercase",letterSpacing:".35em",color:"#7a5c14",marginBottom:"12px",fontWeight:600}}>Fontes</div>
             <h1 style={{fontSize:"clamp(28px,5vw,42px)",fontWeight:300,color:"#2a1e0e",margin:"0 0 8px",letterSpacing:".02em",lineHeight:1.2}}>Sources</h1>
-            <p style={{fontFamily:"'Source Serif 4',Georgia,serif",fontSize:"16px",color:"#7a6a4a",margin:0,fontStyle:"italic"}}>Published calendars, editions, and TNA references for the records of the medieval English Crown, to 1509</p>
+            <p style={{fontFamily:"'Source Serif 4',Georgia,serif",fontSize:"16px",color:"#7a6a4a",margin:0,fontStyle:"italic"}}>Published calendars, editions, and TNA references for the records of the medieval English Crown and Church, to 1509</p>
           </div>
 
           <div style={{maxWidth:760,margin:"0 auto",padding:"28px 16px 60px"}}>
@@ -304,10 +342,41 @@
                 </button>
               ))}
             </div>
+            {!isSearching && branchById(branch).subs && (
+              <div className="sub-tabs" role="tablist">
+                {branchById(branch).subs.map(s => {
+                  const current = branchById(branch).subs.includes(sub) ? sub : branchById(branch).subs[0];
+                  return (
+                    <button key={s} role="tab" aria-selected={current === s}
+                      className={"sub-tab" + (current === s ? " active" : "")}
+                      onClick={() => chooseSub(s)}>
+                      {s} <span className="branch-count">{RECORDS.filter(r => r.branch === branch && r.sub === s).length}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
             <div style={{marginBottom:24}}>
               <input className="si" type="text" placeholder="Search all record types (e.g. Patent, E 372, Feudal Aids)..." value={searchTerm} onChange={e=>setSearchTerm(e.target.value)} />
             </div>
 
+            {(() => {
+              const groups = isSearching ? [] : [...new Set(filteredRecords.map(r => r.group).filter(Boolean))];
+              if (groups.length < 2) return null;
+              return (
+                <div className="jump-links">
+                  <span className="jump-label">Jump to:</span>
+                  {groups.map((g, i) => (
+                    <React.Fragment key={g}>
+                      {i > 0 && <span className="jump-sep">·</span>}
+                      <button type="button" className="jump-link" onClick={() => { const el = document.getElementById(groupId(g)); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}>
+                        {g.replace(/^Province of /, "")}
+                      </button>
+                    </React.Fragment>
+                  ))}
+                </div>
+              );
+            })()}
             <div>
               {filteredRecords.length === 0 && <p className="no-results">No record types match “{searchTerm}”.</p>}
               {filteredRecords.map((rec, idx) => {
@@ -315,13 +384,13 @@
                 const showGroup = !isSearching && rec.group && (idx === 0 || filteredRecords[idx - 1].group !== rec.group);
                 return (
                   <React.Fragment key={rec.id}>
-                  {showGroup && <h3 className="group-heading">{rec.group}</h3>}
-                  <div className="record-card" id={"card-" + rec.id}>
+                  {showGroup && <h3 className="group-heading" id={groupId(rec.group)}>{rec.group}</h3>}
+                  <div className={"record-card" + (!isOpen && rec.sub === "Episcopal" ? " compact" : "")} id={"card-" + rec.id}>
                     <div className="record-header" onClick={() => toggleCard(rec.id)} style={{cursor:"pointer", userSelect:"none"}}>
                       <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
                         <span style={{fontSize:"14px", color:"#7a5c14", transform: isOpen ? "rotate(90deg)" : "rotate(0deg)", transition:"transform 0.2s"}}>▶</span>
                         <h2 className="record-title">{rec.title}</h2>
-                        <span style={{fontFamily:"'Source Serif 4',Georgia,serif", fontSize:"13px", color:"#7a6a4a", fontStyle:"italic"}}>({(n => n + (n === 1 ? " entry" : " entries"))(rec.volumes.filter(v => v.note !== "Not yet published").length)})</span>
+                        <span style={{fontFamily:"'Source Serif 4',Georgia,serif", fontSize:"13px", color:"#7a6a4a", fontStyle:"italic"}}>({rec.volumes.some(v => v.status) ? summariseStatus(rec.volumes) : (n => n + (n === 1 ? " entry" : " entries"))(rec.volumes.filter(v => v.note !== "Not yet published").length)})</span>
                       </div>
                       <div className="header-badges">
                         <button type="button" className="card-link" title="Copy a link to this card" aria-label={"Copy a link to " + rec.title}
@@ -330,7 +399,7 @@
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
                           )}
                         </button>
-                        {isSearching && <span className="branch-tag">{BRANCHES.find(b => b.id === rec.branch).label}</span>}
+                        {isSearching && <span className="branch-tag">{branchById(rec.branch).label}{rec.sub ? " · " + rec.sub : ""}</span>}
                         {rec.tnaCode && (
                           <a href={rec.tnaUrl} target="_blank" rel="noopener noreferrer" className="tna-badge" onClick={e => e.stopPropagation()}>
                             {Icons.tna} {rec.tnaCode}
@@ -353,7 +422,7 @@
                           {originalsFirst(rec.volumes).map((vol, vIdx) => (
                             <div key={vIdx} className="vol-item">
                               <div className="vol-info">
-                                <div className="vol-range">{vol.range}</div>
+                                <div className="vol-range">{vol.who && <span className="vol-who">{vol.who}</span>}{vol.who && ", "}{vol.range}{vol.status && <span className={"status-badge status-" + vol.status.toLowerCase().replace(/[^a-z]+/g, "-")}>{vol.status}</span>}</div>
                                 <div className="vol-editor">{vol.editor}</div>
                                 {vol.tnaCode && (
                                   <a href={vol.tnaUrl} target="_blank" rel="noopener noreferrer" className="tna-badge tna-badge-sm">
