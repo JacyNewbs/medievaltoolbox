@@ -1,4 +1,4 @@
-// Fontes data: one entry per record type. Edit this file to add or change sources; no build step needed.
+// Fontes data: one entry per record type.
 // Fields: id, branch (chancery | exchequer | courts | sc | eccl), sub (Ecclesiastical only: Papal | Episcopal | Monastic | Clergy), group (optional sub-heading), order (optional sort position),
 // title, tnaCode/tnaUrl, extraTna [{code,url}], tnaSearch (series or list of series), tnaSearchLabel, mdrSearch, desc,
 // volumes: [{ range, editor, who? (bishop), status? (Published | Unpublished | No register known), note?, tnaCode?, tnaUrl?, links: [{ type: ia|hathi|google|bho|umich|mmc|web|buy|aalt, label, url }] }]

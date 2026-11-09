@@ -1,32 +1,7 @@
 #!/usr/bin/env node
 /*
- * Medieval Toolbox link checker
- * -----------------------------
- * Reads fontes-data.js, checks every link in it, and writes a Markdown
- * report (link-report.md). Run by .github/workflows/check-links.yml every
- * week; you can also run it yourself:  node tools/check-links.js
- *
- * Options:
- *   --only=archive.org     check only links whose host contains this text
- *   --limit=50             stop after this many links (for quick tests)
- *   --out=link-report.md   where to write the report
- *
- * Exit code: 1 if any link is broken, 0 otherwise.
- *
- * How links are checked:
- *   - Internet Archive (archive.org/details/ID): asks the Archive's metadata
- *     API whether the item still exists and is not withdrawn ("dark").
- *   - HathiTrust (hdl.handle.net/2027/ID or babel.hathitrust.org): asks the
- *     HathiTrust catalogue API whether the volume still exists, and records
- *     its current access rights.
- *   - Everything else: requests the page (HEAD, then GET if HEAD is refused)
- *     and follows redirects. A 404/410 is "broken"; a redirect to a site's
- *     home page is flagged as "suspicious".
- *   - Sites that block automated visitors (403, 429, Cloudflare challenges)
- *     are reported as "couldn't check", never as broken.
- *
- * Requests are polite: at most 2 at a time per site, with a pause between
- * them, and an identifying User-Agent.
+ * Checks every link in fontes-data.js and writes link-report.md.
+ * Usage: node tools/check-links.js [--only=host] [--limit=n] [--out=file]
  */
 "use strict";
 const fs = require("fs");

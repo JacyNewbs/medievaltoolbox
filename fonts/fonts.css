@@ -1,8 +1,4 @@
-/* Self-hosted fonts for medievaltoolbox.com.
- * EB Garamond (Georg Duffner, Octavio Pardo) and Source Serif 4 (Adobe), both under the SIL Open Font License 1.1 (see OFL-*.txt).
- * Variable fonts: one file covers every weight. Browsers download only the subsets a page actually uses.
- * Taken from the Fontsource npm packages @fontsource-variable/eb-garamond and @fontsource-variable/source-serif-4.
- */
+/* EB Garamond and Source Serif 4, SIL Open Font License 1.1 (see OFL-*.txt). Files from Fontsource. */
 
 /* eb-garamond-greek-ext-wght-normal */
 @font-face {
