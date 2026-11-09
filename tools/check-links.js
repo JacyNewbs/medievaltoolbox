@@ -42,9 +42,17 @@ const DATA = path.resolve(ROOT, args.data || "fontes-data.js");
 const IA_API = process.env.IA_API || "https://archive.org/metadata/";
 const HT_API = process.env.HT_API || "https://catalog.hathitrust.org/api/volumes/brief/htid/";
 const UA = "MedievalToolboxLinkChecker/1.0 (+https://medievaltoolbox.com)";
-const TIMEOUT_MS = 30000;
+const TIMEOUT_MS = 45000;
 const PER_HOST = 2;          // simultaneous requests per site
 const PAUSE_MS = 1000;       // pause after each request to the same site
+
+// Sites that can't be checked automatically. Their links are listed in the
+// report (collapsed) but not requested, so they never clutter the results.
+const NOT_CHECKED = {
+  "boydellandbrewer.com": "Site blocks automated checks",
+  "quod.lib.umich.edu": "Site blocks automated checks",
+  "www.listandindexsociety.org.uk": "Site's security certificate is incomplete; links work in browsers but automated tools can't connect",
+};
 
 // HathiTrust rights codes that mean full view (in the US or worldwide)
 const HT_FULL = new Set(["pd", "pdus", "cc-by", "cc-by-nd", "cc-by-nc-nd", "cc-by-nc", "cc-by-nc-sa", "cc-by-sa", "cc-zero", "cc-by-3.0", "cc-by-4.0", "cc-by-nc-4.0", "cc-by-nc-nd-4.0", "cc-by-nc-sa-4.0", "cc-by-nd-4.0", "cc-by-sa-4.0", "und-world", "ic-world"]);
@@ -154,7 +162,7 @@ async function checkArchive(link, id) {
 }
 
 async function checkHathi(link, id) {
-  const r = await politely("hathitrust-api", () => requestWithRetry(HT_API + encodeURIComponent(id) + ".json", "GET"));
+  const r = await politely("hathitrust-api", () => requestWithRetry(HT_API + encodeURI(id) + ".json", "GET"));
   if (r.status !== 200) return { status: "unchecked", note: "HathiTrust API answered " + r.status };
   let j; try { j = JSON.parse(r.body); } catch { return { status: "unchecked", note: "HathiTrust API gave an unreadable answer" }; }
   const item = (j.items || []).find(i => i.htid === id) || (j.items || [])[0];
@@ -187,6 +195,8 @@ async function checkPage(link) {
 }
 
 async function check(link) {
+  const host = hostOf(link.url);
+  if (NOT_CHECKED[host]) return { status: "skipped", note: NOT_CHECKED[host] };
   try {
     const ia = iaIdentifier(link.url);
     if (ia) return await checkArchive(link, ia);
@@ -204,14 +214,14 @@ function where(l) {
   return l.where.map(w => "`#" + w.id + "` " + w.title + " — " + w.what).join("<br>");
 }
 function writeReport(results, startedAt) {
-  const groups = { broken: [], suspicious: [], unchecked: [], ok: [] };
+  const groups = { broken: [], suspicious: [], unchecked: [], skipped: [], ok: [] };
   for (const x of results) groups[x.result.status].push(x);
   const limited = results.filter(x => x.result.rights && x.result.note);
   const mins = ((Date.now() - startedAt) / 60000).toFixed(1);
   const L = [];
   L.push("# Fontes link check — " + new Date().toISOString().slice(0, 10));
   L.push("");
-  L.push(`Checked **${results.length}** links in ${mins} minutes: **${groups.broken.length} broken**, ${groups.suspicious.length} suspicious, ${groups.unchecked.length} couldn't be checked, ${groups.ok.length} fine.`);
+  L.push(`Checked **${results.length}** links in ${mins} minutes: **${groups.broken.length} broken**, ${groups.suspicious.length} suspicious, ${groups.unchecked.length} couldn't be checked, ${groups.ok.length} fine` + (groups.skipped.length ? `, and ${groups.skipped.length} on sites that can't be checked automatically.` : "."));
   L.push("");
   L.push("Cards are listed by their id, so `#close-rolls` is https://medievaltoolbox.com/fontes.html#close-rolls. Fix links in `fontes-data.js`.");
   const table = (title, intro, rows) => {
@@ -223,6 +233,18 @@ function writeReport(results, startedAt) {
   table("Suspicious", "These load, but probably not the page intended. Worth a look.", groups.suspicious);
   table("Couldn't check", "The site blocked the checker or didn't answer. Usually fine; check by hand only if one keeps appearing.",
     groups.unchecked);
+  if (groups.skipped.length) {
+    const byHost = {};
+    for (const x of groups.skipped) (byHost[hostOf(x.url)] = byHost[hostOf(x.url)] || []).push(x);
+    L.push("", "<details><summary>Not checked automatically (" + groups.skipped.length + ")</summary>", "",
+      "These sites can't be checked by a script. Check them by hand now and then.", "");
+    for (const [h, xs] of Object.entries(byHost)) {
+      L.push("**" + h + "** — " + NOT_CHECKED[h] + " (" + xs.length + (xs.length === 1 ? " link)" : " links)"), "");
+      for (const x of xs) L.push("- " + x.url + " — " + where(x));
+      L.push("");
+    }
+    L.push("</details>");
+  }
   if (limited.length) {
     L.push("", "<details><summary>HathiTrust volumes that are search-only in the US (" + limited.length + ")</summary>", "",
       "Not errors: these are often viewable from the UK. Listed so you can spot any that change.", "");
@@ -249,7 +271,7 @@ function writeReport(results, startedAt) {
     return { ...l, result };
   }));
   const g = writeReport(results, startedAt);
-  console.log(`\nDone: ${g.broken.length} broken, ${g.suspicious.length} suspicious, ${g.unchecked.length} unchecked, ${g.ok.length} ok.`);
+  console.log(`\nDone: ${g.broken.length} broken, ${g.suspicious.length} suspicious, ${g.unchecked.length} unchecked, ${g.skipped.length} not checked automatically, ${g.ok.length} ok.`);
   console.log("Report written to " + path.relative(process.cwd(), OUT));
   process.exitCode = g.broken.length ? 1 : 0;
 })().catch(e => { console.error(e); process.exitCode = 2; });
