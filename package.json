@@ -1,0 +1,12 @@
+{
+  "name": "medieval-toolbox",
+  "private": true,
+  "description": "Build step and link checker for medievaltoolbox.com",
+  "scripts": {
+    "build": "node build.js",
+    "check-links": "node tools/check-links.js"
+  },
+  "devDependencies": {
+    "@babel/standalone": "7.23.9"
+  }
+}
