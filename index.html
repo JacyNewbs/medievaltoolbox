@@ -3,14 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medieval Toolbox</title>
-  <script>if(sessionStorage.getItem("tk_auth")!=="8ea752113563c9bbbcc7627e33051535919069af0999cb3ba4291ef055f1d38f")window.location.href="login.html";</script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <title>Medieval Toolbox — Research tools for medieval English history</title>
+  <meta name="description" content="Free research tools for students and scholars of medieval English history: regnal years, the medieval calendar, money and measures, and a guide to sources.">
+  <link rel="canonical" href="https://medievaltoolbox.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Medieval Toolbox">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Medieval Toolbox">
+  <meta property="og:description" content="Free research tools for students and scholars of medieval English history: regnal years, the medieval calendar, money and measures, and a guide to sources.">
+  <meta property="og:url" content="https://medievaltoolbox.com/">
+  <meta property="og:image" content="https://medievaltoolbox.com/images/og/index.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Medieval Toolbox: digital tools for medievalists">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ede0c4">
+  <script src="js/analytics.js" defer></script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Medieval Toolbox", "url": "https://medievaltoolbox.com/", "description": "Free research tools for students and scholars of medieval English history: regnal years, the medieval calendar, money and measures, and a guide to sources.", "inLanguage": "en-GB"}</script>
+  <link rel="stylesheet" href="fonts/fonts.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     ::selection { background: #8b6914; color: #fff; }
     body {
-      font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+      font-family: 'EB Garamond', Georgia, serif;
       background: #f5ead0;
       color: #3a2e1e;
       min-height: 100vh;
@@ -37,7 +52,7 @@
       margin: 0 0 10px;
     }
     header p {
-      font-family: 'Crimson Pro', Georgia, serif;
+      font-family: 'Source Serif 4', Georgia, serif;
       font-size: 17px;
       color: #7a6a4a;
       font-style: italic;
@@ -84,7 +99,7 @@
       margin: 0 0 8px;
     }
     .tool-card p {
-      font-family: 'Crimson Pro', Georgia, serif;
+      font-family: 'Source Serif 4', Georgia, serif;
       font-size: 15px;
       color: #5a4a30;
       line-height: 1.5;
@@ -101,28 +116,19 @@
 
     .card-anno .tool-tag { color: #7a5c14; }
     .card-cal .tool-tag { color: #9a6a10; }
-    .card-carta .tool-tag { color: #8b2020; }
-    .card-locus .tool-tag { color: #3a7a3a; }
     .card-nummus .tool-tag { color: #7a5c14; }
-    .card-leges .tool-tag { color: #2a4a7a; }
     .card-fontes .tool-tag { color: #8b6914; }
-    .card-test .tool-tag { color: #7a7a6a; }
 
-    /* experimental tools: dashed rule, quieter ground */
-    .tool-card.experimental {
-      border-style: dashed;
-      background: #f7f0e0;
-    }
-    .tool-card.experimental:hover { background: #fdf7e8; }
 
     footer {
       border-top: 1px solid #d4c5a0;
       padding: 24px;
       text-align: center;
-      font-family: 'Crimson Pro', Georgia, serif;
+      font-family: 'Source Serif 4', Georgia, serif;
       font-size: 13px;
       color: #9a8a6a;
     }
+    footer a { color: #9a8a6a; }
   </style>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"><link rel="manifest" href="site.webmanifest">
 </head>
@@ -136,65 +142,35 @@
   <div class="tools">
     <a href="anno-regni.html" class="tool-card card-anno">
       <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Regnal Year Calculator</div>
-      <h2>Anno Regni</h2>
-      <p>Convert between regnal years and modern dates, from William I to Charles III. Enter a regnal year with optional day and month for exact date resolution.</p>
+      <div class="tool-tag">Anno Regni</div>
+      <h2>Regnal Year Converter</h2>
+      <p>Convert between regnal years and modern dates, from William I to Charles III, and date Anglo-Saxon documents by indiction, Easter reckoning and the kings then reigning. Enter a regnal year with optional day and month for exact date resolution.</p>
     </a>
 
     <a href="calendarium.html" class="tool-card card-cal">
       <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Medieval Calendar</div>
-      <h2>Calendarium</h2>
+      <div class="tool-tag">Calendarium</div>
+      <h2>Medieval Calendar</h2>
       <p>Traversable calendar of saints' days, moveable feasts, law terms, and return days. Ecclesiastical and legal modes with data from Cheney's Handbook of Dates.</p>
-    </a>
-
-    <a href="carta-maneriorum.html" class="tool-card card-carta">
-      <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Manorial Documents Register</div>
-      <h2>Carta Maneriorum</h2>
-      <p>Interactive map of 4,393 manorial documents across 449 Dorset manors. Filter by date, document type, and search by manor or place. Links to TNA Discovery.</p>
-    </a>
-
-    <!-- PLACEHOLDER: replace the tag and description below with your own copy,
-         and check the href matches your actual filename. -->
-    <a href="leges.html" class="tool-card card-leges">
-      <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Statutes &amp; Legal Texts</div>
-      <h2>Leges</h2>
-      <p>Statutes of the realm and legal texts for medieval England. Search by regnal year, chapter, or subject, with links to published editions.</p>
-    </a>
-
-    <a href="locus-placenames.html" class="tool-card card-locus">
-      <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Dorset Place-Names</div>
-      <h2>Locus</h2>
-      <p>Over 10,000 historical place-names mapped with etymological data from the English Place-Name Society. Search by name, element, hundred, or parish.</p>
     </a>
 
     <a href="nummus.html" class="tool-card card-nummus">
       <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Currency & Measures</div>
-      <h2>Nummus</h2>
+      <div class="tool-tag">Nummus</div>
+      <h2>Money &amp; Units</h2>
       <p>Pounds, shillings, and pence calculator with denomination converter. Weights and measures from Zupko, covering linear, area, capacity, and weight systems.</p>
     </a>
 
     <a href="fontes.html" class="tool-card card-fontes">
       <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Published Primary Sources</div>
-      <h2>Fontes</h2>
-      <p>Calendars, editions, and reference works for medieval English history. Browse by category, search by title or abbreviation, and find links to free online texts.</p>
-    </a>
-
-    <a href="testing.html" class="tool-card card-test experimental">
-      <span class="arrow">&#8599;</span>
-      <div class="tool-tag">Experimental &middot; Password required</div>
-      <h2>Testing</h2>
-      <p>Work in progress. Currently an augmented reality viewer: point a phone camera at a printed target to place a 3D model on it. Needs a rear camera and camera permission.</p>
+      <div class="tool-tag">Fontes</div>
+      <h2>Sources</h2>
+      <p>Published calendars, editions, and TNA references for the records of Chancery, Exchequer, the courts, Special Collections, and the Church to 1509, with links to free scans, original rolls on AALT, and catalogue searches.</p>
     </a>
   </div>
 
   <footer>
-    Medieval Toolbox &middot; Built for research, not for profit
+    Medieval Toolbox &middot; Built for research, not for profit &middot; <a href="about.html">About</a>
   </footer>
 </body>
 </html>

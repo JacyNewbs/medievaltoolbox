@@ -1,0 +1,55 @@
+# Checks every link in fontes-data.js once a week and opens (or updates) a
+# GitHub issue labelled "link-check" if any are broken or suspicious.
+# When everything passes, any open link-check issue is closed.
+# You can also run it by hand: Actions tab → "Check Fontes links" → Run workflow.
+name: Check Fontes links
+
+on:
+  schedule:
+    - cron: "17 4 * * 1"   # Mondays, 04:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check links
+        id: check
+        run: node tools/check-links.js --out=link-report.md
+        continue-on-error: true
+
+      - name: Save the full report
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: link-report.md
+
+      - name: Open, update or close the link-check issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create link-check --color B60205 --description "Broken links found by the weekly checker" --force
+          # GitHub issues are limited to 65,536 characters; the full report is saved above
+          head -c 60000 link-report.md > issue-body.md
+          open=$(gh issue list --label link-check --state open --json number --jq '.[0].number')
+          if grep -qE '^## (Broken|Suspicious)$' link-report.md; then
+            if [ -n "$open" ]; then
+              gh issue edit "$open" --body-file issue-body.md
+              gh issue comment "$open" --body "Updated by the link check on $(date -u +%F)."
+            else
+              gh issue create --title "Broken links in Fontes" --label link-check --body-file issue-body.md
+            fi
+          elif [ -n "$open" ]; then
+            gh issue close "$open" --comment "All links passed on $(date -u +%F)."
+          fi
