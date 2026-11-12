@@ -9,7 +9,296 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
 <meta name="description" content="Find history talks, walks, visits and conferences run by local societies, museums and archives across southern England.">
 <link rel="icon" href="WebsiteIcon.png">
-<link rel="stylesheet" href="style.css">
+<style>
+/* ---- Site styles (copied in from style.css so this page works on its own) ---- */
+/* Southern History Society – shared styles for every page.
+   Change a colour or font here and it changes across the whole site. */
+:root {
+  --site-primary: #6BC3C4;
+  --site-secondary: #173C3D;
+  --site-background: #F7F8F5;
+  --site-on-primary: #153536;
+  --site-on-background: #202827;
+  --ink: #163637;
+  --accent: #337D7D;
+  --muted: #53615D;
+  --line: #DCE5E1;
+  --site-font-body: Arial, Helvetica, sans-serif;
+  --site-font-heading: 'Libre Baskerville', Baskerville, Georgia, 'Times New Roman', serif;
+  /* Bodoni, as on the printed journal – used only for the journal covers */
+  --journal-font: 'Bodoni Moda', 'Bodoni 72', 'Bodoni MT', Didot, Georgia, serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); line-height: 1.55; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.wrap { max-width: 1180px; width: calc(100% - 48px); margin: 0 auto; }
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 8px; background: #fff; padding: 8px 12px; z-index: 10; }
+
+.topline { background: var(--site-secondary); color: #EAF7F5; font-size: 12px; letter-spacing: .04em; }
+.topline .wrap { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; }
+header { background: var(--site-primary); color: var(--ink); border-bottom: 1px solid rgba(22,54,55,.25); position: relative; }
+.headrow { display: flex; align-items: center; gap: 28px; padding: 5px 0; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; min-width: 0; }
+.brand img { width: 90px; height: 90px; flex: none; }
+.brand-name { font: bold 24px/1.05 var(--site-font-heading); letter-spacing: -.02em; }
+.brand-sub { font-size: 10px; text-transform: uppercase; letter-spacing: .14em; margin-top: 5px; }
+nav { display: flex; align-items: center; justify-content: flex-end; gap: 22px; flex: 1; font-size: 13px; font-weight: 700; }
+nav a { text-decoration: none; padding: 8px 0; border-bottom: 2px solid transparent; }
+nav a:hover, nav a:focus-visible { border-color: var(--ink); }
+.nav-cta { padding: 10px 13px !important; border: 1px solid var(--ink) !important; }
+.menu { display: none; background: transparent; border: 1px solid var(--ink); color: var(--ink); padding: 8px 10px; font: inherit; cursor: pointer; white-space: nowrap; }
+
+.hero { background: var(--site-primary); color: var(--ink); overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; padding: 62px 0 70px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .15em; font-size: 11px; font-weight: 800; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font: normal 54px/1.04 var(--site-font-heading); letter-spacing: -.035em; margin: 18px 0 20px; max-width: 630px; text-wrap: balance; }
+.hero p { max-width: 520px; font-size: 17px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: #fff; padding: 12px 17px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; gap: 9px; align-items: center; }
+.btn.secondary { background: transparent; color: var(--ink); }
+.btn:hover { background: #0F2A2B; color: #fff; }
+.hero-art { min-height: 400px; position: relative; display: flex; align-items: center; justify-content: center; }
+.hero-art::before { content: ""; position: absolute; width: 420px; height: 420px; border: 1px solid rgba(22,54,55,.35); border-radius: 50%; }
+/* Journal cover – drawn in HTML to match the printed Southern History.
+   Every size is a share of the cover's width (cqw), so one design works at any size. */
+.jcover { container-type: inline-size; aspect-ratio: 816 / 1275; background: var(--site-primary); color: #fff; font-family: var(--journal-font); font-weight: 400; font-optical-sizing: none; font-variation-settings: "opsz" 6; position: relative; }
+.jc-in { height: 100%; display: flex; flex-direction: column; padding: 0 3.1cqw; }
+.jc-rules { display: flex; flex-direction: column; gap: 1.1cqw; padding-top: 1.5cqw; }
+.jc-rules.bottom { flex-direction: column-reverse; padding: 0 0 1.5cqw; margin-top: auto; }
+.jc-rules i { display: block; background: #1E2B2B; height: .18cqw; }
+.jc-rules i:first-child { height: .9cqw; }
+.jc-title { text-align: center; font-size: 15.6cqw; line-height: .9; margin: 4.5cqw 0 3.6cqw; letter-spacing: .01em; white-space: nowrap; }
+.jc-title .big { font-size: 1.33em; line-height: 0; }
+.jc-band { display: flex; flex-direction: column; gap: .9cqw; }
+.jc-band i { display: block; height: .15cqw; background: #1E2B2B; }
+.jc-band b { display: block; height: 1.8cqw; background: #fff; }
+.jc-sub { text-align: center; font-size: 10.8cqw; line-height: .97; margin-top: 6.6cqw; white-space: nowrap; }
+.jc-vol { color: #1E2B2B; font-size: 4.7cqw; margin-top: auto; align-self: flex-start; padding: 0 1cqw .5cqw 0; border-bottom: .3cqw solid #1E2B2B; min-width: 36cqw; }
+.jc-vol + .jc-rules.bottom { margin-top: 23cqw; }
+.hero .jcover { width: 240px; border: 1px solid rgba(22,54,55,.5); box-shadow: 15px 15px 0 rgba(22,54,55,.13); transform: rotate(2deg); }
+.mini-cover { width: 100%; border: 1px solid rgba(22,54,55,.5); }
+
+main section { padding: 64px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 25px; margin-bottom: 27px; }
+.kicker { color: var(--accent); text-transform: uppercase; letter-spacing: .14em; font-size: 11px; font-weight: 800; margin-bottom: 10px; }
+h2 { font: normal 36px/1.1 var(--site-font-heading); letter-spacing: -.025em; margin-bottom: 9px; text-wrap: balance; }
+.section-head p { max-width: 480px; margin: 0; font-size: 14px; color: var(--muted); }
+.text-link { font-size: 13px; font-weight: 800; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 3px; }
+.text-link:hover { border-bottom-width: 2px; }
+
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.feature { background: #fff; border: 1px solid var(--line); padding: 27px; display: flex; flex-direction: column; }
+.feature.map-feature { background: #E8F5F2; }
+.feature .number { font: normal 14px var(--site-font-heading); color: var(--accent); }
+.feature h3 { font: normal 29px/1.1 var(--site-font-heading); letter-spacing: -.02em; margin: 14px 0 10px; }
+.feature p { font-size: 14px; color: var(--muted); }
+.feature .text-link { align-self: flex-start; margin-top: auto; }
+
+/* Coming up: read from the talks map's events.csv */
+.upcoming { list-style: none; margin: 4px 0 20px; padding: 0; border-top: 1px solid #B8D3C8; }
+.upcoming li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 11px 0; border-bottom: 1px solid #B8D3C8; }
+.upcoming .when { font-family: var(--site-font-heading); color: var(--ink); line-height: 1.1; }
+.upcoming .when b { display: block; font-size: 22px; font-weight: normal; }
+.upcoming .when span { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.upcoming .what { font-size: 14px; line-height: 1.35; }
+.upcoming .what a { font-weight: 700; text-decoration: none; }
+.upcoming .what a:hover { text-decoration: underline; }
+.upcoming .what small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.upcoming .placeholder { grid-column: 1 / -1; display: block; color: var(--muted); font-size: 13px; }
+
+.journal-feature { display: grid; grid-template-columns: 145px 1fr; gap: 24px; align-items: start; margin-top: 14px; }
+.journal-copy h3 { margin-top: 0 !important; }
+.pills { display: flex; flex-wrap: wrap; gap: 7px; margin: 15px 0 20px; }
+.pill { border: 1px solid #CADBD5; padding: 5px 8px; font-size: 11px; color: #355C58; text-decoration: none; }
+.pill:hover { border-color: var(--accent); }
+
+.archive-strip { background: var(--site-secondary); color: #F3F7F3; }
+.archive-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
+.archive-grid h2 { color: #fff; }
+.archive-grid p { color: #D5E2DD; font-size: 14px; }
+.archive-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.archive-number { border-left: 1px solid var(--site-primary); padding: 10px 0 10px 15px; }
+.archive-number strong { display: block; font: normal 36px/1.1 var(--site-font-heading); color: #8AD4D1; }
+.archive-number span { font-size: 12px; color: #D5E2DD; }
+
+.community { background: #F0F2EC; }
+.community-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.community-card { padding: 22px; border: 1px solid #D9E0D9; background: #FAFBF8; display: flex; flex-direction: column; }
+.community-card .symbol { font-size: 22px; color: var(--accent); }
+.community-card h3 { font: normal 23px var(--site-font-heading); margin: 12px 0 7px; }
+.community-card p { color: var(--muted); font-size: 13px; }
+.community-card .text-link { align-self: flex-start; margin-top: auto; }
+
+footer { background: #102D2E; color: #F3F7F3; padding: 36px 0; }
+.footer-grid { display: flex; justify-content: space-between; gap: 28px; align-items: start; }
+footer .brand-name { font-size: 21px; }
+footer p, footer a { color: #D5E2DD; font-size: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+
+@media (max-width: 850px) {
+  .headrow { justify-content: space-between; }
+  nav { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 5; background: var(--site-primary); padding: 20px 24px; flex-direction: column; align-items: stretch; gap: 7px; border-bottom: 1px solid var(--ink); }
+  nav.open { display: flex; }
+  .menu { display: block; }
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; padding: 46px 0; }
+  .hero-art { min-height: 420px; }
+  .hero-art::before { width: 340px; height: 340px; }
+  .feature-grid, .archive-grid { grid-template-columns: 1fr; }
+  .archive-grid { gap: 25px; }
+  .community-grid { grid-template-columns: 1fr; }
+  .section-head { align-items: start; flex-direction: column; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 32px); }
+  .topline .wrap { flex-direction: column; gap: 2px; }
+  .brand img { width: 64px; height: 64px; }
+  .headrow { padding: 5px 0; }
+  .brand-name { font-size: 19px; }
+  .brand-sub { font-size: 8px; }
+  h1 { font-size: 40px; }
+  h2 { font-size: 30px; }
+  main section { padding: 46px 0; }
+  .journal-feature { grid-template-columns: 95px 1fr; gap: 16px; }
+  .feature { padding: 21px; }
+  .archive-number { padding-left: 9px; }
+  .archive-number strong { font-size: 28px; }
+  .footer-grid { flex-direction: column; }
+}
+
+/* Social links (top bar and footer) */
+.socials { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.socials a { text-decoration: none; }
+.socials a:hover { text-decoration: underline; }
+.topline .socials a { color: #EAF7F5; }
+footer .socials { margin-top: 14px; }
+footer .socials a { border: 1px solid #3D6667; padding: 5px 9px; }
+footer .socials a:hover { border-color: #8AD4D1; text-decoration: none; }
+
+/* ---------- Inner pages ---------- */
+/* Header band: Visscher's 1690 map of the south coast under a turquoise tint */
+.page-hero { background: linear-gradient(90deg, rgba(107,195,196,.97) 0%, rgba(107,195,196,.9) 45%, rgba(107,195,196,.55) 100%), url("masthead-map.jpg") center 40% / cover, var(--site-primary); color: var(--ink); padding: 54px 0 58px; border-bottom: 1px solid rgba(22,54,55,.25); }
+.page-hero h1 { font-size: 46px; margin: 10px 0 14px; }
+.page-hero p { max-width: 600px; font-size: 17px; margin: 0; }
+.page-hero .kicker { color: var(--ink); }
+nav a[aria-current="page"] { border-color: var(--ink); }
+.tint { background: #F0F2EC; }
+.prose p { font-size: 16px; max-width: 70ch; }
+.prose h2 { margin-bottom: 16px; }
+.narrow { max-width: 760px; }
+.byline { font-style: italic; color: var(--muted); }
+.two-col { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: start; }
+.side-card { background: #fff; border: 1px solid var(--line); padding: 26px; }
+.side-card h3 { font: normal 22px var(--site-font-heading); margin: 18px 0 6px; }
+.side-card h3:first-child { margin-top: 0; }
+.side-card p { font-size: 14px; color: var(--muted); }
+.emblem { display: grid; grid-template-columns: 150px 1fr; gap: 40px; align-items: start; }
+.after-note { margin-top: 32px; color: var(--muted); font-size: 14px; }
+
+/* Committee */
+.people-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.people-groups h2 { font-size: 26px; padding-bottom: 12px; border-bottom: 2px solid var(--site-primary); }
+.people { list-style: none; margin: 0; padding: 0; }
+.people li { padding: 13px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; }
+.people .role { text-transform: uppercase; letter-spacing: .1em; font-size: 11px; font-weight: 800; color: var(--accent); }
+.people .name { font: normal 19px/1.3 var(--site-font-heading); color: var(--ink); }
+.people .note { font-size: 13px; color: var(--muted); }
+
+/* Conferences */
+.next-conf { display: flex; justify-content: space-between; align-items: center; gap: 30px; border: 1px solid var(--ink); background: #E8F5F2; padding: 30px; }
+.next-conf p { margin: 0; color: var(--muted); max-width: 560px; }
+.next-conf .socials a { border: 1px solid var(--ink); padding: 6px 10px; font-size: 13px; font-weight: 700; }
+.conf-list { list-style: none; margin: 24px 0 0; padding: 0; }
+.conf-list > li { display: grid; grid-template-columns: 110px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid #D9E0D9; }
+.conf-year { font: normal 34px/1 var(--site-font-heading); color: var(--accent); }
+.conf-list h3 { font: normal 23px/1.25 var(--site-font-heading); margin: 2px 0 6px; }
+.meta { color: var(--muted); font-size: 14px; margin: 0; }
+details { margin-top: 12px; }
+summary { cursor: pointer; font-size: 13px; font-weight: 800; color: var(--ink); }
+.programme { list-style: none; padding: 0; margin: 12px 0 0; }
+.programme li { display: grid; grid-template-columns: 105px 1fr; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.programme .time { color: var(--accent); font-weight: 700; }
+
+/* News */
+.posts { display: grid; gap: 0; }
+.post { display: grid; grid-template-columns: 170px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.post:first-child { padding-top: 0; }
+.post time { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; color: var(--accent); padding-top: 6px; }
+.post h3 { font: normal 26px/1.2 var(--site-font-heading); margin-bottom: 8px; }
+.post p { color: var(--muted); font-size: 15px; max-width: 70ch; }
+.contents { font-size: 14px; padding-left: 18px; }
+.contents li { margin: 5px 0; }
+.post details + .text-link { display: inline-block; margin-top: 14px; }
+
+/* Membership */
+.rates { display: grid; grid-template-columns: repeat(2, minmax(0, 280px)); gap: 18px; }
+.rate { border: 1px solid var(--ink); background: #E8F5F2; padding: 22px; }
+.rate span { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; }
+.rate strong { font: normal 48px/1.1 var(--site-font-heading); color: var(--ink); }
+.rate small { color: var(--muted); margin-left: 4px; }
+.steps-title { margin-top: 50px; }
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.steps > li { counter-increment: s; background: #fff; border: 1px solid var(--line); padding: 26px; }
+.steps > li::before { content: counter(s); font: normal 30px var(--site-font-heading); color: var(--accent); }
+.steps h3 { font: normal 24px var(--site-font-heading); margin: 6px 0 8px; }
+.steps p { color: var(--muted); font-size: 14px; }
+.bank { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 14px 0 18px; padding: 16px; background: #F0F2EC; font-size: 14px; }
+.bank dt { color: var(--muted); }
+.bank dd { margin: 0; font-weight: 700; color: var(--ink); }
+
+/* Contact */
+.contact-form { display: grid; gap: 16px; }
+.contact-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; color: var(--ink); }
+.contact-form small { font-weight: normal; color: var(--muted); }
+.contact-form input, .contact-form select, .contact-form textarea { font: inherit; font-weight: normal; padding: 10px 12px; border: 1px solid #B8C9C3; background: #fff; color: var(--site-on-background); width: 100%; }
+.contact-form input[type=file] { padding: 8px; }
+.contact-form .btn { justify-self: start; cursor: pointer; }
+.form-note { color: #8A3B12; font-size: 14px; min-height: 1em; margin: 0; }
+
+@media (max-width: 850px) {
+  .two-col, .people-groups, .steps { grid-template-columns: 1fr; }
+  .next-conf { flex-direction: column; align-items: flex-start; }
+  .page-hero { background: linear-gradient(rgba(107,195,196,.9), rgba(107,195,196,.9)), url("masthead-map.jpg") center / cover, var(--site-primary); }
+}
+@media (max-width: 520px) {
+  .page-hero h1 { font-size: 34px; }
+  .post, .conf-list > li { grid-template-columns: 1fr; gap: 8px; }
+  .programme li { grid-template-columns: 1fr; gap: 2px; }
+  .emblem { grid-template-columns: 1fr; }
+  .emblem img { width: 110px; height: 110px; }
+  .rates { grid-template-columns: 1fr; }
+  nav { gap: 4px; }
+}
+
+/* About page: the Visscher map shown in full colour */
+.map-figure { margin: 44px 0 0; }
+.map-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: #E8E2D0; }
+.map-figure figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; font-style: italic; }
+
+/* Privacy and accessibility pages */
+.legal h2 { font-size: 28px; margin-top: 40px; }
+.legal h2:first-child { margin-top: 0; }
+.legal h3 { font: normal 20px var(--site-font-heading); margin: 24px 0 8px; color: var(--ink); }
+.legal ul { padding-left: 20px; max-width: 70ch; }
+.legal li { margin: 6px 0; }
+/* Placeholder notes – remove each one once the detail is filled in */
+.todo { background: #FFF1B8; border: 1px dashed #B8860B; padding: 1px 6px; font-size: 14px; color: #5A4300; }
+.footer-legal { display: flex; gap: 18px; margin-top: 22px; padding-top: 16px; border-top: 1px solid #2C4F50; }
+
+/* Homepage: find talks near a postcode */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.near-form { margin: 2px 0 6px; }
+.near-row { display: flex; gap: 8px; }
+.near-row input { flex: 1; min-width: 0; font: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid var(--ink); background: #fff; color: var(--site-on-background); text-transform: uppercase; }
+.near-row input::placeholder { text-transform: none; color: #7A8783; }
+.near-row .btn { cursor: pointer; flex: none; }
+.near-loc { background: none; border: 0; padding: 6px 0 0; font: inherit; font-size: 13px; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.near-msg { font-size: 13px; color: var(--ink); margin: 8px 0 10px; min-height: 1em; }
+.upcoming .what small b { color: var(--ink); font-weight: 700; }
+</style>
 <style>
 /* Talks map, styled to match the new Society site (turquoise and teal, square corners).
    The site header comes from style.css; everything below it is the map app. */
